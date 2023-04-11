@@ -5,6 +5,11 @@ plugins {
     id 'kotlin-kapt'
 }
 
+
+//Properties properties = new Properties()
+//properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+
 android {
     namespace 'com.example.view.fifa'
     compileSdk 32
@@ -15,6 +20,10 @@ android {
         targetSdk 32
         versionCode 1
         versionName "1.0"
+
+//        buildConfigField "String", "CLIENT_ID", properties['CLIENT_ID']
+        buildConfigField "String", "CLIENT_ID", project.properties["CLIENT_ID"]
+
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -40,7 +49,7 @@ android {
 dependencies {
 
     implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.5.0'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
