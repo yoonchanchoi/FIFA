@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
     /**
      * 배너 자동 스클롤 핸들러
      */
-    inner class BannerHandler : Handler() {
+    inner class BannerHandler : Handler(Looper.getMainLooper()) {
         override fun handleMessage(message: Message) {
             super.handleMessage(message)
             if (binding.vpImage.currentItem == binding.vpImage.adapter?.let { it.itemCount-1 }) {
