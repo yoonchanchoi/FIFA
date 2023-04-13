@@ -2,13 +2,15 @@ package com.example.view.fifa.ui.activity.main
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.view.fifa.databinding.ItemBannerImageBinding
 
 class BannerAdapter : RecyclerView.Adapter<BannerViewHolder>() {
-    private lateinit var bitmaps: ArrayList<Bitmap>
+//    private lateinit var bitmaps: ArrayList<Bitmap>
+    private lateinit var arrayImage : ArrayList<Drawable>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BannerViewHolder {
         val itemBinding =
@@ -17,10 +19,14 @@ class BannerAdapter : RecyclerView.Adapter<BannerViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: BannerViewHolder, position: Int) {
-        holder.bind()
+        holder.bind(arrayImage[position])
     }
 
     override fun getItemCount(): Int {
-        return bitmaps.size
+        return arrayImage.size
+    }
+
+    fun setImage(arrayImage : ArrayList<Drawable>){
+        this.arrayImage=arrayImage
     }
 }
