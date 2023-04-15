@@ -1,5 +1,6 @@
 package com.example.view.fifa.ui.activity.main
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
@@ -7,11 +8,13 @@ import android.os.Looper
 import android.os.Message
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.view.fifa.R
 import com.example.view.fifa.databinding.ActivityMainBinding
+import com.example.view.fifa.ui.activity.SearchSubActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -51,6 +54,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initListener() {
+
+        binding.etSearch.setOnFocusChangeListener { view, b ->
+            if(b){
+                val intent = Intent(this, SearchSubActivity::class.java)
+                startActivity(intent)
+                view.clearFocus()
+            }
+        }
     }
 
     private fun initObserve() {
@@ -117,6 +128,5 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
         autoScrollStop()
     }
-
 
 }

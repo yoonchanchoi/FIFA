@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/layer_item_bg">
+
+    <TextView
+        android:id="@+id/tv_my_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="유저1(나)" />
+
+    <TextView
+        android:id="@+id/tv_my_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_my_user"
+        app:layout_constraintStart_toEndOf="@id/tv_my_user"
+        app:layout_constraintTop_toTopOf="@id/tv_my_user"
+        tools:text="1" />
+
+    <TextView
+        android:id="@+id/tv_colon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text=":"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_my_user"
+        app:layout_constraintStart_toEndOf="@id/tv_my_score"
+        app:layout_constraintTop_toTopOf="@id/tv_my_user" />
+
+
+    <TextView
+        android:id="@+id/tv_opponent_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_my_user"
+        app:layout_constraintStart_toEndOf="@id/tv_colon"
+        app:layout_constraintTop_toTopOf="@id/tv_my_user"
+        tools:text="1" />
+
+    <TextView
+        android:id="@+id/tv_opponent_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:textSize="20dp"
+        app:layout_constraintStart_toEndOf="@id/tv_opponent_score"
+        app:layout_constraintTop_toTopOf="@id/tv_my_user"
+        tools:text="유저2(상대)" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

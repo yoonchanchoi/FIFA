@@ -4,6 +4,8 @@ import com.example.searchstudy.network.models.response.*
 import com.example.view.fifa.network.models.dto.MatchDTO
 import com.example.view.fifa.network.models.dto.MaxDivisionDTO
 import com.example.view.fifa.network.models.dto.UserDTO
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -17,12 +19,12 @@ interface FIFAService {
     @GET("users")
     fun requestUserInfo(
         @Query("nickname") nicknamee: String
-    ): Call<UserDTO>
+    ): Single<UserDTO>
 
     @GET("matches/{matchid}")
     fun requestMatchInfo(
         @Path("matchid") matchid: String
-    ): Call<MatchDTO>
+    ): Observable<MatchDTO>
 
     @GET("users/{accessid}/matches")
     fun  requestOfficialMatchId(
@@ -30,12 +32,12 @@ interface FIFAService {
         @Query("matchtype") matchtype : Int,
         @Query("offset") offset : Int,
         @Query("limit") limit : Int,
-    ) : Call<List<String>>
+    ) : Single<List<String>>
 
     @GET("users/{accessid}/maxdivision")
     fun  requestMaxDivision(
         @Path("accessid") accessid: String
-    ): Call<List<MaxDivisionDTO>>
+    ): Single<List<MaxDivisionDTO>>
 
 
 }

@@ -5,28 +5,30 @@ import com.example.searchstudy.network.services.FIFAService
 import com.example.view.fifa.network.models.dto.MatchDTO
 import com.example.view.fifa.network.models.dto.MaxDivisionDTO
 import com.example.view.fifa.network.models.dto.UserDTO
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import retrofit2.Call
 import javax.inject.Inject
 
 
 
 
-class FIFAManagerImpl @Inject constructor(private val service: FIFAService) : FIFAManager {
-//    override fun requestTest(): Call<FIFAResponse> =
-//        service.requestTest()
-
-    override fun requestUserInfo(nickname : String): Call<UserDTO> =
-        service.requestUserInfo(nickname)
-
-    override fun requestMatchInfo(matchid: String): Call<MatchDTO> =
-        service.requestMatchInfo(matchid)
-
-    override fun requestOfficialMatchId(accessid : String, matchtype : Int, offset : Int, limit : Int ): Call<List<String>> =
-        service.requestOfficialMatchId(accessid, matchtype, offset, limit)
-
-    override fun requestMaxDivision( accessid: String): Call<List<MaxDivisionDTO>> =
-        service.requestMaxDivision(accessid)
-}
+//class FIFAManagerImpl @Inject constructor(private val service: FIFAService) : FIFAManager {
+////    override fun requestTest(): Call<FIFAResponse> =
+////        service.requestTest()
+//
+//    override fun requestUserInfo(nickname : String): Single<UserDTO> =
+//        service.requestUserInfo(nickname)
+//
+//    override fun requestMatchInfo(matchid: String): Observable<MatchDTO> =
+//        service.requestMatchInfo(matchid)
+//
+//    override fun requestOfficialMatchId(accessid : String, matchtype : Int, offset : Int, limit : Int ): Single<List<String>> =
+//        service.requestOfficialMatchId(accessid, matchtype, offset, limit)
+//
+//    override fun requestMaxDivision( accessid: String): Single<List<MaxDivisionDTO>> =
+//        service.requestMaxDivision(accessid)
+//}
 
 
 
