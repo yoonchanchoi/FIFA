@@ -4,8 +4,8 @@ import com.example.searchstudy.network.models.response.*
 import com.example.view.fifa.network.models.dto.MatchDTO
 import com.example.view.fifa.network.models.dto.MaxDivisionDTO
 import com.example.view.fifa.network.models.dto.UserDTO
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

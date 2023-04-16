@@ -28,8 +28,6 @@ class HeadersInterceptor @Inject constructor(
         val request = chain.request()
             .newBuilder()
             .addHeader("Authorization",CLIENT_ID)
-//            .addHeader("X-Naver-Client-Id", CLIENT_ID)
-//            .addHeader("X-Naver-Client-Secret", CLIENT_SECRET)
             .build()
         return chain.proceed(request)
     }
