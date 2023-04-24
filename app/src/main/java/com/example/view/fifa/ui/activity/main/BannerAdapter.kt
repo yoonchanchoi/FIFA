@@ -27,6 +27,6 @@ class BannerAdapter : RecyclerView.Adapter<BannerViewHolder>() {
     }
 
     fun setImage(arrayImage : ArrayList<Drawable>){
-        this.arrayImage=arrayImage
+        this.arrayImage = arrayImage
     }
 }

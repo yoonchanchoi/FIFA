@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.SearchSubActivity">
+    tools:context=".ui.activity.searchsubactivity.SearchSubActivity">
 
 
     <EditText
@@ -14,13 +14,26 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
+        android:imeActionLabel="검색"
+        android:imeOptions="actionSearch"
         android:background="@drawable/shape_round_bg"
         android:hint="피린이를 입력해주세요"
         android:paddingStart="30dp"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_text_clear"
+        android:visibility="invisible"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/ic_clear"
+        app:layout_constraintTop_toTopOf="@id/et_search"
+        app:layout_constraintBottom_toBottomOf="@id/et_search"
+        app:layout_constraintEnd_toEndOf="@id/et_search"/>
     <ImageView
         android:id="@+id/iv"
         android:layout_width="wrap_content"

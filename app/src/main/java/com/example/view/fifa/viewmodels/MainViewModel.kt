@@ -15,7 +15,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 @HiltViewModel
-class MainActivityViewModel @Inject constructor(
+class MainViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
 
@@ -32,10 +32,6 @@ class MainActivityViewModel @Inject constructor(
         get() = _matchDTOList
 
 
-//
-//    private val _matchIdDTO = MutableLiveData<MatchIdDTO>()
-//    val matchIdDTO: LiveData<MatchIdDTO>
-//        get() = _matchIdDTO
 
     fun requestUserInfo(nickname: String) {
         repository.requestUserInfo(nickname)
@@ -82,8 +78,6 @@ class MainActivityViewModel @Inject constructor(
                 _matchDTOList.postValue(it)
             }).dispose()
     }
-
-
 
     fun requestMaxDivision(accessid: String) {
 

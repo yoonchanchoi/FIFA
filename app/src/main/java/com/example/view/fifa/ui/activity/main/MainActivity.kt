@@ -9,7 +9,6 @@ import android.os.Message
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +16,7 @@ import androidx.core.content.ContextCompat
 import com.example.searchstudy.util.Pref
 import com.example.view.fifa.R
 import com.example.view.fifa.databinding.ActivityMainBinding
-import com.example.view.fifa.ui.activity.SearchSubActivity
+import com.example.view.fifa.ui.activity.searchsubactivity.SearchSubActivity
 import com.example.view.fifa.viewmodels.MainActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
