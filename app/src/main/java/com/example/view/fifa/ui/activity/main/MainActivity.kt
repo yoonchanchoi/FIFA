@@ -17,7 +17,6 @@ import com.example.searchstudy.util.Pref
 import com.example.view.fifa.R
 import com.example.view.fifa.databinding.ActivityMainBinding
 import com.example.view.fifa.ui.activity.searchsubactivity.SearchSubActivity
-import com.example.view.fifa.viewmodels.MainActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -28,8 +27,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var pref: Pref
 
     private lateinit var binding : ActivityMainBinding
-
-    private val viewModel: MainActivityViewModel by viewModels()
 
     private val arrayImage : ArrayList<Drawable> = arrayListOf()
 
@@ -54,7 +51,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun init() {
         Log.e("cyc","시작 체크")
-        viewModel.requestUserInfo("쏘레클")
         val appbar = supportActionBar
         appbar?.let { it.title = "FIFA"}
         initData()

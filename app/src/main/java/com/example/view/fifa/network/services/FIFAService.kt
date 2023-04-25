@@ -21,23 +21,23 @@ interface FIFAService {
         @Query("nickname") nicknamee: String
     ): Single<UserDTO>
 
-    @GET("matches/{matchid}")
+    @GET("matches/{matchId}")
     fun requestMatchInfo(
-        @Path("matchid") matchid: String
+        @Path("matchId") matchId: String
     ): Observable<MatchDTO>
 
-    @GET("users/{accessid}/matches")
+    @GET("users/{accessId}/matches")
     fun  requestOfficialMatchId(
-        @Path("accessid") accessid : String,
-        @Query("matchtype") matchtype : Int,
+        @Path("accessId") accessId : String,
+        @Query("matchType") matchType : Int,
         @Query("offset") offset : Int,
         @Query("limit") limit : Int,
-    ) : Single<List<String>>
+    ) : Single<ArrayList<String>>
 
-    @GET("users/{accessid}/maxdivision")
+    @GET("users/{accessId}/maxdivision")
     fun  requestMaxDivision(
-        @Path("accessid") accessid: String
-    ): Single<List<MaxDivisionDTO>>
+        @Path("accessId") accessId: String
+    ): Single<ArrayList<MaxDivisionDTO>>
 
 
 }

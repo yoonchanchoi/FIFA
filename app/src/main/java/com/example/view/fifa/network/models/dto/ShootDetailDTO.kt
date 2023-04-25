@@ -39,7 +39,7 @@ data class ShootDetailDTO(
 
     @SerializedName("spIdType")
     @Expose
-    val spIdType: Int,
+    val spIdType: Boolean,
 
     @SerializedName("assist")
     @Expose

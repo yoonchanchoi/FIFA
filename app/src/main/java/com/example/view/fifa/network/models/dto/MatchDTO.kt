@@ -8,7 +8,7 @@ data class MatchDTO(
     @Expose
     val matchId : String,
 
-    @SerializedName("matchId")
+    @SerializedName("matchDate")
     @Expose
     val matchDate : String,
 

@@ -15,12 +15,12 @@ class Repository @Inject constructor(private val service: FIFAService) {
     fun requestUserInfo(nickname : String): Single<UserDTO> =
         service.requestUserInfo(nickname)
 
-    fun requestMatchInfo(matchid: String): Observable<MatchDTO> =
-        service.requestMatchInfo(matchid)
+    fun requestMatchInfo(matchId: String): Observable<MatchDTO> =
+        service.requestMatchInfo(matchId)
 
-    fun requestOfficialMatchId(accessid : String): Single<List<String>> =
-        service.requestOfficialMatchId(accessid, matchtype = 50, offset = 0, limit = 20)
+    fun requestOfficialMatchId(accessId : String): Single<ArrayList<String>> =
+        service.requestOfficialMatchId(accessId, matchType = 50, offset = 0, limit = 20)
 
-    fun requestMaxDivision( accessid: String): Single<List<MaxDivisionDTO>> =
-        service.requestMaxDivision(accessid)
+    fun requestMaxDivision(accessId: String): Single<ArrayList<MaxDivisionDTO>> =
+        service.requestMaxDivision(accessId)
 }

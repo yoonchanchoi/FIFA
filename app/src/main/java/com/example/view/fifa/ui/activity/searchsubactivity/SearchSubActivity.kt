@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
@@ -11,15 +12,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.view.fifa.databinding.ActivityMainBinding
 import com.example.view.fifa.databinding.ActivitySearchSubBinding
 import com.example.view.fifa.network.models.dto.MatchDTO
-import com.example.view.fifa.viewmodels.MainViewModel
+import com.example.view.fifa.viewmodels.SearchSubViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchSubActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySearchSubBinding
 
     private lateinit var searchResultAdapter: SearchResultAdapter
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: SearchSubViewModel by viewModels()
 
     private lateinit var matchDtoList: ArrayList<MatchDTO>
 
@@ -66,6 +69,7 @@ class SearchSubActivity : AppCompatActivity() {
             this.setOnEditorActionListener { textView, actionId, keyEvent ->
                 when (actionId) {
                     EditorInfo.IME_ACTION_SEARCH -> {
+                        Log.e("cyc","검색 클릭시")
                         viewModel.requestUserInfo(textView.text.toString())
                         true
                     }
@@ -83,7 +87,8 @@ class SearchSubActivity : AppCompatActivity() {
 
     private fun initObserve() {
         viewModel.matchDTOList.observe(this){
-
+            Log.e("cyc","SearchSubActivity--->observe")
+            searchResultAdapter.setSearchResult(it)
         }
     }
 
