@@ -61,8 +61,17 @@ class SearchSubViewModel @Inject constructor(
         repository.requestOfficialMatchId(accessid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+//            .concatMap {
+//                matchIdDto.forEach{
+//                    Log.e("cyc","index--->${matchIdDto.indexOf(it)}")
+//                    Log.e("cyc","machId---it-->$it")
+//                    requestMatchInfo(it)
+//                }
+//                matchIdDto
+//            }
             .map { matchIdDto ->
                 matchIdDto.forEach{
+                    Log.e("cyc","index--->${matchIdDto.indexOf(it)}")
                     Log.e("cyc","machId---it-->$it")
                     requestMatchInfo(it)
                 }
