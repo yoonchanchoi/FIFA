@@ -88,6 +88,7 @@ class SearchSubActivity : AppCompatActivity() {
     private fun initObserve() {
         viewModel.matchDTOList.observe(this){
             Log.e("cyc","SearchSubActivity--->observe")
+            Log.e("cyc","SearchSubActivity--size-->${it.size}")
             searchResultAdapter.setSearchResult(it)
         }
     }

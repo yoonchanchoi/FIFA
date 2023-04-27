@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.view.fifa.network.models.dto.MatchDTO
-import com.example.view.fifa.network.models.dto.MatchIdDTO
 import com.example.view.fifa.network.models.dto.UserDTO
 import com.example.view.fifa.network.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +15,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
+
 
 @HiltViewModel
 class SearchSubViewModel @Inject constructor(
@@ -91,7 +91,8 @@ class SearchSubViewModel @Inject constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
-                Log.e("cyc","----뷰모델 matchDtoList---map--")
+                Log.e("cyc","it--->$it")
+//                Log.e("cyc","----뷰모델 matchDtoList---map--")
 //                val arrays: ArrayList<MatchDTO> = ((_matchDTOList.value ?: emptyList()) + it) as ArrayList<MatchDTO>
 //                return@map arrays
                 val list = _matchDTOList.value ?: emptyList()
@@ -113,6 +114,7 @@ class SearchSubViewModel @Inject constructor(
 
 
     private fun Disposable.addToDisposables(): Disposable = addTo(disposables)
+
 
 }
 
