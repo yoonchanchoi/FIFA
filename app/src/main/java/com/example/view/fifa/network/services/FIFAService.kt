@@ -32,7 +32,7 @@ interface FIFAService {
         @Query("matchType") matchType : Int,
         @Query("offset") offset : Int,
         @Query("limit") limit : Int,
-    ) : Single<ArrayList<String>>
+    ) : Observable<ArrayList<String>>
 
     @GET("users/{accessId}/maxdivision")
     fun  requestMaxDivision(
