@@ -9,6 +9,7 @@ import com.example.view.fifa.network.models.dto.MatchDTO
 import com.example.view.fifa.network.models.dto.UserDTO
 import com.example.view.fifa.network.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -61,30 +62,14 @@ class SearchSubViewModel @Inject constructor(
         repository.requestOfficialMatchId(accessid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-
-//            .concatMap { matchIdDto ->
-//                matchIdDto.forEach{
-//                    requestMatchInfo(it)
-//                }
-//                matchIdDto
-//            }
-//            .concatMap {
-//                matchIdDto.forEach{
-//                    Log.e("cyc","index--->${matchIdDto.indexOf(it)}")
-//                    Log.e("cyc","machId---it-->$it")
-//                    requestMatchInfo(it)
-//                }
-//                matchIdDto
-//            }
-
-//            .map { matchIdDto ->
-//                matchIdDto.forEach{
-//                    Log.e("cyc","index--->${matchIdDto.indexOf(it)}")
-//                    Log.e("cyc","machId---it-->$it")
-//                    requestMatchInfo(it)
-//                }
-//                matchIdDto
-//            }
+            .map { matchIdDto ->
+                matchIdDto.forEach{
+                    Log.e("cyc","index--->${matchIdDto.indexOf(it)}")
+                    Log.e("cyc","machId---it-->$it")
+                    requestMatchInfo(it)
+                }
+                matchIdDto
+            }
             .subscribe({ matchIdDto ->
                 _arrayMathId.postValue(matchIdDto)
                 Log.e("cyc", "matchIdDto-->$matchIdDto")
@@ -95,22 +80,39 @@ class SearchSubViewModel @Inject constructor(
 
     private fun requestMatchInfo(matchId: String) {
 //        Log.e("cyc","requestMatchInfo")
+        Log.e("cyc","requestMatchInfo-----matchId--->$matchId")
+
         repository.requestMatchInfo(matchId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .map {
+//            .map {
+//                Log.e("cyc","it--->$it")
+////                Log.e("cyc","----뷰모델 matchDtoList---map--")
+////                val arrays: ArrayList<MatchDTO> = ((_matchDTOList.value ?: emptyList()) + it) as ArrayList<MatchDTO>
+////                return@map arrays
+//                val list = _matchDTOList.value ?: emptyList()
+//                val arrayList = ArrayList(list)
+//                arrayList.add(it)
+//                return@map arrayList
+//            }
+            .concatMap { it ->
                 Log.e("cyc","it--->$it")
-//                Log.e("cyc","----뷰모델 matchDtoList---map--")
-//                val arrays: ArrayList<MatchDTO> = ((_matchDTOList.value ?: emptyList()) + it) as ArrayList<MatchDTO>
-//                return@map arrays
                 val list = _matchDTOList.value ?: emptyList()
                 val arrayList = ArrayList(list)
                 arrayList.add(it)
-                return@map arrayList
+                Observable.just(arrayList) // ArrayList를 Observable로 변환합니다.
             }
             .subscribe({
                 Log.e("cyc","----뷰모델 matchDtoList-----")
                 _matchDTOList.postValue(it)
+                Log.e("cyc","----뷰모델 matchDtoList---값!!!!---0---->${_matchDTOList.value!!.get(0)}")
+                Log.e("cyc","----뷰모델 matchDtoList---값!!!!---1---->${_matchDTOList.value!!.get(1)}")
+                Log.e("cyc","----뷰모델 matchDtoList---값!!!!---2---->${_matchDTOList.value!!.get(2)}")
+
+                Log.e("cyc","----뷰모델 matchDtoList---값!!!!---3---->${_matchDTOList.value!!.get(3)}")
+
+                Log.e("cyc","----뷰모델 matchDtoList---값!!!!---4---->${_matchDTOList.value!!.get(4)}")
+
             },{
                 Log.d("cyc", it.message.toString())
             }).addToDisposables()
