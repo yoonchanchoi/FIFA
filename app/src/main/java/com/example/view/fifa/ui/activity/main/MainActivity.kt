@@ -48,8 +48,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 //        setContentView(R.layout.activity_main)
-//        init()
-        initTest()
+        init()
+//        initTest()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -145,41 +145,41 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
         autoScrollStop()
     }
-    fun initTest(){
-
-        val startTime = Date().time
-        val urls = listOf(
-            "https://naver-api-1.com",
-            "https://google-api-2.com",
-            "https://samsung-api-3.com",
-            "https://kakao-api-4.com",
-            "https://line-api-5.com"
-        )
-
-        Flowable.fromIterable(urls)
-            .concatMapEager { result ->
-                request(result).toFlowable()
-            }.subscribe({
-                println("${Date().time - startTime} $it")
-            }, { error ->
-                error.printStackTrace()
-            }, {
-                println("${Date().time - startTime} complete")
-            })
-
-        Thread.sleep(3000L)
-        println("Process finished")
-    }
-
-
-    fun request(url: String): Single<String> {
-        return Single.zip(
-            Single.timer(kotlin.random.Random.nextLong(2000), TimeUnit.MILLISECONDS),
-            Single.just(url),
-            BiFunction<Long, String, String> { _, url ->
-                "$url response"
-            })
-    }
+//    fun initTest(){
+//
+//        val startTime = Date().time
+//        val urls = listOf(
+//            "https://naver-api-1.com",
+//            "https://google-api-2.com",
+//            "https://samsung-api-3.com",
+//            "https://kakao-api-4.com",
+//            "https://line-api-5.com"
+//        )
+//
+//        Flowable.fromIterable(urls)
+//            .concatMapEager { result ->
+//                request(result).toFlowable()
+//            }.subscribe({
+//                println("${Date().time - startTime} $it")
+//            }, { error ->
+//                error.printStackTrace()
+//            }, {
+//                println("${Date().time - startTime} complete")
+//            })
+//
+//        Thread.sleep(3000L)
+//        println("Process finished")
+//    }
+//
+//
+//    fun request(url: String): Single<String> {
+//        return Single.zip(
+//            Single.timer(kotlin.random.Random.nextLong(2000), TimeUnit.MILLISECONDS),
+//            Single.just(url),
+//            BiFunction<Long, String, String> { _, url ->
+//                "$url response"
+//            })
+//    }
 
 
 }

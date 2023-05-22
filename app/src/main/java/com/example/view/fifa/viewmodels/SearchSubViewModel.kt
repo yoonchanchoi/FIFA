@@ -40,21 +40,16 @@ class SearchSubViewModel @Inject constructor(
 
 
     fun requestUserInfo(nickname: String) {
-        Log.e("cyc", "검색 클릭시뷰모델")
         repository.requestUserInfo(nickname)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map { userDto ->
-                Log.e("cyc", "검색클릭 뷰모델 맵")
                 requestMatchId(userDto.accessId)
                 userDto
             }
             .subscribe({ userDto ->
                 _userdto.postValue(userDto)
-                Log.e("cyc", "검색 성공")
-                Log.e("cyc", "items-->$userDto")
             }, {
-                Log.d("cyc", it.message.toString())
             }).addToDisposables()
     }
     fun requestMatchId(accessid: String){
@@ -65,67 +60,52 @@ class SearchSubViewModel @Inject constructor(
                 requestMatchInfo(matchIdDto)
                 matchIdDto
             }
-//            .map { matchIdDto ->
-//                matchIdDto.forEach{
-//                    Log.e("cyc","index--->${matchIdDto.indexOf(it)}")
-//                    Log.e("cyc","machId---it-->$it")
-//                    requestMatchInfo(it)
-//                }
-//                matchIdDto
-//            }
             .subscribe({ matchIdDto ->
                 _arrayMathId.postValue(matchIdDto)
-                Log.e("cyc", "matchIdDto-->$matchIdDto")
             },{
-                Log.d("cyc", it.message.toString())
             }).addToDisposables()
     }
 
     private fun requestMatchInfo(matchIds: ArrayList<String>) {
-//        Log.e("cyc","requestMatchInfo")
-
-        matchIds.forEach {
-            Observable.fromArray(it)
+            Observable.fromIterable(matchIds)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .concatMap {
-                    Observable.just(repository.requestMatchInfo(it)
-                        .map {
-                            Log.e("cyc","it--->$it")
-//                Log.e("cyc","----뷰모델 matchDtoList---map--")
-//                val arrays: ArrayList<MatchDTO> = ((_matchDTOList.value ?: emptyList()) + it) as ArrayList<MatchDTO>
-//                return@map arrays
-                            val list = _matchDTOList.value ?: emptyList()
-                            val arrayList = ArrayList(list)
-                            arrayList.add(it)
-                            return@map arrayList
-                        }
-                        .subscribe({
-                            Log.e("cyc","----뷰모델 matchDtoList-----")
-                            _matchDTOList.postValue(it)
-                            Log.e("cyc","----뷰모델 matchDtoList---값!!!!---0---->${_matchDTOList.value!!.get(0)}")
-                            Log.e("cyc","----뷰모델 matchDtoList---값!!!!---1---->${_matchDTOList.value!!.get(1)}")
-                            Log.e("cyc","----뷰모델 matchDtoList---값!!!!---2---->${_matchDTOList.value!!.get(2)}")
-
-                            Log.e("cyc","----뷰모델 matchDtoList---값!!!!---3---->${_matchDTOList.value!!.get(3)}")
-
-                            Log.e("cyc","----뷰모델 matchDtoList---값!!!!---4---->${_matchDTOList.value!!.get(4)}")
-
-                        },{
-                            Log.d("cyc", it.message.toString())
-                        }).addToDisposables())
+                    repository.requestMatchInfo(it)
                 }
-        }
-        Log.e("cyc","requestMatchInfo-----matchId--->$matchIds")
-//        Observable.fromArray(matchIds)
+
+//        matchIds.forEach {
+//            Observable.fromArray(it)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .concatMap {
+//                    Observable.just(repository.requestMatchInfo(it)
+//                        .subscribe({
+//                            _matchDTOList.postValue(it)
+//                        },{
+//                        }).addToDisposables())
+//                }
+//        }
+
 
     }
 
-//    private fun requestMatchInfo(matchIds: String) {
-////        Log.e("cyc","requestMatchInfo")
-//        Log.e("cyc","requestMatchInfo-----matchId--->$matchId")
-//
-//        repository.requestMatchInfo(matchId)
+    private fun requestMatchInfo(matchIds: String) {
+        repository.requestMatchInfo(matchIds)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+
+            .concatMap { it ->
+                val list = _matchDTOList.value ?: emptyList()
+                val arrayList = ArrayList(list)
+                arrayList.add(it)
+                Observable.just(arrayList) // ArrayList를 Observable로 변환합니다.
+            }
+            .subscribe({
+                _matchDTOList.postValue(it)
+            },{
+            }).addToDisposables()
+    //        repository.requestMatchInfo(matchIds)
 //            .subscribeOn(Schedulers.io())
 //            .observeOn(AndroidSchedulers.mainThread())
 ////            .map {
@@ -159,7 +139,7 @@ class SearchSubViewModel @Inject constructor(
 //            },{
 //                Log.d("cyc", it.message.toString())
 //            }).addToDisposables()
-//    }
+    }
 
     fun requestMaxDivision(accessid: String) {
 
