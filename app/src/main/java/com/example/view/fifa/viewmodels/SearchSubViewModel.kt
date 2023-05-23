@@ -72,7 +72,11 @@ class SearchSubViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .concatMap {
                     repository.requestMatchInfo(it)
+//                    requestMatchInfo(it)
                 }
+                .subscribe({
+                    it.matchInfo
+                })
 
 //        matchIds.forEach {
 //            Observable.fromArray(it)
@@ -90,22 +94,8 @@ class SearchSubViewModel @Inject constructor(
 
     }
 
-    private fun requestMatchInfo(matchIds: String) {
-        repository.requestMatchInfo(matchIds)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-
-            .concatMap { it ->
-                val list = _matchDTOList.value ?: emptyList()
-                val arrayList = ArrayList(list)
-                arrayList.add(it)
-                Observable.just(arrayList) // ArrayList를 Observable로 변환합니다.
-            }
-            .subscribe({
-                _matchDTOList.postValue(it)
-            },{
-            }).addToDisposables()
-    //        repository.requestMatchInfo(matchIds)
+//    private fun requestMatchInfo(matchIds: String) {
+//        repository.requestMatchInfo(matchIds)
 //            .subscribeOn(Schedulers.io())
 //            .observeOn(AndroidSchedulers.mainThread())
 ////            .map {
@@ -126,24 +116,47 @@ class SearchSubViewModel @Inject constructor(
 //                Observable.just(arrayList) // ArrayList를 Observable로 변환합니다.
 //            }
 //            .subscribe({
-//                Log.e("cyc","----뷰모델 matchDtoList-----")
 //                _matchDTOList.postValue(it)
-//                Log.e("cyc","----뷰모델 matchDtoList---값!!!!---0---->${_matchDTOList.value!!.get(0)}")
-//                Log.e("cyc","----뷰모델 matchDtoList---값!!!!---1---->${_matchDTOList.value!!.get(1)}")
-//                Log.e("cyc","----뷰모델 matchDtoList---값!!!!---2---->${_matchDTOList.value!!.get(2)}")
-//
-//                Log.e("cyc","----뷰모델 matchDtoList---값!!!!---3---->${_matchDTOList.value!!.get(3)}")
-//
-//                Log.e("cyc","----뷰모델 matchDtoList---값!!!!---4---->${_matchDTOList.value!!.get(4)}")
 //
 //            },{
-//                Log.d("cyc", it.message.toString())
 //            }).addToDisposables()
-    }
+//    //        repository.requestMatchInfo(matchIds)
+////            .subscribeOn(Schedulers.io())
+////            .observeOn(AndroidSchedulers.mainThread())
+//////            .map {
+//////                Log.e("cyc","it--->$it")
+////////                Log.e("cyc","----뷰모델 matchDtoList---map--")
+////////                val arrays: ArrayList<MatchDTO> = ((_matchDTOList.value ?: emptyList()) + it) as ArrayList<MatchDTO>
+////////                return@map arrays
+//////                val list = _matchDTOList.value ?: emptyList()
+//////                val arrayList = ArrayList(list)
+//////                arrayList.add(it)
+//////                return@map arrayList
+//////            }
+////            .concatMap { it ->
+////                Log.e("cyc","it--->$it")
+////                val list = _matchDTOList.value ?: emptyList()
+////                val arrayList = ArrayList(list)
+////                arrayList.add(it)
+////                Observable.just(arrayList) // ArrayList를 Observable로 변환합니다.
+////            }
+////            .subscribe({
+////                Log.e("cyc","----뷰모델 matchDtoList-----")
+////                _matchDTOList.postValue(it)
+////                Log.e("cyc","----뷰모델 matchDtoList---값!!!!---0---->${_matchDTOList.value!!.get(0)}")
+////                Log.e("cyc","----뷰모델 matchDtoList---값!!!!---1---->${_matchDTOList.value!!.get(1)}")
+////                Log.e("cyc","----뷰모델 matchDtoList---값!!!!---2---->${_matchDTOList.value!!.get(2)}")
+////
+////                Log.e("cyc","----뷰모델 matchDtoList---값!!!!---3---->${_matchDTOList.value!!.get(3)}")
+////
+////                Log.e("cyc","----뷰모델 matchDtoList---값!!!!---4---->${_matchDTOList.value!!.get(4)}")
+////
+////            },{
+////                Log.d("cyc", it.message.toString())
+////            }).addToDisposables()
+//    }
 
-    fun requestMaxDivision(accessid: String) {
 
-    }
 
 
     private fun Disposable.addToDisposables(): Disposable = addTo(disposables)
