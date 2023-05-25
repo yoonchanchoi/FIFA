@@ -67,16 +67,16 @@ class SearchSubViewModel @Inject constructor(
     }
 
     private fun requestMatchInfo(matchIds: ArrayList<String>) {
-            Observable.fromIterable(matchIds)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .concatMap {
-                    repository.requestMatchInfo(it)
-//                    requestMatchInfo(it)
-                }
-                .subscribe({
-                    it.matchInfo
-                })
+//            Observable.fromIterable(matchIds)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .concatMap {
+//                    repository.requestMatchInfo(it)
+////                    requestMatchInfo(it)
+//                }
+//                .subscribe({
+//                    it.matchInfo
+//                })
 
 //        matchIds.forEach {
 //            Observable.fromArray(it)
