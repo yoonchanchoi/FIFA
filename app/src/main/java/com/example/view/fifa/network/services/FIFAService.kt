@@ -22,7 +22,7 @@ interface FIFAService {
     ): Single<UserDTO>
 
     @GET("matches/{matchId}")
-    fun requestMatchInfo(
+    fun requestMatch(
         @Path("matchId") matchId: String
     ): Observable<MatchDTO>
 

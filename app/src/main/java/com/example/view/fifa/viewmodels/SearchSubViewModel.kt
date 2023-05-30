@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.view.fifa.network.models.dto.MatchDTO
+import com.example.view.fifa.network.models.dto.MatchIdDTO
 import com.example.view.fifa.network.models.dto.UserDTO
 import com.example.view.fifa.network.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,9 +30,15 @@ class SearchSubViewModel @Inject constructor(
     val userdto: LiveData<UserDTO>
         get() = _userdto
 
+    private val _matchIdDTO = MutableLiveData<MatchIdDTO>()
+    val matchIdDTO: LiveData<MatchIdDTO>
+        get() = _matchIdDTO
+
     private val _arrayMathId = MutableLiveData<ArrayList<String>>()
     val arrayMathId: LiveData<ArrayList<String>>
         get() = _arrayMathId
+
+
 
     private val _matchDTOList = MutableLiveData<ArrayList<MatchDTO>>()
     val matchDTOList: LiveData<ArrayList<MatchDTO>>
@@ -61,27 +68,30 @@ class SearchSubViewModel @Inject constructor(
                 matchIdDto
             }
             .subscribe({ matchIdDto ->
-                _arrayMathId.postValue(matchIdDto)
+                _matchIdDTO.value?.let {
+                    it.mathId=matchIdDto
+                }
             },{
             }).addToDisposables()
     }
 
     private fun requestMatchInfo(matchIds: ArrayList<String>) {
-//            Observable.fromIterable(matchIds)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .concatMap {
-//                    repository.requestMatchInfo(it)
-////                    requestMatchInfo(it)
-//                }
-//                .subscribe({
-//                    it.matchInfo
-//                })
+            Observable.fromIterable(matchIds)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .concatMap {
+                    repository.requestMatch(it)
+                }
+                .subscribe({
+                    //여기서 받은 MatchDTO를 모아서 라이브데이터에 넣어야되는데 어케해야되나...
+                    _matchDTOList.value
+                })
 
 //        matchIds.forEach {
 //            Observable.fromArray(it)
 //                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
+//                .observeOn(A
+    //                ndroidSchedulers.mainThread())
 //                .concatMap {
 //                    Observable.just(repository.requestMatchInfo(it)
 //                        .subscribe({

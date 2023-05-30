@@ -15,8 +15,8 @@ class Repository @Inject constructor(private val service: FIFAService) {
     fun requestUserInfo(nickname : String): Single<UserDTO> =
         service.requestUserInfo(nickname)
 
-    fun requestMatchInfo(matchId: String): Observable<MatchDTO> =
-        service.requestMatchInfo(matchId)
+    fun requestMatch(matchId: String): Observable<MatchDTO> =
+        service.requestMatch(matchId)
 
 //    fun requestOfficialMatchId(accessId : String): Observable<ArrayList<String>> =
 //        service.requestOfficialMatchId(accessId, matchType = 50, offset = 0, limit = 20)
