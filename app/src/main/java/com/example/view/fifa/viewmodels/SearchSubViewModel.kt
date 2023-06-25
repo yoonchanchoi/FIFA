@@ -40,12 +40,13 @@ class SearchSubViewModel @Inject constructor(
 
 
 
-    private val _matchDTOList = MutableLiveData<ArrayList<MatchDTO>>()
-    val matchDTOList: LiveData<ArrayList<MatchDTO>>
+    private val _matchDTOList = MutableLiveData<List<MatchDTO>>()
+    val matchDTOList: LiveData<List<MatchDTO>>
         get() = _matchDTOList
 
 
 
+    //여기서 부터 rxjava잠금-1
     fun requestUserInfo(nickname: String) {
         repository.requestUserInfo(nickname)
             .subscribeOn(Schedulers.io())
@@ -82,10 +83,16 @@ class SearchSubViewModel @Inject constructor(
                 .concatMap {
                     repository.requestMatch(it)
                 }
-                .subscribe({
-                    //여기서 받은 MatchDTO를 모아서 라이브데이터에 넣어야되는데 어케해야되나...
-                    _matchDTOList.value
-                })
+                .toList()
+                .subscribe(
+                    {
+                        _matchDTOList.postValue(it)
+                     //여기서 받은 MatchDTO를 모아서 라이브데이터에 넣어야되는데 어케해야되나...
+//                    _matchDTOList.value
+                },{
+
+                    }
+                )
 
 //        matchIds.forEach {
 //            Observable.fromArray(it)
@@ -171,6 +178,7 @@ class SearchSubViewModel @Inject constructor(
 
     private fun Disposable.addToDisposables(): Disposable = addTo(disposables)
 
+//    여기까지 rxjava잠금-1
 
 }
 
