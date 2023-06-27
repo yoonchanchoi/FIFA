@@ -12,8 +12,9 @@ import com.example.view.fifa.network.models.dto.MatchInfoDTO
 class SearchResultAdapter : RecyclerView.Adapter<SearchResultViewHolder>(){
     //    private lateinit var arrayImage : ArrayList<Drawable>
 
-//    private lateinit var matchDtoList : List<MatchDTO>
-    private var matchDtoList = mutableListOf<MatchDTO>()
+    private lateinit var matchDtoList : List<MatchDTO>
+//    private var matchDtoList = mutableListOf<MatchDTO>()
+//    private var matchDtoList = mutableListOf<MatchDTO>()
 
 
 
@@ -31,7 +32,7 @@ class SearchResultAdapter : RecyclerView.Adapter<SearchResultViewHolder>(){
         return matchDtoList.size
     }
 
-    fun setSearchResult(matchDtoList: ArrayList<MatchDTO>){
+    fun setSearchResult(matchDtoList: List<MatchDTO>){
 //        this.matchDtoList = matchDtoList
 //        Log.e("cyc","SearchResultAdapter--->setData")
         matchDtoList?.let {

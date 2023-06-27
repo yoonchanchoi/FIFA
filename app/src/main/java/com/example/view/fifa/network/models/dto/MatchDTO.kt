@@ -19,7 +19,4 @@ data class MatchDTO(
     @SerializedName("matchInfo")
     @Expose
     val matchInfo : ArrayList<MatchInfoDTO>
-
-
-
 )

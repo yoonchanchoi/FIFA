@@ -90,7 +90,7 @@ class SearchSubViewModel @Inject constructor(
                      //여기서 받은 MatchDTO를 모아서 라이브데이터에 넣어야되는데 어케해야되나...
 //                    _matchDTOList.value
                 },{
-
+                    Log.e("cyc","_matchDToList에러")
                     }
                 )
 
