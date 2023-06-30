@@ -38,106 +38,95 @@ class SearchSubViewModel @Inject constructor(
     val arrayMathId: LiveData<ArrayList<String>>
         get() = _arrayMathId
 
-
-
-    private val _matchDTOList = MutableLiveData<List<MatchDTO>>()
-    val matchDTOList: LiveData<List<MatchDTO>>
+    private val _matchDTOList = MutableLiveData<ArrayList<MatchDTO>>()
+    val matchDTOList: LiveData<ArrayList<MatchDTO>>
         get() = _matchDTOList
 
 
 
-    //여기서 부터 rxjava잠금-1
-    fun requestUserInfo(nickname: String) {
-        repository.requestUserInfo(nickname)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .map { userDto ->
-                requestMatchId(userDto.accessId)
-                userDto
-            }
-            .subscribe({ userDto ->
-                _userdto.postValue(userDto)
-            }, {
-            }).addToDisposables()
-    }
-    fun requestMatchId(accessid: String){
-        repository.requestOfficialMatchId(accessid)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .map{ matchIdDto ->
-                requestMatchInfo(matchIdDto)
-                matchIdDto
-            }
-            .subscribe({ matchIdDto ->
-                _matchIdDTO.value?.let {
-                    it.mathId=matchIdDto
-                }
-            },{
-            }).addToDisposables()
-    }
-
-    private fun requestMatchInfo(matchIds: ArrayList<String>) {
-            Observable.fromIterable(matchIds)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .concatMap {
-                    repository.requestMatch(it)
-                }
-                .toList()
-                .subscribe(
-                    {
-                        _matchDTOList.postValue(it)
-                     //여기서 받은 MatchDTO를 모아서 라이브데이터에 넣어야되는데 어케해야되나...
-//                    _matchDTOList.value
-                },{
-                    Log.e("cyc","_matchDToList에러")
-                    }
-                )
-
-//        matchIds.forEach {
-//            Observable.fromArray(it)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(A
-    //                ndroidSchedulers.mainThread())
-//                .concatMap {
-//                    Observable.just(repository.requestMatchInfo(it)
-//                        .subscribe({
-//                            _matchDTOList.postValue(it)
-//                        },{
-//                        }).addToDisposables())
-//                }
-//        }
-
+    fun requestUserInfo(nickname: String){
 
     }
 
-//    private fun requestMatchInfo(matchIds: String) {
-//        repository.requestMatchInfo(matchIds)
+//-------------------------------------------------------------------------------------
+
+//    //여기서 부터 rxjava잠금-1
+//
+//    private val _matchDTOList = MutableLiveData<List<MatchDTO>>()
+//    val matchDTOList: LiveData<List<MatchDTO>>
+//        get() = _matchDTOList
+//
+//
+//
+//
+//
+//
+//    fun requestUserInfo(nickname: String) {
+//        repository.requestUserInfo(nickname)
 //            .subscribeOn(Schedulers.io())
 //            .observeOn(AndroidSchedulers.mainThread())
-////            .map {
-////                Log.e("cyc","it--->$it")
-//////                Log.e("cyc","----뷰모델 matchDtoList---map--")
-//////                val arrays: ArrayList<MatchDTO> = ((_matchDTOList.value ?: emptyList()) + it) as ArrayList<MatchDTO>
-//////                return@map arrays
-////                val list = _matchDTOList.value ?: emptyList()
-////                val arrayList = ArrayList(list)
-////                arrayList.add(it)
-////                return@map arrayList
-////            }
-//            .concatMap { it ->
-//                Log.e("cyc","it--->$it")
-//                val list = _matchDTOList.value ?: emptyList()
-//                val arrayList = ArrayList(list)
-//                arrayList.add(it)
-//                Observable.just(arrayList) // ArrayList를 Observable로 변환합니다.
+//            .map { userDto ->
+//                requestMatchId(userDto.accessId)
+//                userDto
 //            }
-//            .subscribe({
-//                _matchDTOList.postValue(it)
-//
+//            .subscribe({ userDto ->
+//                _userdto.postValue(userDto)
+//            }, {
+//            }).addToDisposables()
+//    }
+//    fun requestMatchId(accessid: String){
+//        repository.requestOfficialMatchId(accessid)
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .map{ matchIdDto ->
+//                requestMatchInfo(matchIdDto)
+//                matchIdDto
+//            }
+//            .subscribe({ matchIdDto ->
+//                _matchIdDTO.value?.let {
+//                    it.mathId=matchIdDto
+//                }
 //            },{
 //            }).addToDisposables()
-//    //        repository.requestMatchInfo(matchIds)
+//    }
+//
+//    private fun requestMatchInfo(matchIds: ArrayList<String>) {
+//            Observable.fromIterable(matchIds)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .concatMap {
+//                    repository.requestMatch(it)
+//                }
+//                .toList()
+//                .subscribe(
+//                    {
+//                        _matchDTOList.postValue(it)
+//                     //여기서 받은 MatchDTO를 모아서 라이브데이터에 넣어야되는데 어케해야되나...
+////                    _matchDTOList.value
+//                },{
+//                    Log.e("cyc","_matchDToList에러")
+//                    }
+//                )
+//
+////        matchIds.forEach {
+////            Observable.fromArray(it)
+////                .subscribeOn(Schedulers.io())
+////                .observeOn(A
+//    //                ndroidSchedulers.mainThread())
+////                .concatMap {
+////                    Observable.just(repository.requestMatchInfo(it)
+////                        .subscribe({
+////                            _matchDTOList.postValue(it)
+////                        },{
+////                        }).addToDisposables())
+////                }
+////        }
+//
+//
+//    }
+//
+////    private fun requestMatchInfo(matchIds: String) {
+////        repository.requestMatchInfo(matchIds)
 ////            .subscribeOn(Schedulers.io())
 ////            .observeOn(AndroidSchedulers.mainThread())
 //////            .map {
@@ -158,27 +147,55 @@ class SearchSubViewModel @Inject constructor(
 ////                Observable.just(arrayList) // ArrayList를 Observable로 변환합니다.
 ////            }
 ////            .subscribe({
-////                Log.e("cyc","----뷰모델 matchDtoList-----")
 ////                _matchDTOList.postValue(it)
-////                Log.e("cyc","----뷰모델 matchDtoList---값!!!!---0---->${_matchDTOList.value!!.get(0)}")
-////                Log.e("cyc","----뷰모델 matchDtoList---값!!!!---1---->${_matchDTOList.value!!.get(1)}")
-////                Log.e("cyc","----뷰모델 matchDtoList---값!!!!---2---->${_matchDTOList.value!!.get(2)}")
-////
-////                Log.e("cyc","----뷰모델 matchDtoList---값!!!!---3---->${_matchDTOList.value!!.get(3)}")
-////
-////                Log.e("cyc","----뷰모델 matchDtoList---값!!!!---4---->${_matchDTOList.value!!.get(4)}")
 ////
 ////            },{
-////                Log.d("cyc", it.message.toString())
 ////            }).addToDisposables()
-//    }
+////    //        repository.requestMatchInfo(matchIds)
+//////            .subscribeOn(Schedulers.io())
+//////            .observeOn(AndroidSchedulers.mainThread())
+////////            .map {
+////////                Log.e("cyc","it--->$it")
+//////////                Log.e("cyc","----뷰모델 matchDtoList---map--")
+//////////                val arrays: ArrayList<MatchDTO> = ((_matchDTOList.value ?: emptyList()) + it) as ArrayList<MatchDTO>
+//////////                return@map arrays
+////////                val list = _matchDTOList.value ?: emptyList()
+////////                val arrayList = ArrayList(list)
+////////                arrayList.add(it)
+////////                return@map arrayList
+////////            }
+//////            .concatMap { it ->
+//////                Log.e("cyc","it--->$it")
+//////                val list = _matchDTOList.value ?: emptyList()
+//////                val arrayList = ArrayList(list)
+//////                arrayList.add(it)
+//////                Observable.just(arrayList) // ArrayList를 Observable로 변환합니다.
+//////            }
+//////            .subscribe({
+//////                Log.e("cyc","----뷰모델 matchDtoList-----")
+//////                _matchDTOList.postValue(it)
+//////                Log.e("cyc","----뷰모델 matchDtoList---값!!!!---0---->${_matchDTOList.value!!.get(0)}")
+//////                Log.e("cyc","----뷰모델 matchDtoList---값!!!!---1---->${_matchDTOList.value!!.get(1)}")
+//////                Log.e("cyc","----뷰모델 matchDtoList---값!!!!---2---->${_matchDTOList.value!!.get(2)}")
+//////
+//////                Log.e("cyc","----뷰모델 matchDtoList---값!!!!---3---->${_matchDTOList.value!!.get(3)}")
+//////
+//////                Log.e("cyc","----뷰모델 matchDtoList---값!!!!---4---->${_matchDTOList.value!!.get(4)}")
+//////
+//////            },{
+//////                Log.d("cyc", it.message.toString())
+//////            }).addToDisposables()
+////    }
+//
+//
+//
+//
+//    private fun Disposable.addToDisposables(): Disposable = addTo(disposables)
+//
+////    여기까지 rxjava잠금-1
 
 
-
-
-    private fun Disposable.addToDisposables(): Disposable = addTo(disposables)
-
-//    여기까지 rxjava잠금-1
+//-------------------------------------------------------------------------------------
 
 }
 

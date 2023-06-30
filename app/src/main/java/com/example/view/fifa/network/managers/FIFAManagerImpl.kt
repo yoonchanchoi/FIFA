@@ -6,12 +6,17 @@ import com.example.view.fifa.network.models.dto.MatchDTO
 import com.example.view.fifa.network.models.dto.MaxDivisionDTO
 import com.example.view.fifa.network.models.dto.UserDTO
 import retrofit2.Call
+import retrofit2.Callback
 import javax.inject.Inject
 
 
 
 
-//class FIFAManagerImpl @Inject constructor(private val service: FIFAService) : FIFAManager {
+class FIFAManagerImpl @Inject constructor(private val service: FIFAService) : FIFAManager {
+
+////-------------------------------------------------------------------------------------
+////    //여기서 부터 rxjava잠금-1
+//
 ////    override fun requestTest(): Call<FIFAResponse> =
 ////        service.requestTest()
 //
@@ -26,7 +31,27 @@ import javax.inject.Inject
 //
 //    override fun requestMaxDivision( accessid: String): Single<List<MaxDivisionDTO>> =
 //        service.requestMaxDivision(accessid)
-//}
+//
+//
+////    여기까지 rxjava잠금-1
+////-------------------------------------------------------------------------------------
+
+    override fun requestUserInfo(nickname : String): Call<UserDTO> =
+        service.requestUserInfo(nickname)
+
+    override fun requestMatchInfo(matchid: String): Call<MatchDTO> =
+        service.requestMatch(matchid)
+
+    override fun requestOfficialMatchId(accessid : String, matchtype : Int, offset : Int, limit : Int ): Call<ArrayList<String>> =
+        service.requestOfficialMatchId(accessid, matchtype, offset, limit)
+
+    override fun requestMaxDivision( accessid: String): Call<ArrayList<MaxDivisionDTO>> =
+        service.requestMaxDivision(accessid)
+
+}
+
+
+
 
 
 
