@@ -16,6 +16,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import javax.inject.Inject
 
 
@@ -45,7 +48,17 @@ class SearchSubViewModel @Inject constructor(
 
 
     fun requestUserInfo(nickname: String){
+       val result = repository.requestUserInfo(nickname)
+        result.enqueue(object : Callback<UserDTO>{
+            override fun onResponse(call: Call<UserDTO>, response: Response<UserDTO>) {
+                TODO("Not yet implemented")
+            }
 
+            override fun onFailure(call: Call<UserDTO>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
 //-------------------------------------------------------------------------------------
