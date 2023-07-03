@@ -39,11 +39,13 @@ class FIFAManagerImpl @Inject constructor(private val service: FIFAService) : FI
     override fun requestUserInfo(nickname : String): Call<UserDTO> =
         service.requestUserInfo(nickname)
 
-    override fun requestMatchInfo(matchid: String): Call<MatchDTO> =
-        service.requestMatch(matchid)
+
 
     override fun requestOfficialMatchId(accessid : String, matchtype : Int, offset : Int, limit : Int ): Call<ArrayList<String>> =
         service.requestOfficialMatchId(accessid, matchtype, offset, limit)
+
+    override fun requestMatchInfo(matchid: String): Call<MatchDTO> =
+        service.requestMatchInfo(matchid)
 
     override fun requestMaxDivision( accessid: String): Call<ArrayList<MaxDivisionDTO>> =
         service.requestMaxDivision(accessid)

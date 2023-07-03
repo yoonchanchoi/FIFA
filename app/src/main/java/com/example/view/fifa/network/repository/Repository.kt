@@ -41,11 +41,13 @@ class Repository @Inject constructor(private val service: FIFAService) {
     fun requestUserInfo(nickname : String): Call<UserDTO> =
         service.requestUserInfo(nickname)
 
-    fun requestMatch(matchId: String): Call<MatchDTO> =
-        service.requestMatch(matchId)
-
     fun requestOfficialMatchId(accessId : String): Call<ArrayList<String>> =
         service.requestOfficialMatchId(accessId, matchType = 50, offset = 0, limit = 20)
+
+
+    fun requestMatchInfo(matchId: String): Call<MatchDTO> =
+        service.requestMatchInfo(matchId)
+
 
     fun requestMaxDivision(accessId: String): Call<ArrayList<MaxDivisionDTO>> =
         service.requestMaxDivision(accessId)

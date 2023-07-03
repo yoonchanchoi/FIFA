@@ -27,7 +27,7 @@ class SearchSubViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
 
-    private val disposables by lazy { CompositeDisposable() }
+
 
     private val _userdto = MutableLiveData<UserDTO>()
     val userdto: LiveData<UserDTO>
@@ -46,23 +46,89 @@ class SearchSubViewModel @Inject constructor(
         get() = _matchDTOList
 
 
-
     fun requestUserInfo(nickname: String){
        val result = repository.requestUserInfo(nickname)
         result.enqueue(object : Callback<UserDTO>{
             override fun onResponse(call: Call<UserDTO>, response: Response<UserDTO>) {
-                TODO("Not yet implemented")
+                if(response.isSuccessful) {
+                    response.body()?.let {
+                        requestMatchId(it.accessId)
+                        Log.e("cyc", "성공")
+                    }
+                }else{
+                    Log.e("cyc", "카페-통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
+
+                }
+
             }
 
             override fun onFailure(call: Call<UserDTO>, t: Throwable) {
+                Log.e("cyc", "카페-통신실패 (인터넷 연결의 문제, 예외발생)")
+
+            }
+        })
+    }
+
+    fun requestMatchId(accessId: String){
+        val result = repository.requestOfficialMatchId(accessId)
+        result.enqueue(object : Callback<ArrayList<String>>{
+            override fun onResponse(
+                call: Call<ArrayList<String>>,
+                response: Response<ArrayList<String>>
+            ) {
+                if(response.isSuccessful){
+                    response.body()?.let{
+                        _arrayMathId.postValue(it)
+                    }
+
+
+                }else{
+                    Log.e("cyc", "카페-통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
+                }
+            }
+
+            override fun onFailure(call: Call<ArrayList<String>>, t: Throwable) {
+                Log.e("cyc", "카페-통신실패 (인터넷 연결의 문제, 예외발생)")
+            }
+
+        })
+    }
+
+    fun requestMatchInfo(matchId : String){
+        val result = repository.requestMatchInfo(matchId)
+        result.enqueue(object : Callback<MatchDTO>{
+            override fun onResponse(call: Call<MatchDTO>, response: Response<MatchDTO>) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onFailure(call: Call<MatchDTO>, t: Throwable) {
                 TODO("Not yet implemented")
             }
 
         })
     }
 
-//-------------------------------------------------------------------------------------
 
+//-------------------------------------------------------------------------------------
+//
+//    private val disposables by lazy { CompositeDisposable() }
+//
+//    private val _userdto = MutableLiveData<UserDTO>()
+//    val userdto: LiveData<UserDTO>
+//        get() = _userdto
+//
+//    private val _matchIdDTO = MutableLiveData<MatchIdDTO>()
+//    val matchIdDTO: LiveData<MatchIdDTO>
+//        get() = _matchIdDTO
+//
+//    private val _arrayMathId = MutableLiveData<ArrayList<String>>()
+//    val arrayMathId: LiveData<ArrayList<String>>
+//        get() = _arrayMathId
+//
+//    private val _matchDTOList = MutableLiveData<ArrayList<MatchDTO>>()
+//    val matchDTOList: LiveData<ArrayList<MatchDTO>>
+//        get() = _matchDTOList
+//
 //    //여기서 부터 rxjava잠금-1
 //
 //    private val _matchDTOList = MutableLiveData<List<MatchDTO>>()

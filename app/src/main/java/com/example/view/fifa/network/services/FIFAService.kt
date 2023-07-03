@@ -65,11 +65,6 @@ interface FIFAService {
         @Query("nickname") nicknamee: String
     ): Call<UserDTO>
 
-    @GET("matches/{matchId}")
-    fun requestMatch(
-        @Path("matchId") matchId: String
-    ): Call<MatchDTO>
-
     @GET("users/{accessId}/matches")
     fun  requestOfficialMatchId(
         @Path("accessId") accessId : String,
@@ -77,6 +72,11 @@ interface FIFAService {
         @Query("offset") offset : Int,
         @Query("limit") limit : Int,
     ) : Call<ArrayList<String>>
+
+    @GET("matches/{matchId}")
+    fun requestMatchInfo(
+        @Path("matchId") matchId: String
+    ): Call<MatchDTO>
     //2196df1b745a7f7e06c234f8
     //6457a174c4fea30485abc654
 
