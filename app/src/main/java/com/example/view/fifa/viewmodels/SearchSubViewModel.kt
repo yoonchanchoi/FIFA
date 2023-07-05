@@ -104,6 +104,7 @@ class SearchSubViewModel @Inject constructor(
                 override fun onResponse(call: Call<MatchDTO>, response: Response<MatchDTO>) {
                     if(response.isSuccessful){
                         response.body()?.let { MatchDTO->
+                            Log.e("cyc", "MatchDTO--->${MatchDTO}")
                             tmpMatchDToList.add(MatchDTO)
                         }
                     }else{
@@ -120,9 +121,18 @@ class SearchSubViewModel @Inject constructor(
                 }
             })
         }
+        Log.e("cyc","")
+        Log.e("cyc","체크상태값------------>${check}")
+        Log.e("cyc","")
 
         //체크
         if(check){
+            tmpMatchDToList.forEach {
+                Log.e("cyc","")
+                Log.e("cyc","MatchDTO-------------------------->${it}")
+                Log.e("cyc","")
+
+            }
             return tmpMatchDToList
         }else{
             Log.e("cyc","매칭 리스트 통신에러")

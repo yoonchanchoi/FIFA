@@ -26,6 +26,11 @@ class SearchSubActivity : AppCompatActivity() {
 
     private lateinit var matchDtoList: ArrayList<MatchDTO>
 
+    private var query = ""  // 검색어
+
+    private var preQuery = "" // 이전 검색어
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -70,7 +75,8 @@ class SearchSubActivity : AppCompatActivity() {
                 when (actionId) {
                     EditorInfo.IME_ACTION_SEARCH -> {
                         Log.e("cyc","검색 클릭시")
-                        viewModel.requestUserInfo(textView.text.toString())
+                        checkWord()
+//                        viewModel.requestUserInfo(textView.text.toString())
                         true
                     }
                     else -> {
@@ -102,6 +108,13 @@ class SearchSubActivity : AppCompatActivity() {
             layoutManager = searchLinearLayoutManager
             adapter = searchResultAdapter
             //            this.scrollToPosition(searchAdapter.itemCount - 1) // 해당 포지션으로 스크롤 이동
+        }
+    }
+    private fun checkWord() {
+        query = binding.etSearch.text.toString()
+        if (preQuery != query && !query.isNullOrBlank()) {
+            preQuery = query
+            viewModel.requestUserInfo(query)
         }
     }
 }
