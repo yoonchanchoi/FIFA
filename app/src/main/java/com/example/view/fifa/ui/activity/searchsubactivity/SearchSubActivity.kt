@@ -31,6 +31,8 @@ class SearchSubActivity : AppCompatActivity() {
     private var preQuery = "" // 이전 검색어
 
 
+    //서브 엑티비티와 main액티비티 개발 목적 다시 표시하기
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
