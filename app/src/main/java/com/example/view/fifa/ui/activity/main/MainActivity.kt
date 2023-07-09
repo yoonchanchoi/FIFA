@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
     // 배너 핸들러
     private val bannerHandler = BannerHandler()
-//    private lateinit var bannerHandler : BannerHandler
+
     //2초마다 자도 배너 스와이프
     private val intervalTime: Long = 2000
 
@@ -47,9 +47,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        setContentView(R.layout.activity_main)
         init()
-//        initTest()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -58,11 +56,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        Log.e("cyc","시작 체크")
         val appbar = supportActionBar
         appbar?.let { it.title = "FIFA"}
         initData()
-        initObserve()
         initListener()
     }
 
@@ -71,22 +67,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initListener() {
-
-        binding.etSearch.setOnFocusChangeListener { view, b ->
-            if(b){
-                val intent = Intent(this, SearchSubActivity::class.java)
-                startActivity(intent)
-                view.clearFocus()
-            }
+        binding.btnSearch.setOnClickListener {
+            val intent = Intent(this, SearchSubActivity::class.java)
+            startActivity(intent)
         }
     }
 
-    private fun initObserve() {
 
-    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        Toast.makeText(this, "FIFA 세팅 중", Toast.LENGTH_SHORT).show()
         return super.onOptionsItemSelected(item)
     }
 
