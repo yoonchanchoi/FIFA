@@ -26,7 +26,7 @@ interface FIFAManager {
 ////-------------------------------------------------------------------------------------
     fun requestUserInfo(nickname: String): Call<UserDTO>
 
-    fun requestOfficialMatchId(accessid : String, matchtype : Int, offset : Int, limit : Int ): Call<ArrayList<String>>
+    fun requestOfficialMatchId(accessid : String): Call<ArrayList<String>>
 
     fun requestMatchInfo(nickname: String): Call<MatchDTO>
 

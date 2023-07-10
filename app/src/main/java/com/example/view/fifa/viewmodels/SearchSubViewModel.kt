@@ -5,10 +5,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.searchstudy.network.managers.FIFAManager
 import com.example.view.fifa.network.models.dto.MatchDTO
 import com.example.view.fifa.network.models.dto.MatchIdDTO
 import com.example.view.fifa.network.models.dto.UserDTO
-import com.example.view.fifa.network.repository.Repository
+//import com.example.view.fifa.network.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -24,7 +25,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchSubViewModel @Inject constructor(
-    private val repository: Repository
+    private val fifaManager: FIFAManager
+//rxjava(용)
+//    private val repository: Repository
 ) : ViewModel() {
 
 
@@ -47,7 +50,7 @@ class SearchSubViewModel @Inject constructor(
 
 
     fun requestUserInfo(nickname: String){
-       val result = repository.requestUserInfo(nickname)
+       val result = fifaManager.requestUserInfo(nickname)
         result.enqueue(object : Callback<UserDTO>{
             override fun onResponse(call: Call<UserDTO>, response: Response<UserDTO>) {
                 if(response.isSuccessful) {
@@ -70,7 +73,7 @@ class SearchSubViewModel @Inject constructor(
     }
 
     fun requestMatchId(accessId: String){
-        val result = repository.requestOfficialMatchId(accessId)
+        val result = fifaManager.requestOfficialMatchId(accessId)
         result.enqueue(object : Callback<ArrayList<String>>{
             override fun onResponse(
                 call: Call<ArrayList<String>>,
@@ -99,7 +102,7 @@ class SearchSubViewModel @Inject constructor(
         val tmpMatchDToList = ArrayList<MatchDTO>()
         var check = true
         matchIds.forEach {
-            val result = repository.requestMatchInfo(it)
+            val result = fifaManager.requestMatchInfo(it)
             result.enqueue(object : Callback<MatchDTO>{
                 override fun onResponse(call: Call<MatchDTO>, response: Response<MatchDTO>) {
                     if(response.isSuccessful){
