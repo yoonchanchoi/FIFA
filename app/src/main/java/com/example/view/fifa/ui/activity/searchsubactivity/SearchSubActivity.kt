@@ -5,13 +5,15 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.view.fifa.databinding.ActivityMainBinding
+import com.example.searchstudy.util.onTextChanged
 import com.example.view.fifa.databinding.ActivitySearchSubBinding
-import com.example.view.fifa.network.models.dto.MatchDTO
 import com.example.view.fifa.viewmodels.SearchSubViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,6 +22,8 @@ class SearchSubActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySearchSubBinding
 
+    private lateinit var searchRecentAdapter: SearchRecentAdapter
+
     private val viewModel: SearchSubViewModel by viewModels()
 
     private var query = ""  // 검색어
@@ -27,14 +31,14 @@ class SearchSubActivity : AppCompatActivity() {
     private var preQuery = "" // 이전 검색어
 
 
+
+
     //서브 엑티비티와 main액티비티 개발 목적 다시 표시하기
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivitySearchSubBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        setContentView(R.layout.activity_search_sub)
         init()
     }
 
@@ -44,18 +48,70 @@ class SearchSubActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-        
+        binding.etSearch.requestFocus()
+        setSearchRecentAdapter()
     }
+
 
     private fun initLisnear() {
+        binding.etSearch.apply {
+            this.onTextChanged { s, start, before, after ->
+                if (binding.etSearch.text.toString().isNotEmpty()) {
+                    binding.btnTextClear.visibility = View.VISIBLE
+                } else {
+                    binding.btnTextClear.visibility = View.INVISIBLE
+                }
+            }
 
+            this.setOnEditorActionListener { textView, actionId, keyEvent ->
+                when (actionId) {
+                    EditorInfo.IME_ACTION_SEARCH -> {
+                        if(textView.text.isNullOrBlank()){
+                            Log.e("cyc","검색 값이 null 이거나 비어있을때 ")
+                            false
+                        }else{
+                            Log.e("cyc","검색 값이 null이 아니고 비어있지 않을때 ")
+                            true
+                        }
+                    }
+                    else -> {
+                        false
+                    }
+                }
+            }
+        }
+
+        binding.btnTextClear.setOnClickListener {
+            binding.etSearch.text.clear()
+        }
+        binding.tvRecentAllDelete.setOnClickListener{
+            //리사이클러뷰의 모든 item삭제
+        }
     }
 
 
-
-
-
+        private fun setSearchRecentAdapter() {
+        searchRecentAdapter = SearchRecentAdapter()
+        val searchLinearLayoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true)
+        binding.rvRecentSearch.apply {
+            layoutManager = searchLinearLayoutManager
+            adapter = searchRecentAdapter
+            //            this.scrollToPosition(searchAdapter.itemCount - 1) // 해당 포지션으로 스크롤 이동
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 //package com.example.view.fifa.ui.activity.searchsubactivity
