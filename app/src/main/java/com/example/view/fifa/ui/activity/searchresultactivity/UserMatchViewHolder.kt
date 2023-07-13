@@ -1,13 +1,10 @@
-package com.example.view.fifa.ui.activity.searchsubactivity
+package com.example.view.fifa.ui.activity.searchresultactivity
 
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
-import com.example.view.fifa.databinding.ItemBannerImageBinding
 import com.example.view.fifa.databinding.ItemUserRecordBinding
 import com.example.view.fifa.network.models.dto.MatchDTO
-import com.example.view.fifa.network.models.dto.MatchInfoDTO
 
-class SearchResultViewHolder(private val binding: ItemUserRecordBinding) : RecyclerView.ViewHolder(binding.root){
+class UserMatchViewHolder(private val binding: ItemUserRecordBinding) : RecyclerView.ViewHolder(binding.root){
 
 
     fun bind(matchDtoList: MatchDTO){

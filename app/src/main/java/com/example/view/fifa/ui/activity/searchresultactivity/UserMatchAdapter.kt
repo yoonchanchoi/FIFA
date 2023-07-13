@@ -1,15 +1,12 @@
-package com.example.view.fifa.ui.activity.searchsubactivity
+package com.example.view.fifa.ui.activity.searchresultactivity
 
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.view.fifa.databinding.ItemUserRecordBinding
 import com.example.view.fifa.network.models.dto.MatchDTO
-import com.example.view.fifa.network.models.dto.MatchInfoDTO
 
-class SearchResultAdapter : RecyclerView.Adapter<SearchResultViewHolder>(){
+class UserMatchAdapter : RecyclerView.Adapter<UserMatchViewHolder>(){
     //    private lateinit var arrayImage : ArrayList<Drawable>
 
     private var matchDtoList : List<MatchDTO> = listOf()
@@ -18,13 +15,13 @@ class SearchResultAdapter : RecyclerView.Adapter<SearchResultViewHolder>(){
 
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserMatchViewHolder {
         val itemBinding =
             ItemUserRecordBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return SearchResultViewHolder(itemBinding)
+        return UserMatchViewHolder(itemBinding)
     }
 
-    override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: UserMatchViewHolder, position: Int) {
         holder.bind(matchDtoList[position])
     }
 
