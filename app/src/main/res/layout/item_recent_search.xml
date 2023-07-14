@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tv_rank"
+        app:layout_constraintBottom_toTopOf="@id/tv_level"
         android:text="유저이름"
         android:textColor="@color/black"
         android:textSize="15dp"
@@ -20,7 +20,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="2dp"/>
     <TextView
-        android:id="@+id/tv_rank"
+        android:id="@+id/tv_level"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="유저 랭크"

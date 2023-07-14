@@ -1,6 +1,8 @@
 package com.example.searchstudy.util
 
 import android.content.SharedPreferences
+import com.example.view.fifa.network.models.dto.UserDTO
+import com.google.gson.Gson
 import javax.inject.Inject
 
 class Pref @Inject constructor(private val pref: SharedPreferences) {
@@ -10,24 +12,24 @@ class Pref @Inject constructor(private val pref: SharedPreferences) {
     //확장함수 사용 방법
 
 
-//    fun saveSearchList(searchList: MutableList<SearchData>) {
-//        val searchListString: String = Gson().toJson(searchList)
-//        val editor: SharedPreferences.Editor = pref.edit()
-//        editor.putString(Constants.KEY_SEARCH, searchListString)
-//        editor.apply()
-//    }
-//
-//    fun getSearchList(): MutableList<SearchData> {
-//        var saveSearchList = ArrayList<SearchData>()
-//        pref.getString(Constants.KEY_SEARCH, "")?.let {
-//            if (it.isNotEmpty()) {
-//                saveSearchList = Gson().fromJson(it, Array<SearchData>::class.java)
-//                    .toMutableList() as ArrayList<SearchData>
-//            }
-//        }
-//        return saveSearchList
-//
-//    }
+    fun saveSearchList(searchList: MutableList<UserDTO>) {
+        val searchListString: String = Gson().toJson(searchList)
+        val editor: SharedPreferences.Editor = pref.edit()
+        editor.putString(Constants.PREF_KEY_SEARCH, searchListString)
+        editor.apply()
+    }
+
+    fun getSearchList(): MutableList<UserDTO> {
+        var saveSearchList = ArrayList<UserDTO>()
+        pref.getString(Constants.PREF_KEY_SEARCH, "")?.let {
+            if (it.isNotEmpty()) {
+                saveSearchList = Gson().fromJson(it, Array<UserDTO>::class.java)
+                    .toMutableList() as ArrayList<UserDTO>
+            }
+        }
+        return saveSearchList
+
+    }
 
     fun putData(key: String, value: Any) {
         when (value) {

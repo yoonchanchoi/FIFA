@@ -48,17 +48,24 @@ class SearchSubViewModel @Inject constructor(
     val matchDTOList: LiveData<ArrayList<MatchDTO>>
         get() = _matchDTOList
 
+    private val _userCheck = MutableLiveData<Boolean>()
+    val userCheck: LiveData<Boolean>
+    get() = _userCheck
+
 
     fun requestUserInfo(nickname: String){
        val result = fifaManager.requestUserInfo(nickname)
         result.enqueue(object : Callback<UserDTO>{
             override fun onResponse(call: Call<UserDTO>, response: Response<UserDTO>) {
                 if(response.isSuccessful) {
+                    _userCheck.postValue(true)
                     response.body()?.let {
+                        _userdto.postValue(it)
                         requestMatchId(it.accessId)
                         Log.e("cyc", "성공")
                     }
                 }else{
+                    _userCheck.postValue(false)
                     Log.e("cyc", "통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
 
                 }
@@ -66,6 +73,7 @@ class SearchSubViewModel @Inject constructor(
             }
 
             override fun onFailure(call: Call<UserDTO>, t: Throwable) {
+                _userCheck.postValue(false)
                 Log.e("cyc", "통신실패 (인터넷 연결의 문제, 예외발생)")
 
             }

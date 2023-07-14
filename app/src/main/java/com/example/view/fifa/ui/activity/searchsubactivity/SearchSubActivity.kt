@@ -12,29 +12,29 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.searchstudy.util.Pref
 import com.example.searchstudy.util.onTextChanged
 import com.example.view.fifa.databinding.ActivitySearchSubBinding
+import com.example.view.fifa.network.models.dto.UserDTO
 import com.example.view.fifa.viewmodels.SearchSubViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SearchSubActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivitySearchSubBinding
+    @Inject
+    lateinit var pref: Pref
 
+    private lateinit var searchDataList: ArrayList<UserDTO>
+    private lateinit var binding: ActivitySearchSubBinding
     private lateinit var searchRecentAdapter: SearchRecentAdapter
 
     private val viewModel: SearchSubViewModel by viewModels()
-
     private var query = ""  // 검색어
-
     private var preQuery = "" // 이전 검색어
 
-
-
-
     //서브 엑티비티와 main액티비티 개발 목적 다시 표시하기
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchSubBinding.inflate(layoutInflater)
@@ -44,14 +44,26 @@ class SearchSubActivity : AppCompatActivity() {
 
     private fun init() {
         initData()
+        initObserve()
         initLisnear()
     }
 
     private fun initData() {
         binding.etSearch.requestFocus()
-        setSearchRecentAdapter()
+        searchDataList = pref.getSearchList() as ArrayList<UserDTO>
+        setSearchRecentAdapter(searchDataList)
     }
 
+    private fun initObserve(){
+        viewModel.userCheck.observe(this){
+            if(it){
+                //받은 값이 ok일때 데이터 추가
+                viewModel.userdto.value?.let { userDto -> searchDataList.add(userDto) }
+            //  검색 후 저장하는데 오류가 안나는지 확인
+            //                pref.saveSearchList()
+            }
+        }
+    }
 
     private fun initLisnear() {
         binding.etSearch.apply {
@@ -66,11 +78,12 @@ class SearchSubActivity : AppCompatActivity() {
             this.setOnEditorActionListener { textView, actionId, keyEvent ->
                 when (actionId) {
                     EditorInfo.IME_ACTION_SEARCH -> {
-                        if(textView.text.isNullOrBlank()){
-                            Log.e("cyc","검색 값이 null 이거나 비어있을때 ")
+                        if (textView.text.isNullOrBlank()) {
+                            Log.e("cyc", "검색 값이 null 이거나 비어있을때 ")
                             false
-                        }else{
-                            Log.e("cyc","검색 값이 null이 아니고 비어있지 않을때 ")
+                        } else {
+                            viewModel.requestUserInfo(textView.text.toString())
+                            Log.e("cyc", "검색 값이 null이 아니고 비어있지 않을때 ")
                             true
                         }
                     }
@@ -84,34 +97,26 @@ class SearchSubActivity : AppCompatActivity() {
         binding.btnTextClear.setOnClickListener {
             binding.etSearch.text.clear()
         }
-        binding.tvRecentAllDelete.setOnClickListener{
+        binding.tvRecentAllDelete.setOnClickListener {
             //리사이클러뷰의 모든 item삭제
         }
     }
 
 
-        private fun setSearchRecentAdapter() {
-        searchRecentAdapter = SearchRecentAdapter()
+    /**
+     * 최근 검색어 어댑터 세팅
+     */
+    private fun setSearchRecentAdapter(searchDataList: ArrayList<UserDTO>) {
+        searchRecentAdapter = SearchRecentAdapter(searchDataList)
         val searchLinearLayoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true)
+        searchLinearLayoutManager.stackFromEnd = true // 키보드 열릴시 recycclerview 스크롤 처리
         binding.rvRecentSearch.apply {
             layoutManager = searchLinearLayoutManager
             adapter = searchRecentAdapter
-            //            this.scrollToPosition(searchAdapter.itemCount - 1) // 해당 포지션으로 스크롤 이동
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 //package com.example.view.fifa.ui.activity.searchsubactivity
