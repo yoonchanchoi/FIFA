@@ -1,5 +1,6 @@
 package com.example.view.fifa.ui.activity.searchsubactivity
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -11,6 +12,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.searchstudy.util.Pref
 import com.example.searchstudy.util.onTextChanged
@@ -58,9 +60,10 @@ class SearchSubActivity : AppCompatActivity() {
         viewModel.userCheck.observe(this){
             if(it){
                 //받은 값이 ok일때 데이터 추가
-                viewModel.userdto.value?.let { userDto -> searchDataList.add(userDto) }
+                viewModel.userdto.value?.let { userDto ->
+                    saveSearchData(userDto)
+                }
             //  검색 후 저장하는데 오류가 안나는지 확인
-            //                pref.saveSearchList()
             }
         }
     }
@@ -98,7 +101,11 @@ class SearchSubActivity : AppCompatActivity() {
             binding.etSearch.text.clear()
         }
         binding.tvRecentAllDelete.setOnClickListener {
-            //리사이클러뷰의 모든 item삭제
+            searchDataList.clear()
+            pref.clear()
+            searchRecentAdapter.notifyDataSetChanged()
+            // 최근 기록 전체 삭제 후 보여줄 뷰
+//            checkSearchTextData()
         }
     }
 
@@ -116,6 +123,36 @@ class SearchSubActivity : AppCompatActivity() {
             adapter = searchRecentAdapter
         }
     }
+
+
+    /**
+     * 최근검색어 preference에 저장
+     */
+    private fun saveSearchData(userDTO: UserDTO){
+        //버전 차이에 대한 생각 고민 중
+        //같은 검색일경우 삭제
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            searchDataList.removeIf {
+                it.nickname == userDTO.nickname
+            }
+        }else{
+            searchDataList.forEach{
+                if(it.nickname == userDTO.nickname){
+                    searchDataList.remove(it)
+                }
+            }
+        }
+
+        this.searchDataList.add(userDTO)
+
+        if (searchDataList.size > 10) {
+            searchDataList.removeAt(0)
+        }
+
+        // 기존 데이터에 덮어쓰기
+        pref.saveSearchList(this.searchDataList)
+    }
+
 }
 
 
