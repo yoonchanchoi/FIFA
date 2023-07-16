@@ -3,16 +3,10 @@ package com.example.view.fifa.ui.activity.searchsubactivity
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
-import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.searchstudy.util.Pref
 import com.example.searchstudy.util.onTextChanged
@@ -23,14 +17,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SearchSubActivity : AppCompatActivity() {
+class SearchSubActivity : AppCompatActivity(),RecentSearchRecyclerListener {
 
     @Inject
     lateinit var pref: Pref
 
     private lateinit var searchDataList: ArrayList<UserDTO>
     private lateinit var binding: ActivitySearchSubBinding
-    private lateinit var searchRecentAdapter: SearchRecentAdapter
+    private lateinit var searchRecentAdapter: RecentSearchAdapter
 
     private val viewModel: SearchSubViewModel by viewModels()
     private var query = ""  // 검색어
@@ -114,7 +108,7 @@ class SearchSubActivity : AppCompatActivity() {
      * 최근 검색어 어댑터 세팅
      */
     private fun setSearchRecentAdapter(searchDataList: ArrayList<UserDTO>) {
-        searchRecentAdapter = SearchRecentAdapter(searchDataList)
+        searchRecentAdapter = RecentSearchAdapter(this,searchDataList)
         val searchLinearLayoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true)
         searchLinearLayoutManager.stackFromEnd = true // 키보드 열릴시 recycclerview 스크롤 처리
@@ -151,6 +145,19 @@ class SearchSubActivity : AppCompatActivity() {
 
         // 기존 데이터에 덮어쓰기
         pref.saveSearchList(this.searchDataList)
+    }
+
+    /**
+     * 아이템 삭제
+     */
+    override fun onItemDelete(position: Int) {
+        searchDataList.removeAt(position)
+        pref.saveSearchList(searchDataList)
+        searchRecentAdapter.notifyDataSetChanged()
+    }
+
+    override fun onItemClick(position: Int) {
+        TODO("Not yet implemented")
     }
 
 }
