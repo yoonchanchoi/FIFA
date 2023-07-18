@@ -58,9 +58,9 @@ class SearchSubViewModel @Inject constructor(
         result.enqueue(object : Callback<UserDTO>{
             override fun onResponse(call: Call<UserDTO>, response: Response<UserDTO>) {
                 if(response.isSuccessful) {
-                    _userCheck.postValue(true)
                     response.body()?.let {
                         _userdto.postValue(it)
+                        _userCheck.postValue(true)
                         requestMatchId(it.accessId)
                         Log.e("cyc", "성공")
                     }
@@ -107,7 +107,7 @@ class SearchSubViewModel @Inject constructor(
     }
 
     fun requestMatchInfo(matchIds : ArrayList<String>) : ArrayList<MatchDTO>{
-        val tmpMatchDToList = ArrayList<MatchDTO>()
+        var tmpMatchDToList = ArrayList<MatchDTO>()
         var check = true
         matchIds.forEach {
             val result = fifaManager.requestMatchInfo(it)
@@ -115,34 +115,27 @@ class SearchSubViewModel @Inject constructor(
                 override fun onResponse(call: Call<MatchDTO>, response: Response<MatchDTO>) {
                     if(response.isSuccessful){
                         response.body()?.let { MatchDTO->
-                            Log.e("cyc", "MatchDTO--->${MatchDTO}")
                             tmpMatchDToList.add(MatchDTO)
+                            Log.e("cyc","onResponse안쪽---tmpMatchDToList---->${tmpMatchDToList}")
+                            Log.e("cyc", "tmpMatchDToList.add(MatchDTO)추가")
                         }
                     }else{
                         Log.e("cyc", "통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
-
                         check=false
                     }
                 }
-
                 override fun onFailure(call: Call<MatchDTO>, t: Throwable) {
                     check=false
                     Log.e("cyc", "통신실패 (인터넷 연결의 문제, 예외발생)")
-
                 }
             })
         }
-        Log.e("cyc","")
-        Log.e("cyc","체크상태값------------>${check}")
-        Log.e("cyc","")
-
-        //체크
         if(check){
             tmpMatchDToList.forEach {
+                Log.e("cyc","돌고 있는것인가?????????????????")
                 Log.e("cyc","")
-                Log.e("cyc","MatchDTO-------------------------->${it}")
+                Log.e("cyc","tmpMatchDToList의-----matchDto----->${it}")
                 Log.e("cyc","")
-
             }
             return tmpMatchDToList
         }else{
@@ -150,18 +143,6 @@ class SearchSubViewModel @Inject constructor(
             throw java.lang.Exception()
             return tmpMatchDToList
         }
-
-        //        val result = repository.requestMatchInfo(matchIds)
-//        result.enqueue(object : Callback<MatchDTO>{
-//            override fun onResponse(call: Call<MatchDTO>, response: Response<MatchDTO>) {
-//                TODO("Not yet implemented")
-//            }
-//
-//            override fun onFailure(call: Call<MatchDTO>, t: Throwable) {
-//                TODO("Not yet implemented")
-//            }
-//
-//        })
     }
 
 

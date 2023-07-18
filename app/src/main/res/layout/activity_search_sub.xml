@@ -108,6 +108,7 @@
         android:padding="30dp"
         android:background="@drawable/shape_no_receht_search_bg"
         android:textSize="15dp"
+        android:visibility="invisible"
         android:textColor="@color/clr_5A5A5A"
         android:text="최근 검색된 단언가 없습니다."
         app:layout_constraintStart_toStartOf="parent"

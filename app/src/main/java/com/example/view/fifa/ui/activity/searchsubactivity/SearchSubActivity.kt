@@ -47,15 +47,22 @@ class SearchSubActivity : AppCompatActivity(),RecentSearchRecyclerListener {
     private fun initData() {
         binding.etSearch.requestFocus()
         searchDataList = pref.getSearchList() as ArrayList<UserDTO>
+        Log.e("cyc","init 초기의 searchDataList사이즈--->${searchDataList.size}")
         setSearchRecentAdapter(searchDataList)
+        checkNoRecentSearchView()
     }
 
     private fun initObserve(){
         viewModel.userCheck.observe(this){
             if(it){
+                Log.e("cyc","최근기록 저장")
                 //받은 값이 ok일때 데이터 추가
                 viewModel.userdto.value?.let { userDto ->
+                    Log.e("cyc","여기를 타는가?")
                     saveSearchData(userDto)
+                    searchRecentAdapter.notifyDataSetChanged()
+                    checkNoRecentSearchView()
+
                 }
             //  검색 후 저장하는데 오류가 안나는지 확인
             }
@@ -87,6 +94,7 @@ class SearchSubActivity : AppCompatActivity(),RecentSearchRecyclerListener {
                     else -> {
                         false
                     }
+
                 }
             }
         }
@@ -98,8 +106,7 @@ class SearchSubActivity : AppCompatActivity(),RecentSearchRecyclerListener {
             searchDataList.clear()
             pref.clear()
             searchRecentAdapter.notifyDataSetChanged()
-            // 최근 기록 전체 삭제 후 보여줄 뷰
-//            checkSearchTextData()
+            checkNoRecentSearchView()
         }
     }
 
@@ -142,6 +149,9 @@ class SearchSubActivity : AppCompatActivity(),RecentSearchRecyclerListener {
         if (searchDataList.size > 10) {
             searchDataList.removeAt(0)
         }
+        Log.e("cyc","")
+        Log.e("cyc","searchDataList갯수-->${searchDataList.size}")
+        Log.e("cyc","")
 
         // 기존 데이터에 덮어쓰기
         pref.saveSearchList(this.searchDataList)
@@ -154,11 +164,18 @@ class SearchSubActivity : AppCompatActivity(),RecentSearchRecyclerListener {
         searchDataList.removeAt(position)
         pref.saveSearchList(searchDataList)
         searchRecentAdapter.notifyDataSetChanged()
+        checkNoRecentSearchView()
     }
 
     override fun onItemClick(position: Int) {
-        TODO("Not yet implemented")
+        //해당 아이템 클릭시
     }
+
+    private fun checkNoRecentSearchView(){
+        binding.tvNoRecentSearch.visibility=
+            if(searchRecentAdapter.itemCount>0) View.INVISIBLE else View.VISIBLE
+    }
+
 
 }
 
