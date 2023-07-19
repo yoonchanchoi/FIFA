@@ -129,6 +129,9 @@ class SearchSubViewModel @Inject constructor(
                     Log.e("cyc", "통신실패 (인터넷 연결의 문제, 예외발생)")
                 }
             })
+
+            // 박에서 받는것을 한다.
+            // synchronized로 처리할 될 내부의 repsonse를 뺄수가 없다..일단 다시 해본다 오늘 시도했지만 터졋다..
         }
         if(check){
             tmpMatchDToList.forEach {
