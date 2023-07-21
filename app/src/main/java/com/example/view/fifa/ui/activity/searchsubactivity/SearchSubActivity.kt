@@ -47,7 +47,7 @@ class SearchSubActivity : AppCompatActivity(),RecentSearchRecyclerListener {
     private fun initData() {
         binding.etSearch.requestFocus()
         searchDataList = pref.getSearchList() as ArrayList<UserDTO>
-        Log.e("cyc","init 초기의 searchDataList사이즈--->${searchDataList.size}")
+//        Log.e("cyc","init 초기의 searchDataList사이즈--->${searchDataList.size}")
         setSearchRecentAdapter(searchDataList)
         checkNoRecentSearchView()
     }
@@ -58,13 +58,19 @@ class SearchSubActivity : AppCompatActivity(),RecentSearchRecyclerListener {
                 Log.e("cyc","최근기록 저장")
                 //받은 값이 ok일때 데이터 추가
                 viewModel.userdto.value?.let { userDto ->
-                    Log.e("cyc","여기를 타는가?")
+//                    Log.e("cyc","여기를 타는가?")
                     saveSearchData(userDto)
                     searchRecentAdapter.notifyDataSetChanged()
                     checkNoRecentSearchView()
 
                 }
             //  검색 후 저장하는데 오류가 안나는지 확인
+            }
+        }
+        viewModel.matchDTOList.observe(this){
+            Log.e("cyc","좀더 큰 개발자가 되고 싶당")
+            it.forEach {
+                Log.e("cyc","SearchActivty---observe--MatchDTO--->$it")
             }
         }
     }
@@ -149,10 +155,6 @@ class SearchSubActivity : AppCompatActivity(),RecentSearchRecyclerListener {
         if (searchDataList.size > 10) {
             searchDataList.removeAt(0)
         }
-        Log.e("cyc","")
-        Log.e("cyc","searchDataList갯수-->${searchDataList.size}")
-        Log.e("cyc","")
-
         // 기존 데이터에 덮어쓰기
         pref.saveSearchList(this.searchDataList)
     }

@@ -53,6 +53,8 @@ class SearchSubViewModel @Inject constructor(
     get() = _userCheck
 
 
+
+
     fun requestUserInfo(nickname: String){
        val result = fifaManager.requestUserInfo(nickname)
         result.enqueue(object : Callback<UserDTO>{
@@ -90,7 +92,7 @@ class SearchSubViewModel @Inject constructor(
                 if(response.isSuccessful){
                     response.body()?.let{
                         _arrayMathId.postValue(it)
-                        _matchDTOList.postValue(requestMatchInfo(it))
+//                        _matchDTOList.postValue(requestMatchInfo(it))
 
                     }
 
@@ -106,9 +108,8 @@ class SearchSubViewModel @Inject constructor(
         })
     }
 
-    fun requestMatchInfo(matchIds : ArrayList<String>) : ArrayList<MatchDTO>{
+    fun requestMatchInfo(matchIds : ArrayList<String>) {
         var tmpMatchDToList = ArrayList<MatchDTO>()
-        var check = true
         matchIds.forEach {
             val result = fifaManager.requestMatchInfo(it)
             result.enqueue(object : Callback<MatchDTO>{
@@ -116,35 +117,20 @@ class SearchSubViewModel @Inject constructor(
                     if(response.isSuccessful){
                         response.body()?.let { MatchDTO->
                             tmpMatchDToList.add(MatchDTO)
-                            Log.e("cyc","onResponse안쪽---tmpMatchDToList---->${tmpMatchDToList}")
-                            Log.e("cyc", "tmpMatchDToList.add(MatchDTO)추가")
+                            if(matchIds.indexOf(it) == matchIds.size-1){
+                                _matchDTOList.postValue(tmpMatchDToList)
+                            }
                         }
                     }else{
                         Log.e("cyc", "통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
-                        check=false
                     }
                 }
                 override fun onFailure(call: Call<MatchDTO>, t: Throwable) {
-                    check=false
                     Log.e("cyc", "통신실패 (인터넷 연결의 문제, 예외발생)")
                 }
             })
-
             // 박에서 받는것을 한다.
             // synchronized로 처리할 될 내부의 repsonse를 뺄수가 없다..일단 다시 해본다 오늘 시도했지만 터졋다..
-        }
-        if(check){
-            tmpMatchDToList.forEach {
-                Log.e("cyc","돌고 있는것인가?????????????????")
-                Log.e("cyc","")
-                Log.e("cyc","tmpMatchDToList의-----matchDto----->${it}")
-                Log.e("cyc","")
-            }
-            return tmpMatchDToList
-        }else{
-            Log.e("cyc","매칭 리스트 통신에러")
-            throw java.lang.Exception()
-            return tmpMatchDToList
         }
     }
 
