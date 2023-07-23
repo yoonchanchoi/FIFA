@@ -1,5 +1,6 @@
 package com.example.view.fifa.ui.activity.searchsubactivity
 
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,16 +9,18 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.searchstudy.util.Constants
 import com.example.searchstudy.util.Pref
 import com.example.searchstudy.util.onTextChanged
 import com.example.view.fifa.databinding.ActivitySearchSubBinding
+import com.example.view.fifa.network.models.dto.MatchDTO
 import com.example.view.fifa.network.models.dto.UserDTO
 import com.example.view.fifa.viewmodels.SearchSubViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SearchSubActivity : AppCompatActivity(),RecentSearchRecyclerListener {
+class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
 
     @Inject
     lateinit var pref: Pref
@@ -52,26 +55,26 @@ class SearchSubActivity : AppCompatActivity(),RecentSearchRecyclerListener {
         checkNoRecentSearchView()
     }
 
-    private fun initObserve(){
-        viewModel.userCheck.observe(this){
-            if(it){
-                Log.e("cyc","최근기록 저장")
+    private fun initObserve() {
+        viewModel.recentSearchSaveCheck.observe(this) {
+            if (it) {
+                Log.e("cyc", "최근기록 저장")
                 //받은 값이 ok일때 데이터 추가
                 viewModel.userdto.value?.let { userDto ->
-//                    Log.e("cyc","여기를 타는가?")
                     saveSearchData(userDto)
                     searchRecentAdapter.notifyDataSetChanged()
                     checkNoRecentSearchView()
-
                 }
-            //  검색 후 저장하는데 오류가 안나는지 확인
             }
         }
-        viewModel.matchDTOList.observe(this){
-            Log.e("cyc","좀더 큰 개발자가 되고 싶당")
-            it.forEach {
-                Log.e("cyc","SearchActivty---observe--MatchDTO--->$it")
+        viewModel.matchDTOList.observe(this) {
+            Log.e("cyc", "좀더 큰 개발자가 되고 싶당")
+            //날짜 기준 정렬
+            it.sortByDescending { matchDTO ->
+                matchDTO.matchDate
             }
+            val intent = Intent(this,)
+            //유저경기 상세 데이터
         }
     }
 
@@ -92,7 +95,8 @@ class SearchSubActivity : AppCompatActivity(),RecentSearchRecyclerListener {
                             Log.e("cyc", "검색 값이 null 이거나 비어있을때 ")
                             false
                         } else {
-                            viewModel.requestUserInfo(textView.text.toString())
+                            viewModel.requestUserInfo(textView.text.toString(),Constants.RECENT_SEARCH_SAVE_TRUE)
+
                             Log.e("cyc", "검색 값이 null이 아니고 비어있지 않을때 ")
                             true
                         }
@@ -121,7 +125,7 @@ class SearchSubActivity : AppCompatActivity(),RecentSearchRecyclerListener {
      * 최근 검색어 어댑터 세팅
      */
     private fun setSearchRecentAdapter(searchDataList: ArrayList<UserDTO>) {
-        searchRecentAdapter = RecentSearchAdapter(this,searchDataList)
+        searchRecentAdapter = RecentSearchAdapter(this, searchDataList)
         val searchLinearLayoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true)
         searchLinearLayoutManager.stackFromEnd = true // 키보드 열릴시 recycclerview 스크롤 처리
@@ -131,20 +135,19 @@ class SearchSubActivity : AppCompatActivity(),RecentSearchRecyclerListener {
         }
     }
 
-
     /**
      * 최근검색어 preference에 저장
      */
-    private fun saveSearchData(userDTO: UserDTO){
+    private fun saveSearchData(userDTO: UserDTO) {
         //버전 차이에 대한 생각 고민 중
         //같은 검색일경우 삭제
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             searchDataList.removeIf {
                 it.nickname == userDTO.nickname
             }
-        }else{
-            searchDataList.forEach{
-                if(it.nickname == userDTO.nickname){
+        } else {
+            searchDataList.forEach {
+                if (it.nickname == userDTO.nickname) {
                     searchDataList.remove(it)
                 }
             }
@@ -169,13 +172,15 @@ class SearchSubActivity : AppCompatActivity(),RecentSearchRecyclerListener {
         checkNoRecentSearchView()
     }
 
-    override fun onItemClick(position: Int) {
+    override fun onItemClick(position: Int, nickname: String) {
         //해당 아이템 클릭시
+        viewModel.requestUserInfo(nickname,Constants.RECENT_SEARCH_SAVE_FALSE)
+
     }
 
-    private fun checkNoRecentSearchView(){
-        binding.tvNoRecentSearch.visibility=
-            if(searchRecentAdapter.itemCount>0) View.INVISIBLE else View.VISIBLE
+    private fun checkNoRecentSearchView() {
+        binding.tvNoRecentSearch.visibility =
+            if (searchRecentAdapter.itemCount > 0) View.INVISIBLE else View.VISIBLE
     }
 
 

@@ -52,10 +52,14 @@ class SearchSubViewModel @Inject constructor(
     val userCheck: LiveData<Boolean>
     get() = _userCheck
 
+    private val _recentSearchSaveCheck = MutableLiveData<Boolean>()
+    val recentSearchSaveCheck: LiveData<Boolean>
+    get() = _recentSearchSaveCheck
 
 
 
-    fun requestUserInfo(nickname: String){
+
+    fun requestUserInfo(nickname: String,recentSearchSaveCheck: Boolean){
        val result = fifaManager.requestUserInfo(nickname)
         result.enqueue(object : Callback<UserDTO>{
             override fun onResponse(call: Call<UserDTO>, response: Response<UserDTO>) {
@@ -63,6 +67,7 @@ class SearchSubViewModel @Inject constructor(
                     response.body()?.let {
                         _userdto.postValue(it)
                         _userCheck.postValue(true)
+                        _recentSearchSaveCheck.postValue(recentSearchSaveCheck)
                         requestMatchId(it.accessId)
                         Log.e("cyc", "성공")
                     }
@@ -92,8 +97,7 @@ class SearchSubViewModel @Inject constructor(
                 if(response.isSuccessful){
                     response.body()?.let{
                         _arrayMathId.postValue(it)
-//                        _matchDTOList.postValue(requestMatchInfo(it))
-
+                        requestMatchInfo(it)
                     }
 
                 }else{

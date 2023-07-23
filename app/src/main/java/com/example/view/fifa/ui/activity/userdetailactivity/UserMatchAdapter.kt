@@ -1,4 +1,4 @@
-package com.example.view.fifa.ui.activity.searchresultactivity
+package com.example.view.fifa.ui.activity.userdetailactivity
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

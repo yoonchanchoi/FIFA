@@ -1,4 +1,4 @@
-package com.example.view.fifa.ui.activity.searchresultactivity
+package com.example.view.fifa.ui.activity.userdetailactivity
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.view.fifa.databinding.ItemUserRecordBinding

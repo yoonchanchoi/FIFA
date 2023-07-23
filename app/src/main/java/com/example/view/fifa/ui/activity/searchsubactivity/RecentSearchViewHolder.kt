@@ -4,12 +4,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.view.fifa.databinding.ItemRecentSearchBinding
 import com.example.view.fifa.network.models.dto.UserDTO
 
-class RecentSearchViewHolder(private val binding: ItemRecentSearchBinding) : RecyclerView.ViewHolder(binding.root){
+class RecentSearchViewHolder(private val binding: ItemRecentSearchBinding) :
+    RecyclerView.ViewHolder(binding.root) {
 
 
-    fun bind(userDTO: UserDTO, recentSearchRecyclerListener:RecentSearchRecyclerListener){
-        binding.tvName.text =userDTO.nickname
-        binding.tvLevel.text=userDTO.level.toString()
+    fun bind(userDTO: UserDTO, recentSearchRecyclerListener: RecentSearchRecyclerListener) {
+        binding.tvName.text = userDTO.nickname
+        binding.tvLevel.text = userDTO.level.toString()
 
         //삭제 버튼 생성
         binding.btnDeleteRecent.setOnClickListener {
@@ -18,6 +19,10 @@ class RecentSearchViewHolder(private val binding: ItemRecentSearchBinding) : Rec
 //                        adapterPosition
             )
         }
-        binding.clRecentSearchItem.setOnClickListener { recentSearchRecyclerListener.onItemClick(bindingAdapterPosition) }
+        binding.clRecentSearchItem.setOnClickListener {
+            recentSearchRecyclerListener.onItemClick(
+                bindingAdapterPosition,userDTO.nickname
+            )
+        }
     }
 }
