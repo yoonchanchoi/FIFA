@@ -26,7 +26,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/shape_round_bg"
-        android:hint="피린이를 입력해주세요"
+        android:hint="@string/SearchSubActivity_et_tag"
         android:imeActionLabel="검색"
         android:imeOptions="actionSearch"
         android:inputType="text"
@@ -74,7 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:text="최근검색어"
+        android:text="@string/SearchSubActivity_recent_search_title_tag"
         android:textColor="@color/black"
         android:textSize="20dp"
         android:textStyle="bold"
@@ -86,7 +86,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/tv_recent_title"
-        android:text="전체 삭제"
+        android:text="@string/SearchSubActivty_delete_all"
         android:layout_marginEnd="10dp"
         />
     <androidx.recyclerview.widget.RecyclerView
@@ -110,7 +110,7 @@
         android:textSize="15dp"
         android:visibility="invisible"
         android:textColor="@color/clr_5A5A5A"
-        android:text="최근 검색된 단언가 없습니다."
+        android:text="@string/SearchSubActivity_no_recent_search"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_recent_title"/>

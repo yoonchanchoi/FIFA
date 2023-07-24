@@ -2,6 +2,7 @@ package com.example.view.fifa.network.models.dto
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class MatchInfoDTO(
     @SerializedName("accessId")
@@ -35,4 +36,4 @@ data class MatchInfoDTO(
     @SerializedName("player")
     @Expose
     val player :ArrayList<PlayerDTO>
-)
+): Serializable

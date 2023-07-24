@@ -92,6 +92,7 @@
                 android:layout_height="50dp"
                 android:background="@drawable/shape_outbalck_inwhite_bg"
                 android:gravity="center_vertical|center_horizontal"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/tv_user_most_rank_tag"

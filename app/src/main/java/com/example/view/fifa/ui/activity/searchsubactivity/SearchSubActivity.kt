@@ -15,6 +15,7 @@ import com.example.searchstudy.util.onTextChanged
 import com.example.view.fifa.databinding.ActivitySearchSubBinding
 import com.example.view.fifa.network.models.dto.MatchDTO
 import com.example.view.fifa.network.models.dto.UserDTO
+import com.example.view.fifa.ui.activity.userdetailactivity.UserDetailActivity
 import com.example.view.fifa.viewmodels.SearchSubViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -50,7 +51,6 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
     private fun initData() {
         binding.etSearch.requestFocus()
         searchDataList = pref.getSearchList() as ArrayList<UserDTO>
-//        Log.e("cyc","init 초기의 searchDataList사이즈--->${searchDataList.size}")
         setSearchRecentAdapter(searchDataList)
         checkNoRecentSearchView()
     }
@@ -73,8 +73,17 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
             it.sortByDescending { matchDTO ->
                 matchDTO.matchDate
             }
-            val intent = Intent(this,)
-            //유저경기 상세 데이터
+
+            it.forEach {
+                Log.e("cyc","정렬 후 ---------->${it}")
+
+            }
+            //Serializable를 객체들이 상속해줘야된다. 즉 여기서는 MatchDTO가 Serializable를 상속해줘야되나 그리고 만약
+            //MatchDTO안에 다른객체가 있다면 그것 또한 Serializable를 상속해줘야된다.
+            //ViewModel안에 intent, StartActivity 가능! (하지만 개인적으로 조금더 생각해봐야될 부분임)
+            val intent = Intent(this,UserDetailActivity::class.java)
+            intent.putExtra("ArrayList<MatchDTO>",it)
+            startActivity(intent)
         }
     }
 
@@ -109,9 +118,17 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
             }
         }
 
+
+        /**
+         * 검색어 삭제 버튼
+         */
         binding.btnTextClear.setOnClickListener {
             binding.etSearch.text.clear()
         }
+
+        /**
+         * 모든 최근기록 삭제 버튼
+         */
         binding.tvRecentAllDelete.setOnClickListener {
             searchDataList.clear()
             pref.clear()
@@ -163,7 +180,7 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
     }
 
     /**
-     * 아이템 삭제
+     * 최근 검색어 아이템 삭제
      */
     override fun onItemDelete(position: Int) {
         searchDataList.removeAt(position)
@@ -172,12 +189,18 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
         checkNoRecentSearchView()
     }
 
+    /**
+     *최근 검색어 아이템 클릭 이벤트
+     */
     override fun onItemClick(position: Int, nickname: String) {
         //해당 아이템 클릭시
         viewModel.requestUserInfo(nickname,Constants.RECENT_SEARCH_SAVE_FALSE)
 
     }
 
+    /**
+     * "최근 검색된 단어가 없습니다." 뷰 유무 체크
+     */
     private fun checkNoRecentSearchView() {
         binding.tvNoRecentSearch.visibility =
             if (searchRecentAdapter.itemCount > 0) View.INVISIBLE else View.VISIBLE

@@ -2,6 +2,7 @@ package com.example.view.fifa.network.models.dto
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class PlayerDTO(
 
@@ -21,4 +22,4 @@ data class PlayerDTO(
     @Expose
     val status: StatusDTO
 
-)
+): Serializable

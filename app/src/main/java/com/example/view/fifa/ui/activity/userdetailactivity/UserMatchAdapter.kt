@@ -5,14 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.view.fifa.databinding.ItemUserRecordBinding
 import com.example.view.fifa.network.models.dto.MatchDTO
+import com.example.view.fifa.network.models.dto.UserDTO
+import com.example.view.fifa.ui.activity.searchsubactivity.RecentSearchRecyclerListener
 
-class UserMatchAdapter : RecyclerView.Adapter<UserMatchViewHolder>(){
-    //    private lateinit var arrayImage : ArrayList<Drawable>
-
-    private var matchDtoList : List<MatchDTO> = listOf()
-//    private var matchDtoList = mutableListOf<MatchDTO>()
-//    private var matchDtoList = mutableListOf<MatchDTO>()
-
+class UserMatchAdapter(private val userMatchRecyclerListener: UserMatchRecyclerListener, private val matchDTOList: ArrayList<MatchDTO>) : RecyclerView.Adapter<UserMatchViewHolder>(){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserMatchViewHolder {
@@ -22,19 +18,17 @@ class UserMatchAdapter : RecyclerView.Adapter<UserMatchViewHolder>(){
     }
 
     override fun onBindViewHolder(holder: UserMatchViewHolder, position: Int) {
-        holder.bind(matchDtoList[position])
+        holder.bind(matchDTOList[position],userMatchRecyclerListener)
     }
 
     override fun getItemCount(): Int {
-        return matchDtoList.size
+        return matchDTOList.size
     }
 
-    fun setSearchResult(matchDtoList: List<MatchDTO>){
-//        this.matchDtoList = matchDtoList
-//        Log.e("cyc","SearchResultAdapter--->setData")
-        matchDtoList?.let {
-            this.matchDtoList=it
-        }
-        notifyDataSetChanged()
-    }
+//    fun setSearchResult(matchDtoList: List<MatchDTO>){
+//        matchDtoList?.let {
+//            this.matchDtoList=it
+//        }
+//        notifyDataSetChanged()
+//    }
 }
