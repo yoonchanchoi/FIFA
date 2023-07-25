@@ -22,8 +22,9 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
     @Inject
     lateinit var pref: Pref
 
+    private lateinit var nickName: String
     private lateinit var binding: ActivityUserDetailBinding
-    private lateinit var matchDTOList : ArrayList<MatchDTO>
+    private lateinit var matchDTOList: ArrayList<MatchDTO>
     private lateinit var userMatchAdapter: UserMatchAdapter
 
 
@@ -42,17 +43,22 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
     }
 
 
-    private fun initData(){
-        val intent =intent
+    private fun initData() {
+        val intent = intent
         matchDTOList = intent.getSerializableExtra("ArrayList<MatchDTO>") as ArrayList<MatchDTO>
-        Log.e("cyc","ArrayList<MatchDTO>--->$matchDTOList")
+        intent.getStringExtra("nickName")?.let {
+            nickName = it
+        }
+        Log.e("cyc", "nickName--->${nickName}")
+        setUserMatchAdapter(matchDTOList, nickName)
+        Log.e("cyc", "ArrayList<MatchDTO>--->$matchDTOList")
     }
 
-    private fun initObserve(){
+    private fun initObserve() {
 
     }
 
-    private fun initLisnear(){
+    private fun initLisnear() {
 
     }
 
@@ -60,8 +66,8 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
     /**
      * 최근 검색어 어댑터 세팅
      */
-    private fun setSearchRecentAdapter(matchDTOList: ArrayList<MatchDTO>) {
-        userMatchAdapter = UserMatchAdapter(this,matchDTOList)
+    private fun setUserMatchAdapter(matchDTOList: ArrayList<MatchDTO>, nickName: String) {
+        userMatchAdapter = UserMatchAdapter(this@UserDetailActivity,this, matchDTOList,nickName)
         val searchLinearLayoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true)
         searchLinearLayoutManager.stackFromEnd = true // 키보드 열릴시 recycclerview 스크롤 처리

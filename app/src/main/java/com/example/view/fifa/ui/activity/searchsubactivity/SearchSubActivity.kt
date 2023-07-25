@@ -83,6 +83,7 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
             //ViewModel안에 intent, StartActivity 가능! (하지만 개인적으로 조금더 생각해봐야될 부분임)
             val intent = Intent(this,UserDetailActivity::class.java)
             intent.putExtra("ArrayList<MatchDTO>",it)
+            intent.putExtra("nickName",viewModel.nickname.toString())
             startActivity(intent)
         }
     }

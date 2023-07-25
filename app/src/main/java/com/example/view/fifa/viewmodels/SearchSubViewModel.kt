@@ -56,6 +56,10 @@ class SearchSubViewModel @Inject constructor(
     val recentSearchSaveCheck: LiveData<Boolean>
     get() = _recentSearchSaveCheck
 
+    private val _nickname = MutableLiveData<String>()
+    val nickname: LiveData<String>
+    get() = _nickname
+
 
 
 
@@ -67,6 +71,7 @@ class SearchSubViewModel @Inject constructor(
                     response.body()?.let {
                         _userdto.postValue(it)
                         _userCheck.postValue(true)
+                        _nickname.postValue(nickname)
                         _recentSearchSaveCheck.postValue(recentSearchSaveCheck)
                         requestMatchId(it.accessId)
                         Log.e("cyc", "성공")

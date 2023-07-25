@@ -2,66 +2,99 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_user_record_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/cl_user_record_item"
-    android:background="@drawable/layer_item_bg">
+    android:layout_marginBottom="5dp"
+    android:background="@drawable/shape_item_round_bg"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+
+    <TextView
+        android:id="@+id/tv_my_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="(2023:07:15)"
+        android:textSize="12dp"
+        android:layout_marginBottom="2dp"
+        app:layout_constraintBottom_toTopOf="@id/tv_my_day"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_my_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12dp"
+        android:text="시간"
+        android:layout_marginTop="2dp"
+        app:layout_constraintStart_toStartOf="@id/tv_my_month"
+        app:layout_constraintTop_toBottomOf="@id/tv_my_month"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView
         android:id="@+id/tv_my_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="5dp"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_my_score"
+        app:layout_constraintEnd_toStartOf="@id/tv_my_score"
+        app:layout_constraintStart_toEndOf="@id/tv_my_month"
+        app:layout_constraintTop_toTopOf="@id/tv_my_score"
         tools:text="유저1(나)" />
 
     <TextView
         android:id="@+id/tv_my_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@id/tv_my_user"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_colon"
+        app:layout_constraintEnd_toStartOf="@id/tv_colon"
         app:layout_constraintStart_toEndOf="@id/tv_my_user"
-        app:layout_constraintTop_toTopOf="@id/tv_my_user"
+        app:layout_constraintTop_toTopOf="@id/tv_colon"
         tools:text="1" />
 
     <TextView
         android:id="@+id/tv_colon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:text=":"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@id/tv_my_user"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv_opponent_score"
         app:layout_constraintStart_toEndOf="@id/tv_my_score"
-        app:layout_constraintTop_toTopOf="@id/tv_my_user" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
         android:id="@+id/tv_opponent_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@id/tv_my_user"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_colon"
+        app:layout_constraintEnd_toStartOf="@id/tv_opponent_user"
         app:layout_constraintStart_toEndOf="@id/tv_colon"
-        app:layout_constraintTop_toTopOf="@id/tv_my_user"
+        app:layout_constraintTop_toTopOf="@id/tv_colon"
         tools:text="1" />
 
     <TextView
         android:id="@+id/tv_opponent_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:textSize="20dp"
+        android:layout_marginStart="5dp"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_opponent_score"
         app:layout_constraintStart_toEndOf="@id/tv_opponent_score"
-        app:layout_constraintTop_toTopOf="@id/tv_my_user"
+        app:layout_constraintTop_toTopOf="@id/tv_opponent_score"
         tools:text="유저2(상대)" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
