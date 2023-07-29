@@ -10,7 +10,7 @@ import com.example.view.fifa.network.models.dto.MatchDTO
 import com.example.view.fifa.network.models.dto.UserDTO
 import com.example.view.fifa.ui.activity.searchsubactivity.RecentSearchRecyclerListener
 
-class UserMatchAdapter(private val context: Context, private val userMatchRecyclerListener: UserMatchRecyclerListener, private val matchDTOList: ArrayList<MatchDTO>,private val nickName: String) : RecyclerView.Adapter<UserMatchViewHolder>(){
+class UserMatchAdapter(private val context: Context, private val userMatchRecyclerListener: UserMatchRecyclerListener, private val matchDTOList: ArrayList<MatchDTO>,private val userDTO: UserDTO) : RecyclerView.Adapter<UserMatchViewHolder>(){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserMatchViewHolder {
@@ -20,7 +20,7 @@ class UserMatchAdapter(private val context: Context, private val userMatchRecycl
     }
 
     override fun onBindViewHolder(holder: UserMatchViewHolder, position: Int) {
-        holder.bind(matchDTOList[position],userMatchRecyclerListener,nickName)
+        holder.bind(matchDTOList[position],userMatchRecyclerListener,userDTO)
     }
 
     override fun getItemCount(): Int {

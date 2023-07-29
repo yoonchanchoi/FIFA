@@ -31,6 +31,7 @@ interface FIFAManager {
     fun requestMatchInfo(nickname: String): Call<MatchDTO>
 
     fun requestMaxDivision(nickname: String): Call<ArrayList<MaxDivisionDTO>>
+
 }
 
 

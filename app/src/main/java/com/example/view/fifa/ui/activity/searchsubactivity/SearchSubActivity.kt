@@ -74,16 +74,17 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
                 matchDTO.matchDate
             }
 
-            it.forEach {
-                Log.e("cyc","정렬 후 ---------->${it}")
-
-            }
+//            it.forEach {
+//                Log.e("cyc","정렬 후 ---------->${it}")
+//
+//            }
             //Serializable를 객체들이 상속해줘야된다. 즉 여기서는 MatchDTO가 Serializable를 상속해줘야되나 그리고 만약
             //MatchDTO안에 다른객체가 있다면 그것 또한 Serializable를 상속해줘야된다.
             //ViewModel안에 intent, StartActivity 가능! (하지만 개인적으로 조금더 생각해봐야될 부분임)
             val intent = Intent(this,UserDetailActivity::class.java)
             intent.putExtra("ArrayList<MatchDTO>",it)
-            intent.putExtra("nickName",viewModel.nickname.toString())
+            intent.putExtra("SearchUserDTO",viewModel.userdto.value)
+            intent.putExtra("userRank",viewModel.userRank.value)
             startActivity(intent)
         }
     }

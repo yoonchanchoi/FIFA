@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.example.searchstudy.network.managers.FIFAManager
 import com.example.view.fifa.network.models.dto.MatchDTO
 import com.example.view.fifa.network.models.dto.MatchIdDTO
+import com.example.view.fifa.network.models.dto.MaxDivisionDTO
 import com.example.view.fifa.network.models.dto.UserDTO
 //import com.example.view.fifa.network.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -60,6 +61,18 @@ class SearchSubViewModel @Inject constructor(
     val nickname: LiveData<String>
     get() = _nickname
 
+    private val _maxDivisionDTOList = MutableLiveData<ArrayList<MaxDivisionDTO>>()
+    val maxDivisionDTOList: LiveData<ArrayList<MaxDivisionDTO>>
+        get() = _maxDivisionDTOList
+
+    private val _maxDivision = MutableLiveData<MaxDivisionDTO>()
+    val maxDivision: LiveData<MaxDivisionDTO>
+        get() = _maxDivision
+
+    private val _userRank = MutableLiveData<String>()
+    val userRank: LiveData<String>
+        get() = _userRank
+
 
 
 
@@ -72,6 +85,7 @@ class SearchSubViewModel @Inject constructor(
                         _userdto.postValue(it)
                         _userCheck.postValue(true)
                         _nickname.postValue(nickname)
+                        requestMaxDivision(it.accessId)
                         _recentSearchSaveCheck.postValue(recentSearchSaveCheck)
                         requestMatchId(it.accessId)
                         Log.e("cyc", "성공")
@@ -142,6 +156,79 @@ class SearchSubViewModel @Inject constructor(
             // synchronized로 처리할 될 내부의 repsonse를 뺄수가 없다..일단 다시 해본다 오늘 시도했지만 터졋다..
         }
     }
+
+    fun requestMaxDivision(accessId: String) {
+        val result = fifaManager.requestMaxDivision(accessId)
+        result.enqueue(object : Callback<ArrayList<MaxDivisionDTO>>{
+            override fun onResponse(call: Call<ArrayList<MaxDivisionDTO>>, response: Response<ArrayList<MaxDivisionDTO>>) {
+                if(response.isSuccessful) {
+                    response.body()?.let {
+                        _maxDivisionDTOList.postValue(it)
+                        Log.e("cyc","공식 경기 랭크 값들--->${it}")
+                        _userRank.postValue(checkDivision(it))
+                        Log.e("cyc", "성공")
+                    }
+                }else{
+                    _userCheck.postValue(false)
+                    Log.e("cyc", "통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
+
+                }
+
+            }
+
+            override fun onFailure(call: Call<ArrayList<MaxDivisionDTO>>, t: Throwable) {
+                _userCheck.postValue(false)
+                Log.e("cyc", "통신실패 (인터넷 연결의 문제, 예외발생)")
+
+            }
+        })
+    }
+
+    fun checkDivision(maxDivisionDTOList: ArrayList<MaxDivisionDTO>):String{
+        var userRank = "언랭"
+        maxDivisionDTOList.forEach {
+            if(it.matchType==50){
+                Log.e("cyc","여기를 타는가?")
+                Log.e("cyc","여기를 타는가? 의 it--->$it")
+                Log.e("cyc","여기를 타는가? 의 it.division--->${it.division}")
+
+                //왜 maxDivision.postValue(it)을 하면 안되고
+                // _maxDivision.value=it을 하면 되는가?
+                _maxDivision.value=it
+            }
+        }
+        Log.e("cyc","_maxDivision.value--->${_maxDivision.value}")
+
+        _maxDivision.value?.let {
+            when(it.division){
+                800->{userRank="슈퍼챔피언스"}
+                900->{userRank="챔피언스"}
+                1000->{userRank="슈퍼챌린지"}
+                1100->{userRank="챌린지1"}
+                1200->{userRank="챌린지2"}
+                1300->{userRank="챌린지3"}
+                2000->{userRank="월드클래스1"}
+                2100->{userRank="월드클래스2"}
+                2200->{userRank="월드클래스3"}
+                2300->{userRank="프로1"}
+                2400->{userRank="프로2"}
+                2500->{userRank="프로3"}
+                2600->{userRank="세미프로1"}
+                2700->{userRank="세미프로2"}
+                2800->{userRank="세미프로3"}
+                2900->{userRank="유망주1"}
+                3000->{userRank="유망주2"}
+                3100->{userRank="유망주3"}
+            }
+        }
+        Log.e("cyc","유저 최고 랭크--->${userRank}")
+        return userRank
+    }
+
+
+
+
+
 
 
 //-------------------------------------------------------------------------------------

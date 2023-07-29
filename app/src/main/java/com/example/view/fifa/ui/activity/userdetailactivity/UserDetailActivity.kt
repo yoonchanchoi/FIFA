@@ -22,7 +22,8 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
     @Inject
     lateinit var pref: Pref
 
-    private lateinit var nickName: String
+    private lateinit var userDTO: UserDTO
+    private lateinit var userRank: String
     private lateinit var binding: ActivityUserDetailBinding
     private lateinit var matchDTOList: ArrayList<MatchDTO>
     private lateinit var userMatchAdapter: UserMatchAdapter
@@ -46,12 +47,18 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
     private fun initData() {
         val intent = intent
         matchDTOList = intent.getSerializableExtra("ArrayList<MatchDTO>") as ArrayList<MatchDTO>
-        intent.getStringExtra("nickName")?.let {
-            nickName = it
+        intent.getSerializableExtra("SearchUserDTO")?.let {
+            userDTO = it as UserDTO
         }
-        Log.e("cyc", "nickName--->${nickName}")
-        setUserMatchAdapter(matchDTOList, nickName)
-        Log.e("cyc", "ArrayList<MatchDTO>--->$matchDTOList")
+        intent.getStringExtra("userRank")?.let {
+            userRank=it
+        }
+        Log.e("cyc", "nickName--->${userDTO}")
+        binding.tvUserNickname.text=userDTO.nickname
+        binding.tvUserLevel.text="Lv "+userDTO.level
+        binding.tvUserMostRank.text = userRank
+        setUserMatchAdapter(matchDTOList, userDTO)
+//        Log.e("cyc", "ArrayList<MatchDTO>--->$matchDTOList")
     }
 
     private fun initObserve() {
@@ -66,10 +73,10 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
     /**
      * 최근 검색어 어댑터 세팅
      */
-    private fun setUserMatchAdapter(matchDTOList: ArrayList<MatchDTO>, nickName: String) {
-        userMatchAdapter = UserMatchAdapter(this@UserDetailActivity,this, matchDTOList,nickName)
+    private fun setUserMatchAdapter(matchDTOList: ArrayList<MatchDTO>, userDTO: UserDTO) {
+        userMatchAdapter = UserMatchAdapter(this@UserDetailActivity,this, matchDTOList,userDTO)
         val searchLinearLayoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true)
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
         searchLinearLayoutManager.stackFromEnd = true // 키보드 열릴시 recycclerview 스크롤 처리
         binding.rv.apply {
             layoutManager = searchLinearLayoutManager
