@@ -7,34 +7,7 @@
     android:orientation="vertical"
     tools:context=".ui.activity.userdetailactivity.UserDetailActivity">
 
-    <LinearLayout
-        android:id="@+id/linear_top"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/selector_linear_bg"
-        android:gravity="center"
-        android:padding="10dp">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/selector_btn_bg" />
-
-        <TextView
-            android:id="@+id/tv_title_user_nickname"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="유저이름"
-            android:textColor="@drawable/selector_text_color"
-            android:textStyle="bold" />
-
-        <View
-            android:layout_width="30dp"
-            android:layout_height="30dp" />
-    </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nsv"
@@ -135,5 +108,32 @@
 
 
     </androidx.core.widget.NestedScrollView>
+    <LinearLayout
+        android:id="@+id/linear_top"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/selector_linear_bg"
+        android:gravity="center"
+        android:padding="10dp">
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_baseline_arrow_back_white" />
+
+        <TextView
+            android:id="@+id/tv_title_user_nickname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="유저이름"
+            android:textColor="@drawable/selector_text_color"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+    </LinearLayout>
 </FrameLayout>

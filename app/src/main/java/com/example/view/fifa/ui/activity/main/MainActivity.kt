@@ -9,6 +9,7 @@ import android.os.Message
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -33,9 +34,12 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var pref: Pref
 
-    private lateinit var binding : ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
-    private val arrayImage : ArrayList<Drawable> = arrayListOf()
+    private val arrayImage: ArrayList<Drawable> = arrayListOf()
+
+    private var waitTime = 0L
+
 
     // 배너 핸들러
     private val bannerHandler = BannerHandler()
@@ -51,13 +55,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_actionbar,menu)
+        menuInflater.inflate(R.menu.menu_actionbar, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     private fun init() {
         val appbar = supportActionBar
-        appbar?.let { it.title = "FIFA"}
+        appbar?.let { it.title = "FIFA" }
         initData()
         initListener()
     }
@@ -74,12 +78,11 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return super.onOptionsItemSelected(item)
     }
 
-    fun setbanner(){
+    fun setbanner() {
 
         ContextCompat.getDrawable(this, R.drawable.fifa01)?.let { arrayImage.add(it) }
         ContextCompat.getDrawable(this, R.drawable.fifa02)?.let { arrayImage.add(it) }
@@ -100,7 +103,7 @@ class MainActivity : AppCompatActivity() {
     inner class BannerHandler : Handler(Looper.getMainLooper()) {
         override fun handleMessage(message: Message) {
             super.handleMessage(message)
-            if (binding.vpImage.currentItem == binding.vpImage.adapter?.let { it.itemCount-1 }) {
+            if (binding.vpImage.currentItem == binding.vpImage.adapter?.let { it.itemCount - 1 }) {
                 binding.vpImage.currentItem = 0
                 autoScrollStart()
             } else {
@@ -133,6 +136,21 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         autoScrollStop()
+    }
+
+
+    /**
+     * 뒤로 가기 버튼 클릭
+     */
+    override fun onBackPressed() {
+        if (System.currentTimeMillis() - waitTime >= 1500) {
+            waitTime = System.currentTimeMillis()
+            Toast.makeText(this, getString(R.string.app_finish_toast), Toast.LENGTH_SHORT)
+                .show()
+        } else {
+            finish() // 액티비티 종료
+        }
+
     }
 //    fun initTest(){
 //

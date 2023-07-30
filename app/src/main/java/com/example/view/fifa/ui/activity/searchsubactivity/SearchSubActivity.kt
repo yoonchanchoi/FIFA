@@ -137,6 +137,10 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
             searchRecentAdapter.notifyDataSetChanged()
             checkNoRecentSearchView()
         }
+
+        binding.btnBack.setOnClickListener {
+            this.finish()
+        }
     }
 
 

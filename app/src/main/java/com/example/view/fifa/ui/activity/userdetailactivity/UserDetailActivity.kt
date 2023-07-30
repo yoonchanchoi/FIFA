@@ -1,20 +1,20 @@
 package com.example.view.fifa.ui.activity.userdetailactivity
 
-import androidx.appcompat.app.AppCompatActivity
+import android.R.attr.x
+import android.R.attr.y
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.viewModels
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.NestedScrollView.OnScrollChangeListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.searchstudy.util.Pref
-import com.example.view.fifa.databinding.ActivitySearchSubBinding
 import com.example.view.fifa.databinding.ActivityUserDetailBinding
 import com.example.view.fifa.network.models.dto.MatchDTO
 import com.example.view.fifa.network.models.dto.UserDTO
-import com.example.view.fifa.ui.activity.searchsubactivity.RecentSearchAdapter
-import com.example.view.fifa.ui.activity.searchsubactivity.RecentSearchRecyclerListener
-import com.example.view.fifa.viewmodels.SearchSubViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
@@ -51,13 +51,18 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
             userDTO = it as UserDTO
         }
         intent.getStringExtra("userRank")?.let {
-            userRank=it
+            userRank = it
         }
         Log.e("cyc", "nickName--->${userDTO}")
-        binding.tvUserNickname.text=userDTO.nickname
-        binding.tvUserLevel.text="Lv "+userDTO.level
+        binding.tvUserNickname.text = userDTO.nickname
+        binding.tvTitleUserNickname.text = userDTO.nickname
+        binding.tvUserLevel.text = "Lv " + userDTO.level
         binding.tvUserMostRank.text = userRank
         setUserMatchAdapter(matchDTOList, userDTO)
+        //시작히 top 뷰
+//        binding.btnBack.isSelected=true
+//        binding.linearTop.isSelected=true
+//        binding.tvTitleUserNickname.isSelected =true
 //        Log.e("cyc", "ArrayList<MatchDTO>--->$matchDTOList")
     }
 
@@ -65,7 +70,33 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
 
     }
 
+    //android 기능 ctrl + shift + 방향키는 해당 코드 위치 변경(신기하넹)
     private fun initLisnear() {
+        binding.nsv.setOnScrollChangeListener(OnScrollChangeListener { view, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if(scrollY>isTouchInside(binding.tvUserNickname)) {
+                binding.linearTop.isSelected = true
+                binding.tvTitleUserNickname.isSelected = true
+            }else {
+                binding.linearTop.isSelected = false
+                binding.tvTitleUserNickname.isSelected = false
+            }
+
+            //연습용
+//            if (!v.canScrollVertically(-1)) {
+//                Log.e("cyc", "최상단")
+//                binding.linearTop.isSelected = false
+//                binding.tvTitleUserNickname.isSelected = false
+//            } else {
+//                Log.e("cyc", "아닐때")
+//                Log.e("cyc", "scrollY--->${scrollY}")
+//                binding.linearTop.isSelected = true
+//                binding.tvTitleUserNickname.isSelected = true
+//            }
+        })
+
+        binding.btnBack.setOnClickListener {
+            this.finish()
+        }
 
     }
 
@@ -74,9 +105,9 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
      * 최근 검색어 어댑터 세팅
      */
     private fun setUserMatchAdapter(matchDTOList: ArrayList<MatchDTO>, userDTO: UserDTO) {
-        userMatchAdapter = UserMatchAdapter(this@UserDetailActivity,this, matchDTOList,userDTO)
+        userMatchAdapter = UserMatchAdapter(this@UserDetailActivity, this, matchDTOList, userDTO)
         val searchLinearLayoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         searchLinearLayoutManager.stackFromEnd = true // 키보드 열릴시 recycclerview 스크롤 처리
         binding.rv.apply {
             layoutManager = searchLinearLayoutManager
@@ -92,6 +123,13 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
         TODO("Not yet implemented")
     }
 
+    //해당 view의 y좌표 구하기 확실하지 않음 다시 구현해야됨
+    private fun isTouchInside(view: View): Int {
+        val location = IntArray(2)
+        view.getLocationOnScreen(location)
+        return location[1] + view.height
+
+    }
 }
 
 
