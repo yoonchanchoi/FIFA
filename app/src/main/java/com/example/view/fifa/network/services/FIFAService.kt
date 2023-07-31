@@ -1,21 +1,54 @@
-package com.example.searchstudy.network.services
+package com.example.view.fifa.network.services
 
-import com.example.searchstudy.network.models.response.*
+import com.example.view.fifa.network.models.response.*
 import com.example.view.fifa.network.models.dto.MatchDTO
 import com.example.view.fifa.network.models.dto.MaxDivisionDTO
 import com.example.view.fifa.network.models.dto.UserDTO
-import io.reactivex.Observable
-import io.reactivex.Single
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface FIFAService {
+
+    @GET("users")
+    fun requestUserInfo(
+        @Query("nickname") nicknamee: String
+    ): Call<UserDTO>
+
+    @GET("users/{accessId}/matches")
+    fun  requestOfficialMatchId(
+        @Path("accessId") accessId : String,
+        @Query("matchType") matchType : Int,
+        @Query("offset") offset : Int,
+        @Query("limit") limit : Int,
+    ) : Call<ArrayList<String>>
+
+    @GET("matches/{matchId}")
+    fun requestMatchInfo(
+        @Path("matchId") matchId: String
+    ): Call<MatchDTO>
+
+
+    @GET("users/{accessId}/maxdivision")
+    fun  requestMaxDivision(
+        @Path("accessId") accessId: String
+    ): Call<ArrayList<MaxDivisionDTO>>
+
+}
+
+
+
+
+
+
+
+//2196df1b745a7f7e06c234f8  고유식별자
+//643232150db9d647d7149471  메치
+
+//interface FIFAService {
 //    @GET("nickname={nickname}")
 //    fun requestTest(): Call<FIFAResponse>
-
 
 ////-------------------------------------------------------------------------------------
 ////    //여기서 부터 rxjava잠금-1
@@ -57,44 +90,11 @@ interface FIFAService {
 //
 //
 ////-------------------------------------------------------------------------------------
+//}
 
 
 
-    @GET("users")
-    fun requestUserInfo(
-        @Query("nickname") nicknamee: String
-    ): Call<UserDTO>
 
-    @GET("users/{accessId}/matches")
-    fun  requestOfficialMatchId(
-        @Path("accessId") accessId : String,
-        @Query("matchType") matchType : Int,
-        @Query("offset") offset : Int,
-        @Query("limit") limit : Int,
-    ) : Call<ArrayList<String>>
-
-    @GET("matches/{matchId}")
-    fun requestMatchInfo(
-        @Path("matchId") matchId: String
-    ): Call<MatchDTO>
-    //2196df1b745a7f7e06c234f8
-    //6457a174c4fea30485abc654
-
-//    @GET("users/{accessId}/matches")
-//    fun  requestOfficialMatchId(
-//        @Path("accessId") accessId : String,
-//        @Query("matchType") matchType : Int,
-//        @Query("offset") offset : Int,
-//        @Query("limit") limit : Int,
-//    ) : Observable<ArrayList<String>>
-
-    @GET("users/{accessId}/maxdivision")
-    fun  requestMaxDivision(
-        @Path("accessId") accessId: String
-    ): Call<ArrayList<MaxDivisionDTO>>
-
-
-}
 
 
 

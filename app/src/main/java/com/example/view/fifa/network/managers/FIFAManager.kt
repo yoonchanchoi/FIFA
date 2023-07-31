@@ -1,15 +1,21 @@
-package com.example.searchstudy.network.managers
+package com.example.view.fifa.network.managers
 
-import com.example.searchstudy.network.models.response.*
 import com.example.view.fifa.network.models.dto.MatchDTO
 import com.example.view.fifa.network.models.dto.MaxDivisionDTO
 import com.example.view.fifa.network.models.dto.UserDTO
 import retrofit2.Call
-import retrofit2.Callback
 
 interface FIFAManager {
 
-////-------------------------------------------------------------------------------------
+    fun requestUserInfo(nickname: String): Call<UserDTO>
+
+    fun requestOfficialMatchId(accessid : String): Call<ArrayList<String>>
+
+    fun requestMatchInfo(nickname: String): Call<MatchDTO>
+
+    fun requestMaxDivision(nickname: String): Call<ArrayList<MaxDivisionDTO>>
+
+    ////-------------------------------------------------------------------------------------
 ////    //여기서 부터 rxjava잠금-1
 ////    fun requestTest(): Call<FIFAResponse>
 //
@@ -24,14 +30,6 @@ interface FIFAManager {
 //
 ////    여기까지 rxjava잠금-1
 ////-------------------------------------------------------------------------------------
-    fun requestUserInfo(nickname: String): Call<UserDTO>
-
-    fun requestOfficialMatchId(accessid : String): Call<ArrayList<String>>
-
-    fun requestMatchInfo(nickname: String): Call<MatchDTO>
-
-    fun requestMaxDivision(nickname: String): Call<ArrayList<MaxDivisionDTO>>
-
 }
 
 

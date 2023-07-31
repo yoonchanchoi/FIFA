@@ -94,6 +94,4 @@ data class StatusDTO(
     @Expose
     val spRating : Float
 
-
-
 ): Serializable

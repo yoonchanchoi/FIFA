@@ -1,8 +1,8 @@
-package com.example.searchstudy.util.idmodule
+package com.example.view.fifa.util.idmodule
 
-import com.example.searchstudy.network.services.HeadersInterceptor
-import com.example.searchstudy.network.services.FIFAService
-import com.example.searchstudy.util.Constants
+import com.example.view.fifa.network.services.HeadersInterceptor
+import com.example.view.fifa.network.services.FIFAService
+import com.example.view.fifa.util.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,5 +42,4 @@ class NetworkProviderModule {
             .client(okHttpClient)
             .build().create(FIFAService::class.java)
     }
-
 }

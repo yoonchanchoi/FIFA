@@ -19,6 +19,7 @@ class RecentSearchViewHolder(private val binding: ItemRecentSearchBinding) :
 //                        adapterPosition
             )
         }
+        //최근 기록 아이템 클릭 이벤트
         binding.clRecentSearchItem.setOnClickListener {
             recentSearchRecyclerListener.onItemClick(
                 bindingAdapterPosition,userDTO.nickname

@@ -1,13 +1,12 @@
-package com.example.searchstudy.util.idmodule
+package com.example.view.fifa.util.idmodule
 
-import com.example.searchstudy.network.managers.FIFAManager
-import com.example.searchstudy.network.managers.FIFAManagerImpl
+import com.example.view.fifa.network.managers.FIFAManager
+import com.example.view.fifa.network.managers.FIFAManagerImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
-
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -16,4 +15,5 @@ abstract class ManagerModule {
     @Binds
     @Singleton
     abstract fun bindSearchManager(searchManagerImpl: FIFAManagerImpl): FIFAManager
+
 }

@@ -1,8 +1,7 @@
-package com.example.searchstudy.util.idmodule
+package com.example.view.fifa.util.idmodule
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.searchstudy.util.Pref
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

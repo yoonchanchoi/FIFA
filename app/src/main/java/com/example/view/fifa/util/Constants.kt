@@ -1,4 +1,4 @@
-package com.example.searchstudy.util
+package com.example.view.fifa.util
 
 object Constants {
     //URL

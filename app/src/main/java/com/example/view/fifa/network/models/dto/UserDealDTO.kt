@@ -26,5 +26,3 @@ data class UserDealDTO(
     val value : Int
 
 ): Serializable
-//2196df1b745a7f7e06c234f8  고유식별자
-//643232150db9d647d7149471  메치

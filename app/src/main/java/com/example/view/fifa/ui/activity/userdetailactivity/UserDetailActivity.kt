@@ -1,21 +1,18 @@
 package com.example.view.fifa.ui.activity.userdetailactivity
 
-import android.R.attr.x
-import android.R.attr.y
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView.OnScrollChangeListener
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.searchstudy.util.Pref
+import com.example.view.fifa.util.Pref
 import com.example.view.fifa.databinding.ActivityUserDetailBinding
 import com.example.view.fifa.network.models.dto.MatchDTO
 import com.example.view.fifa.network.models.dto.UserDTO
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
+//* android 기능 ctrl + shift + 방향키는 해당 코드 위치 변경(신기하넹)
 @AndroidEntryPoint
 class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
 
@@ -45,6 +42,7 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
 
 
     private fun initData() {
+        //검색 페이지에서 넘어온값 확인 및 세팅
         val intent = intent
         matchDTOList = intent.getSerializableExtra("ArrayList<MatchDTO>") as ArrayList<MatchDTO>
         intent.getSerializableExtra("SearchUserDTO")?.let {
@@ -53,25 +51,21 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
         intent.getStringExtra("userRank")?.let {
             userRank = it
         }
-        Log.e("cyc", "nickName--->${userDTO}")
         binding.tvUserNickname.text = userDTO.nickname
         binding.tvTitleUserNickname.text = userDTO.nickname
         binding.tvUserLevel.text = "Lv " + userDTO.level
         binding.tvUserMostRank.text = userRank
+        //유저의 매칭기록 어댑터 세팅
         setUserMatchAdapter(matchDTOList, userDTO)
-        //시작히 top 뷰
-//        binding.btnBack.isSelected=true
-//        binding.linearTop.isSelected=true
-//        binding.tvTitleUserNickname.isSelected =true
-//        Log.e("cyc", "ArrayList<MatchDTO>--->$matchDTOList")
     }
 
     private fun initObserve() {
 
     }
 
-    //android 기능 ctrl + shift + 방향키는 해당 코드 위치 변경(신기하넹)
     private fun initLisnear() {
+
+        //스크롤에 따른 최상당 topBar 보여주기
         binding.nsv.setOnScrollChangeListener(OnScrollChangeListener { view, scrollX, scrollY, oldScrollX, oldScrollY ->
             if(scrollY>isTouchInside(binding.tvUserNickname)) {
                 binding.linearTop.isSelected = true
@@ -80,8 +74,7 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
                 binding.linearTop.isSelected = false
                 binding.tvTitleUserNickname.isSelected = false
             }
-
-            //연습용
+            //* 연습용
 //            if (!v.canScrollVertically(-1)) {
 //                Log.e("cyc", "최상단")
 //                binding.linearTop.isSelected = false
@@ -94,10 +87,12 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
 //            }
         })
 
+        /**
+         * 뒤로가기 버튼
+         */
         binding.btnBack.setOnClickListener {
             this.finish()
         }
-
     }
 
 
@@ -115,20 +110,21 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
         }
     }
 
+    //없어질 기능
     override fun onItemDelete(position: Int) {
         TODO("Not yet implemented")
     }
 
+    //곧 구헌해야됨
     override fun onItemClick(position: Int) {
         TODO("Not yet implemented")
     }
 
-    //해당 view의 y좌표 구하기 확실하지 않음 다시 구현해야됨
+    //해당 view의 y좌표 구하기 (기능 및 맞게 돌아가지만 확실하지 않음 재공부 및  다시 구현해야됨)
     private fun isTouchInside(view: View): Int {
         val location = IntArray(2)
         view.getLocationOnScreen(location)
         return location[1] + view.height
-
     }
 }
 

@@ -6,27 +6,18 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.example.searchstudy.util.Pref
 import com.example.view.fifa.R
 import com.example.view.fifa.databinding.ActivityMainBinding
 import com.example.view.fifa.ui.activity.searchsubactivity.SearchSubActivity
+import com.example.view.fifa.util.Pref
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.Flowable
-import io.reactivex.Single
-import io.reactivex.functions.BiFunction
-import java.util.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.collections.ArrayList
-import kotlin.random.Random.Default.nextLong
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -35,15 +26,10 @@ class MainActivity : AppCompatActivity() {
     lateinit var pref: Pref
 
     private lateinit var binding: ActivityMainBinding
-
     private val arrayImage: ArrayList<Drawable> = arrayListOf()
-
     private var waitTime = 0L
-
-
     // 배너 핸들러
     private val bannerHandler = BannerHandler()
-
     //2초마다 자도 배너 스와이프
     private val intervalTime: Long = 2000
 
@@ -77,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
+    // 메뉴 업션 구현(아직 미구헌 추후 추가)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return super.onOptionsItemSelected(item)
     }
@@ -152,6 +138,12 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+
+
+
+
+
 //    fun initTest(){
 //
 //        val startTime = Date().time

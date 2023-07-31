@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class UserDTO(
+
     @SerializedName("accessId")
     @Expose
     val accessId : String,
@@ -16,4 +17,5 @@ data class UserDTO(
     @SerializedName("level")
     @Expose
     val level : Int
+
 ): Serializable

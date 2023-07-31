@@ -1,20 +1,28 @@
-package com.example.searchstudy.network.managers
+package com.example.view.fifa.network.managers
 
-import com.example.searchstudy.network.models.response.*
-import com.example.searchstudy.network.services.FIFAService
+import com.example.view.fifa.network.services.FIFAService
 import com.example.view.fifa.network.models.dto.MatchDTO
 import com.example.view.fifa.network.models.dto.MaxDivisionDTO
 import com.example.view.fifa.network.models.dto.UserDTO
 import retrofit2.Call
-import retrofit2.Callback
 import javax.inject.Inject
-
-
 
 
 class FIFAManagerImpl @Inject constructor(private val service: FIFAService) : FIFAManager {
 
-////-------------------------------------------------------------------------------------
+    override fun requestUserInfo(nickname: String): Call<UserDTO> =
+        service.requestUserInfo(nickname)
+
+    override fun requestOfficialMatchId(accessid: String): Call<ArrayList<String>> =
+        service.requestOfficialMatchId(accessid, matchType = 50, offset = 0, limit = 20)
+
+    override fun requestMatchInfo(matchid: String): Call<MatchDTO> =
+        service.requestMatchInfo(matchid)
+
+    override fun requestMaxDivision(accessid: String): Call<ArrayList<MaxDivisionDTO>> =
+        service.requestMaxDivision(accessid)
+
+    ////-------------------------------------------------------------------------------------
 ////    //여기서 부터 rxjava잠금-1
 //
 ////    override fun requestTest(): Call<FIFAResponse> =
@@ -36,33 +44,8 @@ class FIFAManagerImpl @Inject constructor(private val service: FIFAService) : FI
 ////    여기까지 rxjava잠금-1
 ////-------------------------------------------------------------------------------------
 
-    override fun requestUserInfo(nickname : String): Call<UserDTO> =
-        service.requestUserInfo(nickname)
-
-
-
-    override fun requestOfficialMatchId(accessid : String): Call<ArrayList<String>> =
-        service.requestOfficialMatchId(accessid, matchType = 50, offset = 0, limit = 20)
-
-    override fun requestMatchInfo(matchid: String): Call<MatchDTO> =
-        service.requestMatchInfo(matchid)
-
-    override fun requestMaxDivision( accessid: String): Call<ArrayList<MaxDivisionDTO>> =
-        service.requestMaxDivision(accessid)
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //

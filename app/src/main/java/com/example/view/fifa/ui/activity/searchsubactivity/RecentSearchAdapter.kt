@@ -8,7 +8,6 @@ import com.example.view.fifa.network.models.dto.UserDTO
 
 class RecentSearchAdapter(private val recentSearchRecyclerListener:RecentSearchRecyclerListener,private val searchDataList: ArrayList<UserDTO>) : RecyclerView.Adapter<RecentSearchViewHolder>(){
 
-    // 최근기록이름 데이터
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentSearchViewHolder {
         val itemBinding =
             ItemRecentSearchBinding.inflate(LayoutInflater.from(parent.context), parent, false)

@@ -1,10 +1,16 @@
-package com.example.searchstudy.network.models.response
-
-
+package com.example.view.fifa.network.models.response
 
 data class FIFAResponse(
     val test : String=""
 )
+
+
+
+
+
+
+
+
 
 //data class ResultSearchAll(
 //    @SerializedName("lastBuildDate")

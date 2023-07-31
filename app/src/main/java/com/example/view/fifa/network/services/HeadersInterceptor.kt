@@ -1,4 +1,4 @@
-package com.example.searchstudy.network.services
+package com.example.view.fifa.network.services
 
 
 //import com.example.searchstudy.BuildConfig
@@ -16,12 +16,10 @@ class HeadersInterceptor @Inject constructor(
         private const val CLIENT_ID = BuildConfig.CLIENT_ID
     }
 
-
-//    companion object {
+    //    companion object {
 //        private const val CLIENT_ID = BuildConfig.CLIENT_ID
 ////        private const val CLIENT_SECRET = BuildConfig.CLIENT_SECRET
 //    }
-
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {

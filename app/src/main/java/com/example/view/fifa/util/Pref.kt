@@ -1,4 +1,4 @@
-package com.example.searchstudy.util
+package com.example.view.fifa.util
 
 import android.content.SharedPreferences
 import com.example.view.fifa.network.models.dto.UserDTO
