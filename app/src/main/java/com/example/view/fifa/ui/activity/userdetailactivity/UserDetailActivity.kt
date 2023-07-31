@@ -37,7 +37,7 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
     private fun init() {
         initData()
         initObserve()
-        initLisnear()
+        initListener()
     }
 
 
@@ -63,7 +63,7 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
 
     }
 
-    private fun initLisnear() {
+    private fun initListener() {
 
         //스크롤에 따른 최상당 topBar 보여주기
         binding.nsv.setOnScrollChangeListener(OnScrollChangeListener { view, scrollX, scrollY, oldScrollX, oldScrollY ->

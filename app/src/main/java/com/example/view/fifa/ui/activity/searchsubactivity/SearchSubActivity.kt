@@ -15,6 +15,7 @@ import com.example.view.fifa.util.onTextChanged
 import com.example.view.fifa.databinding.ActivitySearchSubBinding
 import com.example.view.fifa.network.models.dto.UserDTO
 import com.example.view.fifa.ui.activity.userdetailactivity.UserDetailActivity
+import com.example.view.fifa.ui.dialog.LoadingProgressDialog
 import com.example.view.fifa.viewmodels.SearchSubViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -28,6 +29,7 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
     private lateinit var searchDataList: ArrayList<UserDTO>
     private lateinit var binding: ActivitySearchSubBinding
     private lateinit var searchRecentAdapter: RecentSearchAdapter
+    private lateinit var loadingProgressDialog: LoadingProgressDialog
     private val viewModel: SearchSubViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,10 +42,11 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
     private fun init() {
         initData()
         initObserve()
-        initLisnear()
+        initListener()
     }
 
     private fun initData() {
+        loadingProgressDialog = LoadingProgressDialog(this)
         binding.etSearch.requestFocus()
         searchDataList = pref.getSearchList() as ArrayList<UserDTO>
         setSearchRecentAdapter(searchDataList)
@@ -77,13 +80,15 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
             intent.putExtra("ArrayList<MatchDTO>",it)
             intent.putExtra("SearchUserDTO",viewModel.userdto.value)
             intent.putExtra("userRank",viewModel.userRank.value)
+            loadingProgressDialog.dismiss()
             startActivity(intent)
         }
     }
 
-    private fun initLisnear() {
+    private fun initListener() {
         //검색어 입력값에 따른 검색어 지우기 버튼 유무
         binding.etSearch.apply {
+
             this.onTextChanged { s, start, before, after ->
                 if (binding.etSearch.text.toString().isNotEmpty()) {
                     binding.btnTextClear.visibility = View.VISIBLE
@@ -94,8 +99,10 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
 
             //키보드에 검색Action 설정
             this.setOnEditorActionListener { textView, actionId, keyEvent ->
+
                 when (actionId) {
                     EditorInfo.IME_ACTION_SEARCH -> {
+                        loadingProgressDialog.show()
                         if (textView.text.isNullOrBlank()) {
                             Log.e("cyc", "검색 값이 null 이거나 비어있을때 ")
                             false
@@ -193,6 +200,7 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
      */
     override fun onItemClick(position: Int, nickname: String) {
         //해당 아이템 클릭시
+        loadingProgressDialog.show()
         viewModel.requestUserInfo(nickname,Constants.RECENT_SEARCH_SAVE_FALSE)
 
     }

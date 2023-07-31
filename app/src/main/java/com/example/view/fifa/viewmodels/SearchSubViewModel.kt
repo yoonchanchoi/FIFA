@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.searchstudy.network.managers.FIFAManager
+import com.example.view.fifa.network.managers.FIFAManager
 import com.example.view.fifa.network.models.dto.MatchDTO
 import com.example.view.fifa.network.models.dto.MatchIdDTO
 import com.example.view.fifa.network.models.dto.MaxDivisionDTO
