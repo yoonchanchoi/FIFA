@@ -13,6 +13,7 @@ import com.example.view.fifa.databinding.ItemUserRecordBinding
 import com.example.view.fifa.network.models.dto.MatchDTO
 import com.example.view.fifa.network.models.dto.MatchInfoDTO
 import com.example.view.fifa.network.models.dto.UserDTO
+import com.example.view.fifa.util.Util
 import java.text.SimpleDateFormat
 
 class UserMatchViewHolder(
@@ -47,12 +48,13 @@ class UserMatchViewHolder(
         }
 
         //매칭의 승패에 따른 색깔 결정
-        matchResultViewColor(matchDTO.matchInfo[0],matchDTO.matchInfo[1], userDTO.nickname)
+//        matchResultViewColor(matchDTO.matchInfo[0],matchDTO.matchInfo[1], userDTO.nickname)
+        Util.matchResultViewColor(matchDTO.matchInfo[0],matchDTO.matchInfo[1], userDTO.nickname, binding.clUserRecordItem, context)
 
         //아이템 선택에 따른 리스너(인터페이스 내용을 구현해야됨)
         binding.clUserRecordItem.setOnClickListener {
             userMatchRecyclerListener.onItemClick(
-                bindingAdapterPosition
+                matchDTO, userDTO.nickname
             )
         }
     }

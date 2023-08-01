@@ -79,7 +79,7 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
             val intent = Intent(this,UserDetailActivity::class.java)
             intent.putExtra("ArrayList<MatchDTO>",it)
             intent.putExtra("SearchUserDTO",viewModel.userdto.value)
-            intent.putExtra("userRank",viewModel.userRank.value)
+            intent.putExtra("UserRank",viewModel.userRank.value)
             loadingProgressDialog.dismiss()
             startActivity(intent)
         }

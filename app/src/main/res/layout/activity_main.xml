@@ -24,7 +24,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="130dp"
         android:layout_marginBottom="250dp"
-        android:background="@drawable/shape_outbalck_inwhite_bg"
+        android:background="@drawable/shape_outbalck_inwhite_round_bg"
         android:drawableTop="@drawable/ic_baseline_search"
         android:paddingVertical="50dp"
         android:text="@string/MainActivity_search_tag"

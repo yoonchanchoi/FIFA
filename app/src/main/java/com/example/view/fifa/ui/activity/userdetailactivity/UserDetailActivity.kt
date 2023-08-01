@@ -1,5 +1,6 @@
 package com.example.view.fifa.ui.activity.userdetailactivity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,7 @@ import com.example.view.fifa.util.Pref
 import com.example.view.fifa.databinding.ActivityUserDetailBinding
 import com.example.view.fifa.network.models.dto.MatchDTO
 import com.example.view.fifa.network.models.dto.UserDTO
+import com.example.view.fifa.ui.activity.matchdetailactivity.MatchDetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -44,11 +46,13 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
     private fun initData() {
         //검색 페이지에서 넘어온값 확인 및 세팅
         val intent = intent
-        matchDTOList = intent.getSerializableExtra("ArrayList<MatchDTO>") as ArrayList<MatchDTO>
+        intent.getSerializableExtra("ArrayList<MatchDTO>")?.let {
+            matchDTOList = it as ArrayList<MatchDTO>
+        }
         intent.getSerializableExtra("SearchUserDTO")?.let {
             userDTO = it as UserDTO
         }
-        intent.getStringExtra("userRank")?.let {
+        intent.getStringExtra("UserRank")?.let {
             userRank = it
         }
         binding.tvUserNickname.text = userDTO.nickname
@@ -110,15 +114,16 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
         }
     }
 
-    //없어질 기능
-    override fun onItemDelete(position: Int) {
-        TODO("Not yet implemented")
+    //곧 구헌해야됨
+    override fun onItemClick(matchDTO: MatchDTO, nickName: String) {
+        val intent = Intent(this,MatchDetailActivity::class.java)
+        intent.putExtra("MatchDTO",matchDTO)
+        intent.putExtra("NickName",nickName)
+        startActivity(intent)
+
     }
 
-    //곧 구헌해야됨
-    override fun onItemClick(position: Int) {
-        TODO("Not yet implemented")
-    }
+
 
     //해당 view의 y좌표 구하기 (기능 및 맞게 돌아가지만 확실하지 않음 재공부 및  다시 구현해야됨)
     private fun isTouchInside(view: View): Int {
