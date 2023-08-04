@@ -16,7 +16,7 @@
         android:theme="@style/Theme.FIFA"
         tools:targetApi="31">
         <activity
-            android:name=".MatchDetailActivity"
+            android:name=".ui.activity.matchdetailactivity.MatchDetailActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

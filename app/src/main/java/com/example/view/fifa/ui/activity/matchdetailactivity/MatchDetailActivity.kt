@@ -1,11 +1,20 @@
 package com.example.view.fifa.ui.activity.matchdetailactivity
 
+import android.content.Context
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
+import android.graphics.PorterDuff
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.core.content.ContextCompat
+import com.example.view.fifa.R
 import com.example.view.fifa.databinding.ActivityMatchDetailBinding
 import com.example.view.fifa.databinding.ActivitySearchSubBinding
 import com.example.view.fifa.databinding.ActivityUserDetailBinding
 import com.example.view.fifa.network.models.dto.MatchDTO
+import com.example.view.fifa.network.models.dto.MatchInfoDTO
 import com.example.view.fifa.network.models.dto.UserDTO
 import com.example.view.fifa.util.Pref
 import com.example.view.fifa.util.Util
@@ -61,9 +70,12 @@ class MatchDetailActivity : AppCompatActivity() {
             dayOut = dayOutFormat.format(tempDate)
             return@with dayOut
         }
+        binding.tvTitleUserNickname.text = nickName
+        matchDetailResultViewColor(matchDTO.matchInfo[0],binding.linearMy, this)
+        matchDetailResultViewColor(matchDTO.matchInfo[1],binding.linearOpponent, this)
 
-        Util.matchResultViewColor(matchDTO.matchInfo[0], matchDTO.matchInfo[1],nickName,binding.linearMy, this)
-        Util.matchResultViewColor(matchDTO.matchInfo[0], matchDTO.matchInfo[1],nickName,binding.linearOpponent, this)
+
+        //어댑터 세팅2개 각각의 어댑터
 
     }
 
@@ -77,5 +89,63 @@ class MatchDetailActivity : AppCompatActivity() {
         }
     }
 
+
+    /**
+     * 유저의 승패에 따른 색깔 결정
+     */
+    private fun matchDetailResultViewColor(
+        matchInfoUser: MatchInfoDTO,
+        view: View,
+        context: Context
+    ) {
+        when (matchInfoUser.matchDetail.matchResult) {
+            "승" -> {
+                val color = ContextCompat.getColor(context, R.color.clr_E1EFFF)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    view.background.colorFilter = BlendModeColorFilter(
+                        (color),
+                        BlendMode.SRC_ATOP
+                    )
+                } else {
+                    view.background.setColorFilter(
+                        color,
+                        PorterDuff.Mode.SRC_IN
+                    )
+                }
+            }
+            "패" -> {
+                val color = ContextCompat.getColor(context, R.color.clr_FEE7EF)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    view.background.colorFilter = BlendModeColorFilter(
+                        (color),
+                        BlendMode.SRC_ATOP
+                    )
+                } else {
+                    view.background.setColorFilter(
+                        color,
+                        PorterDuff.Mode.SRC_IN
+                    )
+                }
+            }
+            "무" -> {
+                val color = ContextCompat.getColor(context, R.color.clr_ECEEF0)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    view.background.colorFilter = BlendModeColorFilter(
+                        (color),
+                        BlendMode.SRC_ATOP
+                    )
+                } else {
+                    view.background.setColorFilter(
+                        color,
+                        PorterDuff.Mode.SRC_IN
+                    )
+                }
+            }
+            // 추후에 처리
+//            else ->{
+//                Log.e("cyc","숭패에 승, 패, 무, 어떤한 값도 없음")
+//            }
+        }
+    }
 
 }
