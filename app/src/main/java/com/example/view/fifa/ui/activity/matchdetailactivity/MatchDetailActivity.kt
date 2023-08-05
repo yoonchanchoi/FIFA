@@ -9,13 +9,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.view.fifa.R
 import com.example.view.fifa.databinding.ActivityMatchDetailBinding
 import com.example.view.fifa.databinding.ActivitySearchSubBinding
 import com.example.view.fifa.databinding.ActivityUserDetailBinding
 import com.example.view.fifa.network.models.dto.MatchDTO
 import com.example.view.fifa.network.models.dto.MatchInfoDTO
+import com.example.view.fifa.network.models.dto.MatchPlayDTO
 import com.example.view.fifa.network.models.dto.UserDTO
+import com.example.view.fifa.ui.activity.userdetailactivity.UserMatchAdapter
 import com.example.view.fifa.util.Pref
 import com.example.view.fifa.util.Util
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,6 +34,11 @@ class MatchDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMatchDetailBinding
     private lateinit var matchDTO: MatchDTO
     private lateinit var nickName: String
+    private lateinit var matchMyPlayerAdapter: MatchPlayerAdapter
+    private lateinit var matchOpponentPlayerAdapter: MatchPlayerAdapter
+    private lateinit var matchMyPlayerDTOList: ArrayList<MatchPlayDTO>
+    private lateinit var matchOpponentPlayerDTOList: ArrayList<MatchPlayDTO>
+
 
 
 
@@ -74,8 +82,9 @@ class MatchDetailActivity : AppCompatActivity() {
         matchDetailResultViewColor(matchDTO.matchInfo[0],binding.linearMy, this)
         matchDetailResultViewColor(matchDTO.matchInfo[1],binding.linearOpponent, this)
 
-
         //어댑터 세팅2개 각각의 어댑터
+        setMatchMyPlayerAdapter(matchMyPlayerDTOList)
+        setMatchOpponentPlayerAdapter(matchOpponentPlayerDTOList)
 
     }
 
@@ -86,6 +95,36 @@ class MatchDetailActivity : AppCompatActivity() {
     private fun initListener() {
         binding.btnBack.setOnClickListener {
             this.finish()
+        }
+    }
+
+
+
+    /**
+     *
+     */
+    private fun setMatchMyPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayDTO>) {
+        matchMyPlayerAdapter = MatchPlayerAdapter(matchPlayerDTOList)
+        val searchLinearLayoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        searchLinearLayoutManager.stackFromEnd = true // 키보드 열릴시 recycclerview 스크롤 처리
+        binding.rvMy.apply {
+            layoutManager = searchLinearLayoutManager
+            adapter = matchMyPlayerAdapter
+        }
+    }
+
+    /**
+     *
+     */
+    private fun setMatchOpponentPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayDTO>) {
+        matchOpponentPlayerAdapter = MatchPlayerAdapter(matchPlayerDTOList)
+        val searchLinearLayoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        searchLinearLayoutManager.stackFromEnd = true // 키보드 열릴시 recycclerview 스크롤 처리
+        binding.rvMy.apply {
+            layoutManager = searchLinearLayoutManager
+            adapter = matchOpponentPlayerAdapter
         }
     }
 
