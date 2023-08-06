@@ -22,6 +22,7 @@ class FIFAManagerImpl @Inject constructor(private val service: FIFAService) : FI
     override fun requestMaxDivision(accessid: String): Call<ArrayList<MaxDivisionDTO>> =
         service.requestMaxDivision(accessid)
 
+
     ////-------------------------------------------------------------------------------------
 ////    //여기서 부터 rxjava잠금-1
 //

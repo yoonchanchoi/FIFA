@@ -12,15 +12,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.view.fifa.R
 import com.example.view.fifa.databinding.ActivityMatchDetailBinding
-import com.example.view.fifa.databinding.ActivitySearchSubBinding
-import com.example.view.fifa.databinding.ActivityUserDetailBinding
 import com.example.view.fifa.network.models.dto.MatchDTO
 import com.example.view.fifa.network.models.dto.MatchInfoDTO
-import com.example.view.fifa.network.models.dto.MatchPlayDTO
-import com.example.view.fifa.network.models.dto.UserDTO
-import com.example.view.fifa.ui.activity.userdetailactivity.UserMatchAdapter
+import com.example.view.fifa.network.models.dto.MatchPlayerDTO
 import com.example.view.fifa.util.Pref
-import com.example.view.fifa.util.Util
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import javax.inject.Inject
@@ -36,8 +31,8 @@ class MatchDetailActivity : AppCompatActivity() {
     private lateinit var nickName: String
     private lateinit var matchMyPlayerAdapter: MatchPlayerAdapter
     private lateinit var matchOpponentPlayerAdapter: MatchPlayerAdapter
-    private lateinit var matchMyPlayerDTOList: ArrayList<MatchPlayDTO>
-    private lateinit var matchOpponentPlayerDTOList: ArrayList<MatchPlayDTO>
+    private lateinit var matchMyPlayerDTOList: ArrayList<MatchPlayerDTO>
+    private lateinit var matchOpponentPlayerDTOList: ArrayList<MatchPlayerDTO>
 
 
 
@@ -103,7 +98,7 @@ class MatchDetailActivity : AppCompatActivity() {
     /**
      *
      */
-    private fun setMatchMyPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayDTO>) {
+    private fun setMatchMyPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayerDTO>) {
         matchMyPlayerAdapter = MatchPlayerAdapter(matchPlayerDTOList)
         val searchLinearLayoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -117,7 +112,7 @@ class MatchDetailActivity : AppCompatActivity() {
     /**
      *
      */
-    private fun setMatchOpponentPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayDTO>) {
+    private fun setMatchOpponentPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayerDTO>) {
         matchOpponentPlayerAdapter = MatchPlayerAdapter(matchPlayerDTOList)
         val searchLinearLayoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
