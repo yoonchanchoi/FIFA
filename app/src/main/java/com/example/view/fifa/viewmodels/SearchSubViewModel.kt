@@ -6,10 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.view.fifa.network.managers.FIFAManager
-import com.example.view.fifa.network.models.dto.MatchDTO
-import com.example.view.fifa.network.models.dto.MatchIdDTO
-import com.example.view.fifa.network.models.dto.MaxDivisionDTO
-import com.example.view.fifa.network.models.dto.UserDTO
+import com.example.view.fifa.network.managers.FIFAMetadataManager
+import com.example.view.fifa.network.models.dto.*
 //import com.example.view.fifa.network.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
@@ -26,7 +24,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchSubViewModel @Inject constructor(
-    private val fifaManager: FIFAManager
+    private val fifaManager: FIFAManager,
+    //Test
+    private val fifaMetadataManager: FIFAMetadataManager
 //rxjava(용)
 //    private val repository: Repository
 ) : ViewModel() {
@@ -73,7 +73,35 @@ class SearchSubViewModel @Inject constructor(
     val userRank: LiveData<String>
         get() = _userRank
 
+    //Test
+    private val _testMetadataDTOList = MutableLiveData<ArrayList<SpidDTO>>()
+    val testMetadataDTOList: LiveData<ArrayList<SpidDTO>>
+        get() = _testMetadataDTOList
 
+
+    //Test
+    fun requestTest(){
+        val result = fifaMetadataManager.requestSpid()
+        result.enqueue(object : Callback<ArrayList<SpidDTO>>{
+            override fun onResponse(call: Call<ArrayList<SpidDTO>>, response: Response<ArrayList<SpidDTO>>) {
+                Log.e("cyc","뷰모텔 테스트 매타데이터----->>${response.body()}")
+                if(response.isSuccessful) {
+                    response.body()?.let {
+                        _testMetadataDTOList.postValue(it)
+                        Log.e("cyc", "성공")
+                    }
+                }else{
+                    Log.e("cyc", "통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
+                }
+            }
+
+            override fun onFailure(call: Call<ArrayList<SpidDTO>>, t: Throwable) {
+                Log.e("cyc", "통신실패 (인터넷 연결의 문제, 예외발생)")
+
+            }
+
+        })
+    }
 
 
     fun requestUserInfo(nickname: String,recentSearchSaveCheck: Boolean){

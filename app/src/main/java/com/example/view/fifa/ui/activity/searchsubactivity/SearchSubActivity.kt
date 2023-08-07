@@ -36,7 +36,11 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchSubBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        init()
+
+        //test
+        testInit()
+
+//        init()
     }
 
     private fun init() {
@@ -211,5 +215,17 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
     private fun checkNoRecentSearchView() {
         binding.tvNoRecentSearch.visibility =
             if (searchRecentAdapter.itemCount > 0) View.INVISIBLE else View.VISIBLE
+    }
+
+    //test
+    private fun testInit() {
+        viewModel.requestTest()
+        testObserve()
+    }
+
+    private fun testObserve() {
+        viewModel.testMetadataDTOList.observe(this){
+            Log.e("cyc","test--매타 데이터 ---->${it}")
+        }
     }
 }

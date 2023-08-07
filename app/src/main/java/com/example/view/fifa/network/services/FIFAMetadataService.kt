@@ -1,40 +1,15 @@
 package com.example.view.fifa.network.services
 
 import com.example.view.fifa.network.models.response.*
-import com.example.view.fifa.network.models.dto.MatchDTO
-import com.example.view.fifa.network.models.dto.MaxDivisionDTO
-import com.example.view.fifa.network.models.dto.UserDTO
+import com.example.view.fifa.network.models.dto.SpidDTO
 import retrofit2.Call
 import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
 
 
-interface FIFAService {
+interface FIFAMetadataService {
 
-    @GET("users")
-    fun requestUserInfo(
-        @Query("nickname") nicknamee: String
-    ): Call<UserDTO>
-
-    @GET("users/{accessId}/matches")
-    fun  requestOfficialMatchId(
-        @Path("accessId") accessId : String,
-        @Query("matchType") matchType : Int,
-        @Query("offset") offset : Int,
-        @Query("limit") limit : Int,
-    ) : Call<ArrayList<String>>
-
-    @GET("matches/{matchId}")
-    fun requestMatchInfo(
-        @Path("matchId") matchId: String
-    ): Call<MatchDTO>
-
-
-    @GET("users/{accessId}/maxdivision")
-    fun  requestMaxDivision(
-        @Path("accessId") accessId: String
-    ): Call<ArrayList<MaxDivisionDTO>>
+    @GET("spid.json")
+    fun  requestSpid(): Call<ArrayList<SpidDTO>>
 
 }
 

@@ -6,15 +6,18 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.view.fifa.R
 import com.example.view.fifa.databinding.ActivityMainBinding
 import com.example.view.fifa.ui.activity.searchsubactivity.SearchSubActivity
 import com.example.view.fifa.util.Pref
+import com.example.view.fifa.viewmodels.SearchSubViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlin.collections.ArrayList
@@ -138,8 +141,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
-
 
 
 

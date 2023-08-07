@@ -8,6 +8,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.view.fifa.R
@@ -16,6 +17,7 @@ import com.example.view.fifa.network.models.dto.MatchDTO
 import com.example.view.fifa.network.models.dto.MatchInfoDTO
 import com.example.view.fifa.network.models.dto.MatchPlayerDTO
 import com.example.view.fifa.util.Pref
+import com.example.view.fifa.viewmodels.SearchSubViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import javax.inject.Inject
@@ -35,8 +37,6 @@ class MatchDetailActivity : AppCompatActivity() {
     private lateinit var matchOpponentPlayerDTOList: ArrayList<MatchPlayerDTO>
 
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMatchDetailBinding.inflate(layoutInflater)
@@ -44,15 +44,15 @@ class MatchDetailActivity : AppCompatActivity() {
         init()
     }
 
-    private fun init(){
+    private fun init() {
         initData()
         initObserve()
         initListener()
     }
 
-    private fun initData(){
+    private fun initData() {
         val intent = intent
-        intent.getSerializableExtra("MatchDTO")?.let{
+        intent.getSerializableExtra("MatchDTO")?.let {
             matchDTO = it as MatchDTO
         }
         intent.getStringExtra("NickName")?.let {
@@ -66,7 +66,7 @@ class MatchDetailActivity : AppCompatActivity() {
         binding.tvMonth.text = date[0]
         binding.tvDay.text = with(date[1]) {
             // 시간 형식 HH:mm:ss--->HH:mm 변경
-            var dayOut=""
+            var dayOut = ""
             val dayIntFormat = SimpleDateFormat("HH:mm:ss")
             val dayOutFormat = SimpleDateFormat("HH:mm")
             val tempDate = dayIntFormat.parse(this)
@@ -74,8 +74,8 @@ class MatchDetailActivity : AppCompatActivity() {
             return@with dayOut
         }
         binding.tvTitleUserNickname.text = nickName
-        matchDetailResultViewColor(matchDTO.matchInfo[0],binding.linearMy, this)
-        matchDetailResultViewColor(matchDTO.matchInfo[1],binding.linearOpponent, this)
+        matchDetailResultViewColor(matchDTO.matchInfo[0], binding.linearMy, this)
+        matchDetailResultViewColor(matchDTO.matchInfo[1], binding.linearOpponent, this)
 
         //어댑터 세팅2개 각각의 어댑터
         setMatchMyPlayerAdapter(matchMyPlayerDTOList)
@@ -83,7 +83,7 @@ class MatchDetailActivity : AppCompatActivity() {
 
     }
 
-    private fun initObserve(){
+    private fun initObserve() {
 
     }
 
@@ -92,7 +92,6 @@ class MatchDetailActivity : AppCompatActivity() {
             this.finish()
         }
     }
-
 
 
     /**
@@ -181,5 +180,4 @@ class MatchDetailActivity : AppCompatActivity() {
 //            }
         }
     }
-
 }

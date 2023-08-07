@@ -4,11 +4,12 @@ import com.example.view.fifa.network.services.FIFAService
 import com.example.view.fifa.network.models.dto.MatchDTO
 import com.example.view.fifa.network.models.dto.MaxDivisionDTO
 import com.example.view.fifa.network.models.dto.UserDTO
+import com.example.view.fifa.util.idmodule.NetworkProviderModule
 import retrofit2.Call
 import javax.inject.Inject
 
 
-class FIFAManagerImpl @Inject constructor(private val service: FIFAService) : FIFAManager {
+class FIFAManagerImpl @Inject constructor(@NetworkProviderModule.FifaRetrofit private val service: FIFAService) : FIFAManager {
 
     override fun requestUserInfo(nickname: String): Call<UserDTO> =
         service.requestUserInfo(nickname)
