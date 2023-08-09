@@ -28,6 +28,9 @@ class MatchDetailActivity : AppCompatActivity() {
     @Inject
     lateinit var pref: Pref
 
+    private val viewModel: SearchSubViewModel by viewModels()
+
+
     private lateinit var binding: ActivityMatchDetailBinding
     private lateinit var matchDTO: MatchDTO
     private lateinit var nickName: String
@@ -80,7 +83,6 @@ class MatchDetailActivity : AppCompatActivity() {
         //어댑터 세팅2개 각각의 어댑터
         setMatchMyPlayerAdapter(matchMyPlayerDTOList)
         setMatchOpponentPlayerAdapter(matchOpponentPlayerDTOList)
-
     }
 
     private fun initObserve() {

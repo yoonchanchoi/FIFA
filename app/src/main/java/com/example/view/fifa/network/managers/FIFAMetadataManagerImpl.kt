@@ -2,6 +2,7 @@ package com.example.view.fifa.network.managers
 
 
 import com.example.view.fifa.network.models.dto.SpidDTO
+import com.example.view.fifa.network.models.dto.SppositionDTO
 import com.example.view.fifa.network.services.FIFAMetadataService
 import com.example.view.fifa.util.idmodule.NetworkProviderModule
 import retrofit2.Call
@@ -12,5 +13,9 @@ class FIFAMetadataManagerImpl @Inject constructor(@NetworkProviderModule.FifaMet
 
     override fun requestSpid(): Call<ArrayList<SpidDTO>> =
         service.requestSpid()
+
+    override fun requestSpposition(): Call<ArrayList<SppositionDTO>> =
+        service.requestSpposition()
+
 }
 
