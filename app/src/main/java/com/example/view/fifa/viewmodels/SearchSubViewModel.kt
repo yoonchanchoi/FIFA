@@ -73,21 +73,38 @@ class SearchSubViewModel @Inject constructor(
     val userRank: LiveData<String>
         get() = _userRank
 
+
+
+
+//    //Test
+//    private val _spidDTOList = MutableLiveData<ArrayList<SpidDTO>>()
+//    val spidDTOList: LiveData<ArrayList<SpidDTO>>
+//        get() = _spidDTOList
+//
+//    //Test2
+//    private val _sppositionDTOList = MutableLiveData<ArrayList<SppositionDTO>>()
+//    val sppositionDTOList: LiveData<ArrayList<SppositionDTO>>
+//        get() = _sppositionDTOList
+//
+
     //Test
-    private val _testMetadataDTOList = MutableLiveData<ArrayList<SpidDTO>>()
-    val testMetadataDTOList: LiveData<ArrayList<SpidDTO>>
-        get() = _testMetadataDTOList
+    private var _spidDTOList2 = ArrayList<SpidDTO>()
+
+
+    //Test2
+    private var _sppositionDTOList2 = ArrayList<SppositionDTO>()
 
 
     //Test
-    fun requestTest(){
+    fun requestSpid(){
         val result = fifaMetadataManager.requestSpid()
         result.enqueue(object : Callback<ArrayList<SpidDTO>>{
             override fun onResponse(call: Call<ArrayList<SpidDTO>>, response: Response<ArrayList<SpidDTO>>) {
                 Log.e("cyc","뷰모텔 테스트 매타데이터----->>${response.body()}")
                 if(response.isSuccessful) {
                     response.body()?.let {
-                        _testMetadataDTOList.postValue(it)
+//                        _spidDTOList.postValue(it)
+                        _spidDTOList2=it
                         Log.e("cyc", "성공")
                     }
                 }else{
@@ -96,6 +113,32 @@ class SearchSubViewModel @Inject constructor(
             }
 
             override fun onFailure(call: Call<ArrayList<SpidDTO>>, t: Throwable) {
+                Log.e("cyc", "통신실패 (인터넷 연결의 문제, 예외발생)")
+
+            }
+
+        })
+    }
+
+
+    //Test2
+    fun requestSpposition(){
+        val result = fifaMetadataManager.requestSpposition()
+        result.enqueue(object : Callback<ArrayList<SppositionDTO>>{
+            override fun onResponse(call: Call<ArrayList<SppositionDTO>>, response: Response<ArrayList<SppositionDTO>>) {
+                Log.e("cyc","뷰모텔 테스트 매타데이터----->>${response.body()}")
+                if(response.isSuccessful) {
+                    response.body()?.let {
+//                        _sppositionDTOList.postValue(it)
+                        _sppositionDTOList2=it
+                        Log.e("cyc", "성공")
+                    }
+                }else{
+                    Log.e("cyc", "통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
+                }
+            }
+
+            override fun onFailure(call: Call<ArrayList<SppositionDTO>>, t: Throwable) {
                 Log.e("cyc", "통신실패 (인터넷 연결의 문제, 예외발생)")
 
             }
