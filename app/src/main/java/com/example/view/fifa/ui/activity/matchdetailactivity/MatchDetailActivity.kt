@@ -17,6 +17,7 @@ import com.example.view.fifa.network.models.dto.MatchDTO
 import com.example.view.fifa.network.models.dto.MatchInfoDTO
 import com.example.view.fifa.network.models.dto.MatchPlayerDTO
 import com.example.view.fifa.util.Pref
+import com.example.view.fifa.viewmodels.MatchDetailViewModel
 import com.example.view.fifa.viewmodels.SearchSubViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -28,7 +29,7 @@ class MatchDetailActivity : AppCompatActivity() {
     @Inject
     lateinit var pref: Pref
 
-    private val viewModel: SearchSubViewModel by viewModels()
+    private val viewModel: MatchDetailViewModel by viewModels()
 
 
     private lateinit var binding: ActivityMatchDetailBinding
@@ -54,6 +55,9 @@ class MatchDetailActivity : AppCompatActivity() {
     }
 
     private fun initData() {
+        viewModel.requestSpid()
+        viewModel.requestSpposition()
+
         val intent = intent
         intent.getSerializableExtra("MatchDTO")?.let {
             matchDTO = it as MatchDTO
@@ -79,6 +83,8 @@ class MatchDetailActivity : AppCompatActivity() {
         binding.tvTitleUserNickname.text = nickName
         matchDetailResultViewColor(matchDTO.matchInfo[0], binding.linearMy, this)
         matchDetailResultViewColor(matchDTO.matchInfo[1], binding.linearOpponent, this)
+
+
 
         //어댑터 세팅2개 각각의 어댑터
         setMatchMyPlayerAdapter(matchMyPlayerDTOList)
