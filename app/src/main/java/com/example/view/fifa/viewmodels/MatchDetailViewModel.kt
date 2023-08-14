@@ -30,6 +30,15 @@ class MatchDetailViewModel @Inject constructor(
 //    val sppositionDTOList: LiveData<ArrayList<SppositionDTO>>
 //        get() = _sppositionDTOList
 //
+
+    private val _matchMyPlayerDTOList = MutableLiveData<ArrayList<MatchPlayerDTO>>()
+    val matchMyPlayerDTOList: LiveData<ArrayList<MatchPlayerDTO>>
+        get() = _matchMyPlayerDTOList
+
+    private val _matchOpponentPlayerDTOList = MutableLiveData<ArrayList<MatchPlayerDTO>>()
+    val matchOpponentPlayerDTOList: LiveData<ArrayList<MatchPlayerDTO>>
+        get() = _matchOpponentPlayerDTOList
+
     private var _spidDTOList2 = ArrayList<SpidDTO>()
 
     private var _sppositionDTOList2 = ArrayList<SppositionDTO>()
@@ -91,8 +100,27 @@ class MatchDetailViewModel @Inject constructor(
     }
 
     fun setPlayer(matchDTO: MatchDTO){
+        matchDTO.matchInfo[0].player.forEach { playDto ->
+            playDto.spId
+            _spidDTOList2.forEach { spidDto ->
+                spidDto.id
+            }
+        }
+        matchDTO.matchInfo[1].player.forEach {
 
-
+        }
     }
+
+
+//    private fun pickUpPlayer(id: Int, position: Int): ArrayList<MatchPlayerDTO>{
+//        val tempMatchPlayer = ArrayList<MatchPlayerDTO>()
+//        val name =""
+//        _spidDTOList2.forEach {
+//            if(it.id==id){
+//
+//            }
+//        }
+//        tempMatchPlayer.add(MatchPlayerDTO(,))
+//    }
 
 }
