@@ -99,12 +99,11 @@ class MatchDetailViewModel @Inject constructor(
         })
     }
 
+
+    //아...어케해야되냐......
     fun setPlayer(matchDTO: MatchDTO){
         matchDTO.matchInfo[0].player.forEach { playDto ->
-            playDto.spId
-            _spidDTOList2.forEach { spidDto ->
-                spidDto.id
-            }
+
         }
         matchDTO.matchInfo[1].player.forEach {
 
@@ -112,15 +111,16 @@ class MatchDetailViewModel @Inject constructor(
     }
 
 
-//    private fun pickUpPlayer(id: Int, position: Int): ArrayList<MatchPlayerDTO>{
-//        val tempMatchPlayer = ArrayList<MatchPlayerDTO>()
-//        val name =""
-//        _spidDTOList2.forEach {
-//            if(it.id==id){
-//
-//            }
-//        }
-//        tempMatchPlayer.add(MatchPlayerDTO(,))
-//    }
+    //아...어케해야되냐......
+    private fun pickUpPlayer(id: Int, position: Int):MatchPlayerDTO{
+        val tempMatchPlayerDTO = MatchPlayerDTO("","")
+        val name =""
+        _spidDTOList2.forEach {
+            if(it.id==id){
+
+            }
+        }
+        return tempMatchPlayerDTO
+    }
 
 }
