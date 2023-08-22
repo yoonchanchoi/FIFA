@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.view.fifa.network.managers.FIFAManager
 import com.example.view.fifa.network.managers.FIFAMetadataManager
 import com.example.view.fifa.network.models.dto.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,13 +30,17 @@ class MatchDetailViewModel @Inject constructor(
 //        get() = _sppositionDTOList
 //
 
-    private val _matchMyPlayerDTOList = MutableLiveData<ArrayList<MatchPlayerDTO>>()
-    val matchMyPlayerDTOList: LiveData<ArrayList<MatchPlayerDTO>>
-        get() = _matchMyPlayerDTOList
+//    private val _matchMyPlayerDTOList = MutableLiveData<ArrayList<MatchPlayerDTO>>()
+//    val matchMyPlayerDTOList: LiveData<ArrayList<MatchPlayerDTO>>
+//        get() = _matchMyPlayerDTOList
+//
+//    private val _matchOpponentPlayerDTOList = MutableLiveData<ArrayList<MatchPlayerDTO>>()
+//    val matchOpponentPlayerDTOList: LiveData<ArrayList<MatchPlayerDTO>>
+//        get() = _matchOpponentPlayerDTOList
 
-    private val _matchOpponentPlayerDTOList = MutableLiveData<ArrayList<MatchPlayerDTO>>()
-    val matchOpponentPlayerDTOList: LiveData<ArrayList<MatchPlayerDTO>>
-        get() = _matchOpponentPlayerDTOList
+    private val _matchMyPlayerDTOList = ArrayList<MatchPlayerDTO>()
+
+    private val _matchOpponentPlayerDTOList = ArrayList<MatchPlayerDTO>()
 
     private var _spidDTOList2 = ArrayList<SpidDTO>()
 
@@ -102,25 +105,34 @@ class MatchDetailViewModel @Inject constructor(
 
     //아...어케해야되냐......
     fun setPlayer(matchDTO: MatchDTO){
-        matchDTO.matchInfo[0].player.forEach { playDto ->
-
+        matchDTO.matchInfo[0].player.forEach {
+            _matchMyPlayerDTOList.add(pickUpPlayer(it.spId,it.spPosition))
+//            if(matchDTO.matchInfo[0].player.indexOf(it) == matchDTO.matchInfo[0].player.size-1){
+//            }
         }
         matchDTO.matchInfo[1].player.forEach {
-
+            _matchOpponentPlayerDTOList.add(pickUpPlayer(it.spId,it.spPosition))
+//            if(matchDTO.matchInfo[0].player.indexOf(it) == matchDTO.matchInfo[0].player.size-1){
+//            }
         }
     }
 
 
     //아...어케해야되냐......
-    private fun pickUpPlayer(id: Int, position: Int):MatchPlayerDTO{
-        val tempMatchPlayerDTO = MatchPlayerDTO("","")
-        val name =""
+    private fun pickUpPlayer(id: Int, position: Int): MatchPlayerDTO {
+        var name = ""
+        var desc = ""
         _spidDTOList2.forEach {
-            if(it.id==id){
-
+            if (it.id == id) {
+                name = it.name
             }
         }
-        return tempMatchPlayerDTO
+        _sppositionDTOList2.forEach {
+            if (it.spposition == position) {
+                desc = it.desc
+            }
+        }
+        return MatchPlayerDTO(name, desc)
     }
 
 }
