@@ -7,6 +7,7 @@ import android.graphics.PorterDuff
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -16,6 +17,7 @@ import com.example.view.fifa.databinding.ActivityMatchDetailBinding
 import com.example.view.fifa.network.models.dto.MatchDTO
 import com.example.view.fifa.network.models.dto.MatchInfoDTO
 import com.example.view.fifa.network.models.dto.MatchPlayerDTO
+import com.example.view.fifa.network.models.dto.SppositionDTO
 import com.example.view.fifa.util.Pref
 import com.example.view.fifa.viewmodels.MatchDetailViewModel
 import com.example.view.fifa.viewmodels.SearchSubViewModel
@@ -31,7 +33,6 @@ class MatchDetailActivity : AppCompatActivity() {
 
     private val viewModel: MatchDetailViewModel by viewModels()
 
-
     private lateinit var binding: ActivityMatchDetailBinding
     private lateinit var matchDTO: MatchDTO
     private lateinit var nickName: String
@@ -39,6 +40,9 @@ class MatchDetailActivity : AppCompatActivity() {
     private lateinit var matchOpponentPlayerAdapter: MatchPlayerAdapter
     private lateinit var matchMyPlayerDTOList: ArrayList<MatchPlayerDTO>
     private lateinit var matchOpponentPlayerDTOList: ArrayList<MatchPlayerDTO>
+
+    private var spidDtoListCheck: Boolean = false
+    private var sppositionDtoListCheck: Boolean = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,9 +59,11 @@ class MatchDetailActivity : AppCompatActivity() {
     }
 
     private fun initData() {
+//        각각의 선수 값 및 포지션 전체 값가져오기(추후에 split화면 구현시 split화면에 옮길 것 생각하기)
         viewModel.requestSpid()
         viewModel.requestSpposition()
 
+        //화면이 보여질때 가져올 데이터 intent
         val intent = intent
         intent.getSerializableExtra("MatchDTO")?.let {
             matchDTO = it as MatchDTO
@@ -65,6 +71,7 @@ class MatchDetailActivity : AppCompatActivity() {
         intent.getStringExtra("NickName")?.let {
             nickName = it
         }
+        //유저 이름 및 점수를 화면에 설정
         binding.tvMyUser.text = matchDTO.matchInfo[0].nickname
         binding.tvMyScore.text = matchDTO.matchInfo[0].shoot.goalTotal.toString()
         binding.tvOpponentUser.text = matchDTO.matchInfo[1].nickname
@@ -81,18 +88,59 @@ class MatchDetailActivity : AppCompatActivity() {
             return@with dayOut
         }
         binding.tvTitleUserNickname.text = nickName
+
+        //승패에 따른 화면 색깔 지정
         matchDetailResultViewColor(matchDTO.matchInfo[0], binding.linearMy, this)
         matchDetailResultViewColor(matchDTO.matchInfo[1], binding.linearOpponent, this)
 
 
+//        Log.e("cyc","내 선수 명당---->${matchMyPlayerDTOList}")
+//        Log.e("cyc","상대 선수 명당---->${matchOpponentPlayerDTOList}")
 
-        //어댑터 세팅2개 각각의 어댑터
-        setMatchMyPlayerAdapter(matchMyPlayerDTOList)
-        setMatchOpponentPlayerAdapter(matchOpponentPlayerDTOList)
+//        //어댑터 세팅2개 각각의 어댑터
+//        setMatchMyPlayerAdapter(matchMyPlayerDTOList)
+//        setMatchOpponentPlayerAdapter(matchOpponentPlayerDTOList)
     }
 
     private fun initObserve() {
+        viewModel.spidDTOList2.observe(this) {
+            spidDtoListCheck = true
+            if (spidDtoListCheck && sppositionDtoListCheck) {
+                Log.e("cyc", "선수 먼저 true")
 
+                viewModel.setPlayer(matchDTO)
+                matchMyPlayerDTOList = viewModel.tempMatchMyPlayerDTOList
+                matchOpponentPlayerDTOList = viewModel.tempMatchOpponentPlayerDTOList
+                //어댑터 세팅2개 각각의 어댑터
+                setMatchMyPlayerAdapter(matchMyPlayerDTOList)
+                setMatchOpponentPlayerAdapter(matchOpponentPlayerDTOList)
+            }
+
+
+        }
+
+        viewModel.sppositionDTOList2.observe(this) {
+            sppositionDtoListCheck = true
+            if (sppositionDtoListCheck && spidDtoListCheck) {
+                Log.e("cyc", "포지션 먼저 true")
+
+                viewModel.setPlayer(matchDTO)
+                matchMyPlayerDTOList = viewModel.tempMatchMyPlayerDTOList
+                matchOpponentPlayerDTOList = viewModel.tempMatchOpponentPlayerDTOList
+                //어댑터 세팅2개 각각의 어댑터
+                setMatchMyPlayerAdapter(matchMyPlayerDTOList)
+                setMatchOpponentPlayerAdapter(matchOpponentPlayerDTOList)
+            }
+
+        }
+
+
+//        viewModel.matchMyPlayerDTOList.observe(this){
+//            matchMyPlayerDTOList=it
+//        }
+//        viewModel.matchOpponentPlayerDTOList.observe(this){
+//            matchOpponentPlayerDTOList=it
+//        }
     }
 
     private fun initListener() {
@@ -124,7 +172,7 @@ class MatchDetailActivity : AppCompatActivity() {
         val searchLinearLayoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         searchLinearLayoutManager.stackFromEnd = true // 키보드 열릴시 recycclerview 스크롤 처리
-        binding.rvMy.apply {
+        binding.rvOpponent.apply {
             layoutManager = searchLinearLayoutManager
             adapter = matchOpponentPlayerAdapter
         }

@@ -17,6 +17,7 @@ import com.example.view.fifa.R
 import com.example.view.fifa.databinding.ActivityMainBinding
 import com.example.view.fifa.ui.activity.searchsubactivity.SearchSubActivity
 import com.example.view.fifa.util.Pref
+import com.example.view.fifa.viewmodels.MatchDetailViewModel
 import com.example.view.fifa.viewmodels.SearchSubViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
