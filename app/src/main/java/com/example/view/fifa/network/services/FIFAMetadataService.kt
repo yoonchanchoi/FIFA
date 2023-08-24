@@ -5,9 +5,16 @@ import com.example.view.fifa.network.models.dto.SpidDTO
 import com.example.view.fifa.network.models.dto.SppositionDTO
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 
 interface FIFAMetadataService {
+
+//    //test 개별데이터로 선수 이름값이 불러지는지
+//    @GET("{spid}")
+//    fun  testRequestSpid(
+//        @Path("spid") spid: Int
+//    ): Call<SpidDTO>
 
     @GET("spid.json")
     fun  requestSpid(): Call<ArrayList<SpidDTO>>
