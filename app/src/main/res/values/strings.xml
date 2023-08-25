@@ -9,4 +9,8 @@
     <string name="SearchSubActivity_recent_search_title_tag">최근 검색어</string>
     <string name="SearchSubActivty_delete_all">전체 삭제</string>
     <string name="SearchSubActivity_no_recent_search">최근 검색된 단어가 없습니다.</string>
+
+    <!--MatchDetailActivity Detail data String 형식 -->
+    <string name="MatchDetailActivity_detail_data_form"> %1s / %2s</string>
+
 </resources>

@@ -1,6 +1,8 @@
 package com.example.view.fifa.util
 
 import android.content.SharedPreferences
+import com.example.view.fifa.network.models.dto.SpidDTO
+import com.example.view.fifa.network.models.dto.SppositionDTO
 import com.example.view.fifa.network.models.dto.UserDTO
 import com.google.gson.Gson
 import javax.inject.Inject
@@ -28,8 +30,45 @@ class Pref @Inject constructor(private val pref: SharedPreferences) {
             }
         }
         return saveSearchList
-
     }
+
+    fun saveAllSpidList(allSpidList: MutableList<SpidDTO>){
+        val allSpidListString: String = Gson().toJson(allSpidList)
+        val editor: SharedPreferences.Editor = pref.edit()
+        editor.putString(Constants.PREF_KEY_ALL_SPID, allSpidListString)
+        editor.apply()
+    }
+
+    fun getAllSpidList(): MutableList<SpidDTO> {
+        var saveAllSpidList = ArrayList<SpidDTO>()
+        pref.getString(Constants.PREF_KEY_ALL_SPID, "")?.let {
+            if (it.isNotEmpty()) {
+                saveAllSpidList = Gson().fromJson(it, Array<SpidDTO>::class.java)
+                    .toMutableList() as ArrayList<SpidDTO>
+            }
+        }
+        return saveAllSpidList
+    }
+
+    fun saveAllSppositionList(allSppositionDTOList: MutableList<SppositionDTO>){
+        val allSppositionListString: String = Gson().toJson(allSppositionDTOList)
+        val editor: SharedPreferences.Editor = pref.edit()
+        editor.putString(Constants.PREF_KEY_ALL_SPPOSITION, allSppositionListString)
+        editor.apply()
+    }
+
+    fun getAllSppositionList(): MutableList<SppositionDTO> {
+        var saveAllSppositionList = ArrayList<SppositionDTO>()
+        pref.getString(Constants.PREF_KEY_ALL_SPPOSITION, "")?.let {
+            if (it.isNotEmpty()) {
+                saveAllSppositionList = Gson().fromJson(it, Array<SppositionDTO>::class.java)
+                    .toMutableList() as ArrayList<SppositionDTO>
+            }
+        }
+        return saveAllSppositionList
+    }
+
+
 
     fun putData(key: String, value: Any) {
         when (value) {

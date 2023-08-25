@@ -14,10 +14,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.view.fifa.R
 import com.example.view.fifa.databinding.ActivityMatchDetailBinding
-import com.example.view.fifa.network.models.dto.MatchDTO
-import com.example.view.fifa.network.models.dto.MatchInfoDTO
-import com.example.view.fifa.network.models.dto.MatchPlayerDTO
-import com.example.view.fifa.network.models.dto.SppositionDTO
+import com.example.view.fifa.network.models.dto.*
+import com.example.view.fifa.ui.dialog.LoadingProgressDialog
 import com.example.view.fifa.util.Pref
 import com.example.view.fifa.viewmodels.MatchDetailViewModel
 import com.example.view.fifa.viewmodels.SearchSubViewModel
@@ -39,6 +37,7 @@ class MatchDetailActivity : AppCompatActivity() {
     private lateinit var matchMyPlayerAdapter: MatchPlayerAdapter
     private lateinit var matchOpponentPlayerAdapter: MatchPlayerAdapter
     private lateinit var matchMyPlayerDTOList: ArrayList<MatchPlayerDTO>
+    private lateinit var loadingProgressDialog: LoadingProgressDialog
     private lateinit var matchOpponentPlayerDTOList: ArrayList<MatchPlayerDTO>
 
     private var spidDtoListCheck: Boolean = false
@@ -59,6 +58,10 @@ class MatchDetailActivity : AppCompatActivity() {
     }
 
     private fun initData() {
+        //로딩 프로그래서 시작
+        loadingProgressDialog = LoadingProgressDialog(this)
+        loadingProgressDialog.show()
+
 //        각각의 선수 값 및 포지션 전체 값가져오기(추후에 split화면 구현시 split화면에 옮길 것 생각하기)
         viewModel.requestSpid()
         viewModel.requestSpposition()
@@ -93,6 +96,48 @@ class MatchDetailActivity : AppCompatActivity() {
         matchDetailResultViewColor(matchDTO.matchInfo[0], binding.linearMy, this)
         matchDetailResultViewColor(matchDTO.matchInfo[1], binding.linearOpponent, this)
 
+        //아래 상세 데이터 설정
+        binding.tvAverageRating.text = getString(
+            R.string.MatchDetailActivity_detail_data_form,
+            averageRating(matchDTO.matchInfo[0]),
+            averageRating(matchDTO.matchInfo[1])
+        )
+        binding.tvShooting.text = getString(
+            R.string.MatchDetailActivity_detail_data_form,
+            matchDTO.matchInfo[0].shoot.shootTotal.toString(),
+            matchDTO.matchInfo[1].shoot.shootTotal.toString()
+        )
+        binding.tvEffectiveShootingRating.text = getString(
+            R.string.MatchDetailActivity_detail_data_form,
+            matchDTO.matchInfo[0].shoot.effectiveShootTotal.toString(),
+            matchDTO.matchInfo[1].shoot.effectiveShootTotal.toString()
+        )
+        binding.tvShare.text = getString(
+            R.string.MatchDetailActivity_detail_data_form,
+            matchDTO.matchInfo[0].matchDetail.possession.toString(),
+            matchDTO.matchInfo[1].matchDetail.possession.toString()
+        )
+        binding.tvPassSuccessRate.text = getString(
+            R.string.MatchDetailActivity_detail_data_form,
+            passSuccesRate(matchDTO.matchInfo[0]),
+            passSuccesRate(matchDTO.matchInfo[1])
+        )
+        binding.tvCornerKick.text = getString(
+            R.string.MatchDetailActivity_detail_data_form,
+            matchDTO.matchInfo[0].matchDetail.cornerKick.toString(),
+            matchDTO.matchInfo[1].matchDetail.cornerKick.toString()
+        )
+        binding.tvTackle.text = getString(
+            R.string.MatchDetailActivity_detail_data_form,
+            matchDTO.matchInfo[0].defence.tackleSuccess.toString(),
+            matchDTO.matchInfo[1].defence.tackleSuccess.toString()
+        )
+        binding.tvBlock.text = getString(
+            R.string.MatchDetailActivity_detail_data_form,
+            matchDTO.matchInfo[0].defence.blockSuccess.toString(),
+            matchDTO.matchInfo[1].defence.blockSuccess.toString()
+        )
+
 
 //        Log.e("cyc","내 선수 명당---->${matchMyPlayerDTOList}")
 //        Log.e("cyc","상대 선수 명당---->${matchOpponentPlayerDTOList}")
@@ -114,6 +159,10 @@ class MatchDetailActivity : AppCompatActivity() {
                 //어댑터 세팅2개 각각의 어댑터
                 setMatchMyPlayerAdapter(matchMyPlayerDTOList)
                 setMatchOpponentPlayerAdapter(matchOpponentPlayerDTOList)
+
+                //로딩 프로그래스 다이얼로그 종료
+                loadingProgressDialog.dismiss()
+
             }
 
 
@@ -125,13 +174,16 @@ class MatchDetailActivity : AppCompatActivity() {
                 Log.e("cyc", "포지션 먼저 true")
 
                 viewModel.setPlayer(matchDTO)
+
                 matchMyPlayerDTOList = viewModel.tempMatchMyPlayerDTOList
                 matchOpponentPlayerDTOList = viewModel.tempMatchOpponentPlayerDTOList
                 //어댑터 세팅2개 각각의 어댑터
                 setMatchMyPlayerAdapter(matchMyPlayerDTOList)
                 setMatchOpponentPlayerAdapter(matchOpponentPlayerDTOList)
-            }
 
+                //로딩 프로그래스 다이얼로그 종료
+                loadingProgressDialog.dismiss()
+            }
         }
 
 
@@ -235,5 +287,40 @@ class MatchDetailActivity : AppCompatActivity() {
 //                Log.e("cyc","숭패에 승, 패, 무, 어떤한 값도 없음")
 //            }
         }
+    }
+
+    /**
+     * 평균 평점 구하기
+     */
+    private fun averageRating(matchInfoDTO: MatchInfoDTO): String {
+        var spRatingSum = 0.0
+        var count = 0.0
+        matchInfoDTO.player.forEach {
+            spRatingSum += it.status.spRating
+
+            if(it.status.spRating != 0f){
+                count++
+            }
+        }
+        val averageSpRating = spRatingSum / count
+
+        return String.format("%.1f", averageSpRating)
+    }
+
+    /**
+     * 패스 성공률
+     */
+    private fun passSuccesRate(matchInfoDTO: MatchInfoDTO): String {
+
+        val passTry = matchInfoDTO.pass.passTry.toDouble()
+        Log.e("cyc", "MatchDetailActivity---passTry--->${passTry}")
+
+        val passSuccess = matchInfoDTO.pass.passSuccess.toDouble()
+        Log.e("cyc", "MatchDetailActivity---passSuccess--->${passSuccess}")
+
+        val passSuccesRate = passSuccess / passTry * 100
+        Log.e("cyc", "MatchDetailActivity---passSuccesRate--->${passSuccesRate}")
+
+        return String.format("%.0f", passSuccesRate)
     }
 }

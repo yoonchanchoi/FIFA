@@ -12,5 +12,4 @@ class MatchPlayerViewHolder(
         binding.tvPlayerNickname.text = matchPlayDTO.spName
         binding.tvPlayerPosition.text = matchPlayDTO.spPosition
     }
-
 }
