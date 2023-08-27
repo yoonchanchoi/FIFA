@@ -13,7 +13,6 @@ class Pref @Inject constructor(private val pref: SharedPreferences) {
     //apply() 비동기 처리, 구글 권장
     //확장함수 사용 방법
 
-
     fun saveSearchList(searchList: MutableList<UserDTO>) {
         val searchListString: String = Gson().toJson(searchList)
         val editor: SharedPreferences.Editor = pref.edit()
@@ -67,8 +66,6 @@ class Pref @Inject constructor(private val pref: SharedPreferences) {
         }
         return saveAllSppositionList
     }
-
-
 
     fun putData(key: String, value: Any) {
         when (value) {

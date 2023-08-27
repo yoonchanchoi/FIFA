@@ -27,7 +27,6 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
     private lateinit var matchDTOList: ArrayList<MatchDTO>
     private lateinit var userMatchAdapter: UserMatchAdapter
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUserDetailBinding.inflate(layoutInflater)
@@ -35,13 +34,10 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
         init()
     }
 
-
     private fun init() {
         initData()
-        initObserve()
         initListener()
     }
-
 
     private fun initData() {
         //검색 페이지에서 넘어온값 확인 및 세팅
@@ -63,12 +59,7 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
         setUserMatchAdapter(matchDTOList, userDTO)
     }
 
-    private fun initObserve() {
-
-    }
-
     private fun initListener() {
-
         //스크롤에 따른 최상당 topBar 보여주기
         binding.nsv.setOnScrollChangeListener(OnScrollChangeListener { view, scrollX, scrollY, oldScrollX, oldScrollY ->
             if(scrollY>isTouchInside(binding.tvUserNickname)) {
@@ -99,7 +90,6 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
         }
     }
 
-
     /**
      * 최근 검색어 어댑터 세팅
      */
@@ -122,8 +112,6 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
         startActivity(intent)
 
     }
-
-
 
     //해당 view의 y좌표 구하기 (기능 및 맞게 돌아가지만 확실하지 않음 재공부 및  다시 구현해야됨)
     private fun isTouchInside(view: View): Int {

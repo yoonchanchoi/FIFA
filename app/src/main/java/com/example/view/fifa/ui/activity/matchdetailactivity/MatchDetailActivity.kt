@@ -29,8 +29,6 @@ class MatchDetailActivity : AppCompatActivity() {
     @Inject
     lateinit var pref: Pref
 
-    private val viewModel: MatchDetailViewModel by viewModels()
-
     private lateinit var binding: ActivityMatchDetailBinding
     private lateinit var matchDTO: MatchDTO
     private lateinit var nickName: String
@@ -40,9 +38,10 @@ class MatchDetailActivity : AppCompatActivity() {
     private lateinit var loadingProgressDialog: LoadingProgressDialog
     private lateinit var matchOpponentPlayerDTOList: ArrayList<MatchPlayerDTO>
 
+    private val viewModel: MatchDetailViewModel by viewModels()
+
     private var spidDtoListCheck: Boolean = false
     private var sppositionDtoListCheck: Boolean = false
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +61,7 @@ class MatchDetailActivity : AppCompatActivity() {
         loadingProgressDialog = LoadingProgressDialog(this)
         loadingProgressDialog.show()
 
-//        각각의 선수 값 및 포지션 전체 값가져오기(추후에 split화면 구현시 split화면에 옮길 것 생각하기)
+        //각각의 선수 값 및 포지션 전체 값가져오기(추후에 split화면 구현시 split화면에 옮길 것 생각하기)
         viewModel.requestSpid()
         viewModel.requestSpposition()
 
@@ -137,41 +136,29 @@ class MatchDetailActivity : AppCompatActivity() {
             matchDTO.matchInfo[0].defence.blockSuccess.toString(),
             matchDTO.matchInfo[1].defence.blockSuccess.toString()
         )
-
-
-//        Log.e("cyc","내 선수 명당---->${matchMyPlayerDTOList}")
-//        Log.e("cyc","상대 선수 명당---->${matchOpponentPlayerDTOList}")
-
-//        //어댑터 세팅2개 각각의 어댑터
-//        setMatchMyPlayerAdapter(matchMyPlayerDTOList)
-//        setMatchOpponentPlayerAdapter(matchOpponentPlayerDTOList)
     }
 
     private fun initObserve() {
-        viewModel.spidDTOList2.observe(this) {
+        viewModel.spidDTOList.observe(this) {
             spidDtoListCheck = true
             if (spidDtoListCheck && sppositionDtoListCheck) {
-                Log.e("cyc", "선수 먼저 true")
 
                 viewModel.setPlayer(matchDTO)
                 matchMyPlayerDTOList = viewModel.tempMatchMyPlayerDTOList
                 matchOpponentPlayerDTOList = viewModel.tempMatchOpponentPlayerDTOList
+
                 //어댑터 세팅2개 각각의 어댑터
                 setMatchMyPlayerAdapter(matchMyPlayerDTOList)
                 setMatchOpponentPlayerAdapter(matchOpponentPlayerDTOList)
 
                 //로딩 프로그래스 다이얼로그 종료
                 loadingProgressDialog.dismiss()
-
             }
-
-
         }
 
-        viewModel.sppositionDTOList2.observe(this) {
+        viewModel.sppositionDTOList.observe(this) {
             sppositionDtoListCheck = true
             if (sppositionDtoListCheck && spidDtoListCheck) {
-                Log.e("cyc", "포지션 먼저 true")
 
                 viewModel.setPlayer(matchDTO)
 
@@ -185,14 +172,6 @@ class MatchDetailActivity : AppCompatActivity() {
                 loadingProgressDialog.dismiss()
             }
         }
-
-
-//        viewModel.matchMyPlayerDTOList.observe(this){
-//            matchMyPlayerDTOList=it
-//        }
-//        viewModel.matchOpponentPlayerDTOList.observe(this){
-//            matchOpponentPlayerDTOList=it
-//        }
     }
 
     private fun initListener() {
@@ -298,11 +277,11 @@ class MatchDetailActivity : AppCompatActivity() {
         matchInfoDTO.player.forEach {
             spRatingSum += it.status.spRating
 
-            if(it.status.spRating != 0f){
+            if (it.status.spRating != 0f) {
                 count++
             }
         }
-        val averageSpRating = spRatingSum / count
+        val averageSpRating = if ((spRatingSum / count).isNaN()) 0.0 else spRatingSum / count
 
         return String.format("%.1f", averageSpRating)
     }
@@ -313,13 +292,9 @@ class MatchDetailActivity : AppCompatActivity() {
     private fun passSuccesRate(matchInfoDTO: MatchInfoDTO): String {
 
         val passTry = matchInfoDTO.pass.passTry.toDouble()
-        Log.e("cyc", "MatchDetailActivity---passTry--->${passTry}")
-
         val passSuccess = matchInfoDTO.pass.passSuccess.toDouble()
-        Log.e("cyc", "MatchDetailActivity---passSuccess--->${passSuccess}")
-
-        val passSuccesRate = passSuccess / passTry * 100
-        Log.e("cyc", "MatchDetailActivity---passSuccesRate--->${passSuccesRate}")
+        val passSuccesRate =
+            if ((passSuccess / passTry * 100).isNaN()) 0.0 else passSuccess / passTry * 100
 
         return String.format("%.0f", passSuccesRate)
     }

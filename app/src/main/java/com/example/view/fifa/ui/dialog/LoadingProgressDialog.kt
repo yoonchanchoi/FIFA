@@ -1,6 +1,5 @@
 package com.example.view.fifa.ui.dialog
 
-import android.R
 import android.app.Dialog
 import android.content.Context
 import android.graphics.BlendMode
@@ -18,10 +17,7 @@ class LoadingProgressDialog(context: Context) : Dialog(context) {
     private var binding: DialogProgressbarBinding = DialogProgressbarBinding.inflate(layoutInflater)
 
     init {
-        // 다이얼 로그 제목을 안보이게...
-
         binding.pb.isIndeterminate = true
-//        binding.pb.indeterminateDrawable.setColorFilter(Color.parseColor("#4CAF50"), PorterDuff.Mode.MULTIPLY)
         val color = ContextCompat.getColor(context, com.example.view.fifa.R.color.white)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             binding.pb.indeterminateDrawable.colorFilter = BlendModeColorFilter((color), BlendMode.SRC_ATOP)
@@ -35,7 +31,5 @@ class LoadingProgressDialog(context: Context) : Dialog(context) {
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(binding.root)
-
     }
-
 }

@@ -7,7 +7,6 @@ import com.example.view.fifa.network.models.dto.UserDTO
 class RecentSearchViewHolder(private val binding: ItemRecentSearchBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-
     fun bind(userDTO: UserDTO, recentSearchRecyclerListener: RecentSearchRecyclerListener) {
         binding.tvName.text = userDTO.nickname
         binding.tvLevel.text = userDTO.level.toString()

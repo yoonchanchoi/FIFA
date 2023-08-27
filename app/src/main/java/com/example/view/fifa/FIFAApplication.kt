@@ -3,7 +3,6 @@ package com.example.view.fifa
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
-
 @HiltAndroidApp
 class FIFAApplication : Application() {
     companion object {

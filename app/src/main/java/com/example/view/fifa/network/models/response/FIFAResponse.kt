@@ -4,14 +4,6 @@ data class FIFAResponse(
     val test : String=""
 )
 
-
-
-
-
-
-
-
-
 //data class ResultSearchAll(
 //    @SerializedName("lastBuildDate")
 //    @Expose

@@ -5,23 +5,14 @@ import com.example.view.fifa.network.models.dto.SpidDTO
 import com.example.view.fifa.network.models.dto.SppositionDTO
 import retrofit2.Call
 import retrofit2.http.GET
-import retrofit2.http.Path
-
 
 interface FIFAMetadataService {
-
-//    //test 개별데이터로 선수 이름값이 불러지는지
-//    @GET("{spid}")
-//    fun  testRequestSpid(
-//        @Path("spid") spid: Int
-//    ): Call<SpidDTO>
 
     @GET("spid.json")
     fun  requestSpid(): Call<ArrayList<SpidDTO>>
 
     @GET("spposition.json")
     fun  requestSpposition(): Call<ArrayList<SppositionDTO>>
-
 }
 
 
@@ -29,9 +20,6 @@ interface FIFAMetadataService {
 
 
 
-
-//2196df1b745a7f7e06c234f8  고유식별자
-//643232150db9d647d7149471  메치
 
 //interface FIFAService {
 //    @GET("nickname={nickname}")
@@ -79,69 +67,3 @@ interface FIFAMetadataService {
 ////-------------------------------------------------------------------------------------
 //}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    @GET("/v1/search/blog.json")
-//    fun requestBlog(
-//        @Query(value = "query", encoded = true) query: String,
-//        @Query(value = "display") display: Int,
-//        @Query(value = "start") start: Int? = null,
-//        @Query(value = "sort") sort: String? = null
-//    ): Call<ResultSearchAll>
-//
-//
-//    @GET("/v1/search/cafearticle.json")
-//    fun requestCafe(
-//        @Query(value = "query", encoded = true) query: String,
-//        @Query(value = "display") display: Int? = 10,
-//        @Query(value = "start") start: Int? = null,
-//        @Query(value = "sort") sort: String? = null
-//    ): Call<ResultSearchAll>
-//
-//    @GET("/v1/search/encyc.json")
-//    fun requestDictionary(
-//        @Query(value = "query", encoded = true) query: String,
-//        @Query(value = "display") display: Int? = 10,
-//        @Query(value = "start") start: Int? = null
-//    ): Call<ResultSearchAll>
-//
-//    @GET("/v1/search/image")
-//    fun requestImg(
-//        @Query(value = "query", encoded = true) query: String,
-//        @Query(value = "display") display: Int? = 20,
-//        @Query(value = "start") start: Int? = null,
-//        @Query(value = "sort") sort: String? = null,
-//        @Query(value = "filter") filter: String? = null
-//    ): Call<ResultSearchImg>
-//
-//
-//    @GET("/v1/search/adult.json")
-//    fun requestCheckAdultWord(
-//        @Query(value = "query", encoded = true) query: String): Call<ResultCheckAdultWord>
-//
-//    @GET("/v1/search/errata.json")
-//    fun requestCheckMissWord(
-//        @Query(value = "query", encoded = true) query: String): Call<ResultMisspelledWord>

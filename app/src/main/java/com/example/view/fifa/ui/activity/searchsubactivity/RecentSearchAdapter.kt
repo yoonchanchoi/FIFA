@@ -21,5 +21,4 @@ class RecentSearchAdapter(private val recentSearchRecyclerListener:RecentSearchR
     override fun getItemCount(): Int {
         return searchDataList.size
     }
-
 }

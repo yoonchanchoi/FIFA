@@ -21,5 +21,4 @@ class MatchPlayerAdapter(private val matchPlayerDTOList: ArrayList<MatchPlayerDT
     override fun getItemCount(): Int {
         return matchPlayerDTOList.size
     }
-
 }

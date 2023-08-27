@@ -8,7 +8,6 @@ import com.example.view.fifa.util.idmodule.NetworkProviderModule
 import retrofit2.Call
 import javax.inject.Inject
 
-
 class FIFAManagerImpl @Inject constructor(@NetworkProviderModule.FifaRetrofit private val service: FIFAService) : FIFAManager {
 
     override fun requestUserInfo(nickname: String): Call<UserDTO> =
@@ -22,7 +21,6 @@ class FIFAManagerImpl @Inject constructor(@NetworkProviderModule.FifaRetrofit pr
 
     override fun requestMaxDivision(accessid: String): Call<ArrayList<MaxDivisionDTO>> =
         service.requestMaxDivision(accessid)
-
 
     ////-------------------------------------------------------------------------------------
 ////    //여기서 부터 rxjava잠금-1
@@ -45,7 +43,6 @@ class FIFAManagerImpl @Inject constructor(@NetworkProviderModule.FifaRetrofit pr
 //
 ////    여기까지 rxjava잠금-1
 ////-------------------------------------------------------------------------------------
-
 
 }
 

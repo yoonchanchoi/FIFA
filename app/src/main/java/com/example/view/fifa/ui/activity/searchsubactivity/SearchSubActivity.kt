@@ -37,9 +37,6 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
         binding = ActivitySearchSubBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        //test지울것
-//        testInit()
-
         init()
     }
 
@@ -76,7 +73,6 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
             it.sortByDescending { matchDTO ->
                 matchDTO.matchDate
             }
-
             //* Serializable를 객체들이 상속해줘야된다. 즉 여기서는 MatchDTO가 Serializable를 상속해줘야되나 그리고 만약
             //* MatchDTO안에 다른객체가 있다면 그것 또한 Serializable를 상속해줘야된다.
             //* ViewModel안에 intent, StartActivity 가능! (하지만 개인적으로 조금더 생각해봐야될 부분임)
@@ -216,16 +212,4 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
         binding.tvNoRecentSearch.visibility =
             if (searchRecentAdapter.itemCount > 0) View.INVISIBLE else View.VISIBLE
     }
-
-//    //test 지울것
-//    private fun testInit() {
-//        viewModel.requestTest()
-//        testObserve()
-//    }
-//
-//    private fun testObserve() {
-//        viewModel.testMetadataDTOList.observe(this){
-//            Log.e("cyc","test--매타 데이터 ---->${it}")
-//        }
-//    }
 }

@@ -23,5 +23,4 @@ class UserMatchAdapter(private val context: Context, private val userMatchRecycl
     override fun getItemCount(): Int {
         return matchDTOList.size
     }
-
 }

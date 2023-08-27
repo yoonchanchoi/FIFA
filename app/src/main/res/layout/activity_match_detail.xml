@@ -170,17 +170,33 @@
                     android:background="@drawable/shape_outbalck_inwhite_bg"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
                     android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/tv_no_my_player_data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="데이터가 없습니다."
+                        android:layout_gravity="center_vertical"
+                        android:visibility="gone"/>
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_my"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
                 <LinearLayout
                     android:background="@drawable/shape_outbalck_inwhite_bg"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
                     android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/tv_no_opponent_player_data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="데이터가 없습니다."
+                        android:layout_gravity="center_vertical"
+                        android:visibility="gone"/>
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_opponent"
                         android:layoutDirection="rtl"

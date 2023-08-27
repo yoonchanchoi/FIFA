@@ -6,19 +6,16 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.view.fifa.R
 import com.example.view.fifa.databinding.ActivityMainBinding
+import com.example.view.fifa.ui.activity.licensoractivity.LicensorActivity
 import com.example.view.fifa.ui.activity.searchsubactivity.SearchSubActivity
 import com.example.view.fifa.util.Pref
-import com.example.view.fifa.viewmodels.MatchDetailViewModel
-import com.example.view.fifa.viewmodels.SearchSubViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlin.collections.ArrayList
@@ -30,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var pref: Pref
 
     private lateinit var binding: ActivityMainBinding
+
     private val arrayImage: ArrayList<Drawable> = arrayListOf()
     private var waitTime = 0L
     // 배너 핸들러
@@ -45,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_actionbar, menu)
+        menuInflater.inflate(R.menu.menu_main_actionbar, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -69,6 +67,12 @@ class MainActivity : AppCompatActivity() {
 
     // 메뉴 업션 구현(아직 미구헌 추후 추가)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId==R.id.setting_action){
+            val intent = Intent(this, LicensorActivity::class.java)
+            startActivity(intent)
+        }
+
+
         return super.onOptionsItemSelected(item)
     }
 
@@ -85,7 +89,6 @@ class MainActivity : AppCompatActivity() {
         binding.vpImage.adapter = bannerAdapter
 
     }
-
 
     /**
      * 배너 자동 스클롤 핸들러
@@ -128,7 +131,6 @@ class MainActivity : AppCompatActivity() {
         autoScrollStop()
     }
 
-
     /**
      * 뒤로 가기 버튼 클릭
      */
@@ -140,47 +142,5 @@ class MainActivity : AppCompatActivity() {
         } else {
             finish() // 액티비티 종료
         }
-
     }
-
-
-
-
-//    fun initTest(){
-//
-//        val startTime = Date().time
-//        val urls = listOf(
-//            "https://naver-api-1.com",
-//            "https://google-api-2.com",
-//            "https://samsung-api-3.com",
-//            "https://kakao-api-4.com",
-//            "https://line-api-5.com"
-//        )
-//
-//        Flowable.fromIterable(urls)
-//            .concatMapEager { result ->
-//                request(result).toFlowable()
-//            }.subscribe({
-//                println("${Date().time - startTime} $it")
-//            }, { error ->
-//                error.printStackTrace()
-//            }, {
-//                println("${Date().time - startTime} complete")
-//            })
-//
-//        Thread.sleep(3000L)
-//        println("Process finished")
-//    }
-//
-//
-//    fun request(url: String): Single<String> {
-//        return Single.zip(
-//            Single.timer(kotlin.random.Random.nextLong(2000), TimeUnit.MILLISECONDS),
-//            Single.just(url),
-//            BiFunction<Long, String, String> { _, url ->
-//                "$url response"
-//            })
-//    }
-
-
 }
