@@ -10,7 +10,20 @@
     <string name="SearchSubActivty_delete_all">전체 삭제</string>
     <string name="SearchSubActivity_no_recent_search">최근 검색된 단어가 없습니다.</string>
 
+    <!--LicensorActivity -->
+    <string name="LicensorActivity_nexon_api_text">NEXON DEVELOPERS 오픈 API</string>
+    <string name="LicensorActivity_nexon_api_address">https://developers.nexon.com/fifaonline4</string>
+
+    <string name="LicensorActivity_Retrofit_text">Retrofit</string>
+    <string name="LicensorActivity_Retrofit_address">http://devflow.github.io/retrofit-kr/</string>
+
+    <string name="LicensorActivity_Gson_text">Gson</string>
+    <string name="LicensorActivity_Gson_address">https://github.com/google/gson</string>
+
+
     <!--MatchDetailActivity Detail data String 형식 -->
     <string name="MatchDetailActivity_detail_data_form"> %1s / %2s</string>
+
+
 
 </resources>
