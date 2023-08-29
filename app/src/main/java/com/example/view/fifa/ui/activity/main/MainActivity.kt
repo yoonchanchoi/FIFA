@@ -9,6 +9,7 @@ import android.os.Message
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.view.fifa.R
@@ -16,6 +17,8 @@ import com.example.view.fifa.databinding.ActivityMainBinding
 import com.example.view.fifa.ui.activity.licensoractivity.LicensorActivity
 import com.example.view.fifa.ui.activity.searchsubactivity.SearchSubActivity
 import com.example.view.fifa.util.Pref
+import com.example.view.fifa.viewmodels.MainViewModel
+import com.example.view.fifa.viewmodels.MatchDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlin.collections.ArrayList
@@ -28,12 +31,13 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    private val viewModel: MainViewModel by viewModels()
     private val arrayImage: ArrayList<Drawable> = arrayListOf()
-    private var waitTime = 0L
     // 배너 핸들러
     private val bannerHandler = BannerHandler()
     //2초마다 자도 배너 스와이프
     private val intervalTime: Long = 2000
+    private var waitTime = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,11 +55,22 @@ class MainActivity : AppCompatActivity() {
         val appbar = supportActionBar
         appbar?.let { it.title = "FIFA" }
         initData()
+        initObserve()
         initListener()
     }
 
     private fun initData() {
+        viewModel.requestSpid()
+        viewModel.requestSpposition()
         setbanner()
+    }
+    private fun initObserve(){
+        viewModel.spidDTOList.observe(this){
+            pref.saveAllSpidList(it)
+        }
+        viewModel.sppositionDTOList.observe(this){
+            pref.saveAllSppositionList(it)
+        }
     }
 
     private fun initListener() {
