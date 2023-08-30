@@ -57,6 +57,12 @@ class MatchDetailActivity : AppCompatActivity() {
     }
 
     private fun initData() {
+
+
+        //pref에서 데이터 가져오기 선수의 이름과 포지션 데이터 가져오기
+        //추가로 해당 데이터를 직접만든 이름과 포지션 데이터 뿐만아니라 기존의 선수 데이터도 가지고 있게 변환해야될거 같다
+        //일단 데이터만 저장하고 데이터 모델을 변환해야될것으로 보임...
+
         //로딩 프로그래서 시작
         loadingProgressDialog = LoadingProgressDialog(this)
         loadingProgressDialog.show()
