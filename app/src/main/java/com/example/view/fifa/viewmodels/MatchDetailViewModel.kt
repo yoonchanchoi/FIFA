@@ -35,6 +35,7 @@ class MatchDetailViewModel @Inject constructor(
     val tempMatchMyPlayerDTOList = ArrayList<MatchPlayerDTO>()
     val tempMatchOpponentPlayerDTOList = ArrayList<MatchPlayerDTO>()
 
+    //바꾸는중
 //    fun requestSpid() {
 //        val result = fifaMetadataManager.requestSpid()
 //        result.enqueue(object : Callback<ArrayList<SpidDTO>> {
