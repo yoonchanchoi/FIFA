@@ -15,65 +15,72 @@ import javax.inject.Inject
 @HiltViewModel
 class MatchDetailViewModel @Inject constructor(
     private val fifaMetadataManager: FIFAMetadataManager
+
 ) : ViewModel() {
+    //바꾸는중
+//    private val _spidDTOList = MutableLiveData<ArrayList<SpidDTO>>()
+//    val spidDTOList: LiveData<ArrayList<SpidDTO>>
+//        get() = _spidDTOList
+//
+//    private val _sppositionDTOList = MutableLiveData<ArrayList<SppositionDTO>>()
+//    val sppositionDTOList: LiveData<ArrayList<SppositionDTO>>
+//        get() = _sppositionDTOList
 
-    private val _spidDTOList = MutableLiveData<ArrayList<SpidDTO>>()
-    val spidDTOList: LiveData<ArrayList<SpidDTO>>
-        get() = _spidDTOList
 
-    private val _sppositionDTOList = MutableLiveData<ArrayList<SppositionDTO>>()
-    val sppositionDTOList: LiveData<ArrayList<SppositionDTO>>
-        get() = _sppositionDTOList
+    //과연 이게 뷰모델에서 할 필요가 있는가?
+     val _spidDTOList = MutableLiveData<ArrayList<SpidDTO>>()
+     val _sppositionDTOList = MutableLiveData<ArrayList<SppositionDTO>>()
+
 
     val tempMatchMyPlayerDTOList = ArrayList<MatchPlayerDTO>()
     val tempMatchOpponentPlayerDTOList = ArrayList<MatchPlayerDTO>()
 
-    fun requestSpid() {
-        val result = fifaMetadataManager.requestSpid()
-        result.enqueue(object : Callback<ArrayList<SpidDTO>> {
-            override fun onResponse(
-                call: Call<ArrayList<SpidDTO>>,
-                response: Response<ArrayList<SpidDTO>>
-            ) {
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        _spidDTOList.postValue(it)
-                        Log.e("cyc", "성공")
-                    }
-                } else {
-                    Log.e("cyc", "통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
-                }
-            }
-            override fun onFailure(call: Call<ArrayList<SpidDTO>>, t: Throwable) {
-                Log.e("cyc", "통신실패 (인터넷 연결의 문제, 예외발생)")
-            }
-        })
-    }
+//    fun requestSpid() {
+//        val result = fifaMetadataManager.requestSpid()
+//        result.enqueue(object : Callback<ArrayList<SpidDTO>> {
+//            override fun onResponse(
+//                call: Call<ArrayList<SpidDTO>>,
+//                response: Response<ArrayList<SpidDTO>>
+//            ) {
+//                if (response.isSuccessful) {
+//                    response.body()?.let {
+//                        _spidDTOList.postValue(it)
+//                        Log.e("cyc", "성공")
+//                    }
+//                } else {
+//                    Log.e("cyc", "통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
+//                }
+//            }
+//            override fun onFailure(call: Call<ArrayList<SpidDTO>>, t: Throwable) {
+//                Log.e("cyc", "통신실패 (인터넷 연결의 문제, 예외발생)")
+//            }
+//        })
+//    }
 
-    fun requestSpposition() {
-        val result = fifaMetadataManager.requestSpposition()
-        result.enqueue(object : Callback<ArrayList<SppositionDTO>> {
-            override fun onResponse(
-                call: Call<ArrayList<SppositionDTO>>,
-                response: Response<ArrayList<SppositionDTO>>
-            ) {
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        _sppositionDTOList.postValue(it)
-                        Log.e("cyc", "성공")
-                    }
-                } else {
-                    Log.e("cyc", "통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
-                }
-            }
-
-            override fun onFailure(call: Call<ArrayList<SppositionDTO>>, t: Throwable) {
-                Log.e("cyc", "통신실패 (인터넷 연결의 문제, 예외발생)")
-
-            }
-
-        })
-    }
+//    fun requestSpposition() {
+//        val result = fifaMetadataManager.requestSpposition()
+//        result.enqueue(object : Callback<ArrayList<SppositionDTO>> {
+//            override fun onResponse(
+//                call: Call<ArrayList<SppositionDTO>>,
+//                response: Response<ArrayList<SppositionDTO>>
+//            ) {
+//                if (response.isSuccessful) {
+//                    response.body()?.let {
+//                        _sppositionDTOList.postValue(it)
+//                        Log.e("cyc", "성공")
+//                    }
+//                } else {
+//                    Log.e("cyc", "통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<ArrayList<SppositionDTO>>, t: Throwable) {
+//                Log.e("cyc", "통신실패 (인터넷 연결의 문제, 예외발생)")
+//
+//            }
+//
+//        })
+//    }
 
     fun setPlayer(matchDTO: MatchDTO) {
         matchDTO.matchInfo[0].player.forEach {
