@@ -7,12 +7,14 @@ import androidx.lifecycle.ViewModel
 import com.example.view.fifa.network.managers.FIFAMetadataManager
 import com.example.view.fifa.network.models.dto.SpidDTO
 import com.example.view.fifa.network.models.dto.SppositionDTO
+import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
-class MainViewModel  @Inject constructor(
+@HiltViewModel
+class SplashViewModel  @Inject constructor(
     private val fifaMetadataManager: FIFAMetadataManager
 ) : ViewModel() {
 
@@ -34,14 +36,14 @@ class MainViewModel  @Inject constructor(
                 if (response.isSuccessful) {
                     response.body()?.let {
                         _spidDTOList.postValue(it)
-                        Log.e("cyc", "성공")
+                        Log.e("cyc", "splash 성공")
                     }
                 } else {
-                    Log.e("cyc", "통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
+                    Log.e("cyc", "splash 통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
                 }
             }
             override fun onFailure(call: Call<ArrayList<SpidDTO>>, t: Throwable) {
-                Log.e("cyc", "통신실패 (인터넷 연결의 문제, 예외발생)")
+                Log.e("cyc", "splash 통신실패 (인터넷 연결의 문제, 예외발생)")
             }
         })
     }
@@ -56,15 +58,15 @@ class MainViewModel  @Inject constructor(
                 if (response.isSuccessful) {
                     response.body()?.let {
                         _sppositionDTOList.postValue(it)
-                        Log.e("cyc", "성공")
+                        Log.e("cyc", "splash 성공")
                     }
                 } else {
-                    Log.e("cyc", "통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
+                    Log.e("cyc", "splash 통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
                 }
             }
 
             override fun onFailure(call: Call<ArrayList<SppositionDTO>>, t: Throwable) {
-                Log.e("cyc", "통신실패 (인터넷 연결의 문제, 예외발생)")
+                Log.e("cyc", "splash 통신실패 (인터넷 연결의 문제, 예외발생)")
 
             }
 

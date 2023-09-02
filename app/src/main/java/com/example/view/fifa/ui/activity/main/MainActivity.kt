@@ -9,35 +9,36 @@ import android.os.Message
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.view.fifa.R
 import com.example.view.fifa.databinding.ActivityMainBinding
 import com.example.view.fifa.ui.activity.licensoractivity.LicensorActivity
 import com.example.view.fifa.ui.activity.searchsubactivity.SearchSubActivity
-import com.example.view.fifa.util.Pref
-import com.example.view.fifa.viewmodels.MainViewModel
-import com.example.view.fifa.viewmodels.MatchDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var pref: Pref
+//    @Inject
+//    lateinit var pref: Pref
 
     private lateinit var binding: ActivityMainBinding
+//    private lateinit var loadingProgressDialog: LoadingProgressDialog
 
-    private val viewModel: MainViewModel by viewModels()
+//    private val viewModel: MainViewModel by viewModels()
+//    private val viewModel: MainViewModel by viewModels()
     private val arrayImage: ArrayList<Drawable> = arrayListOf()
     // 배너 핸들러
     private val bannerHandler = BannerHandler()
     //2초마다 자도 배너 스와이프
     private val intervalTime: Long = 2000
     private var waitTime = 0L
+
+//    private var checkSaveAllSpidList: Boolean = false
+//    private var checkSaveAllSppositionList: Boolean = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,23 +56,34 @@ class MainActivity : AppCompatActivity() {
         val appbar = supportActionBar
         appbar?.let { it.title = "FIFA" }
         initData()
-        initObserve()
+//        initObserve()
         initListener()
     }
 
     private fun initData() {
-        viewModel.requestSpid()
-        viewModel.requestSpposition()
+//        loadingProgressDialog = LoadingProgressDialog(this)
+//        loadingProgressDialog.show()
+//
+//        viewModel.requestSpid()
+//        viewModel.requestSpposition()
         setbanner()
     }
-    private fun initObserve(){
-        viewModel.spidDTOList.observe(this){
-            pref.saveAllSpidList(it)
-        }
-        viewModel.sppositionDTOList.observe(this){
-            pref.saveAllSppositionList(it)
-        }
-    }
+//    private fun initObserve(){
+//        viewModel.spidDTOList.observe(this){
+//            pref.saveAllSpidList(it)
+//            checkSaveAllSpidList=true
+//            if(checkSaveAllSpidList && checkSaveAllSppositionList){
+//                loadingProgressDialog.dismiss()
+//            }
+//        }
+//        viewModel.sppositionDTOList.observe(this){
+//            pref.saveAllSppositionList(it)
+//            checkSaveAllSppositionList = true
+//            if(checkSaveAllSpidList && checkSaveAllSppositionList){
+//                loadingProgressDialog.dismiss()
+//            }
+//        }
+//    }
 
     private fun initListener() {
         binding.btnSearch.setOnClickListener {
