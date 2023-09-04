@@ -23,6 +23,10 @@
 <!--        <item name="windowActionBar">false</item>-->
 <!--        <item name="windowNoTitle">true</item>-->
     </style>
+    <style name="SplashTheme" parent="Theme.FIFA">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
 </resources>
 
 

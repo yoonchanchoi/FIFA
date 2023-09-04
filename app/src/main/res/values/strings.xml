@@ -5,6 +5,7 @@
     <string name="tag_Lv">Lv</string>
     <string name="MainActivity_search_tag">피린이를 검색하자</string>
     <string name="app_finish_toast">뒤로가기 버튼을 한번 더 누르면 종료됩니다.</string>
+    <string name="app_error_game">해당 전적은 에러가 있습니다.</string>
     <string name="SearchSubActivity_et_tag">피린이를 입력해주세요</string>
     <string name="SearchSubActivity_recent_search_title_tag">최근 검색어</string>
     <string name="SearchSubActivty_delete_all">전체 삭제</string>

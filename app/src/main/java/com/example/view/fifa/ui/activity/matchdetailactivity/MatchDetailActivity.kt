@@ -67,14 +67,15 @@ class MatchDetailActivity : AppCompatActivity() {
 
         //로딩 프로그래서 시작
         //바꾸는중
-        loadingProgressDialog = LoadingProgressDialog(this)
-        loadingProgressDialog.show()
+//        loadingProgressDialog = LoadingProgressDialog(this)
+//        loadingProgressDialog.show()
 
         //각각의 선수 값 및 포지션 전체 값가져오기(추후에 split화면 구현시 split화면에 옮길 것 생각하기)
         //바꾸는중
-        viewModel.requestSpid()
-        viewModel.requestSpposition()
-//        viewModel.getPreData()
+//        viewModel.requestSpid()
+//        viewModel.requestSpposition()
+
+        viewModel.getPreData()
 
         //화면이 보여질때 가져올 데이터 intent
         val intent = intent
@@ -149,14 +150,14 @@ class MatchDetailActivity : AppCompatActivity() {
         )
 
 
-//        viewModel.setPlayer(matchDTO)
-//
-//        matchMyPlayerDTOList = viewModel.filtedMatchMyPlayerDTOList
-//        matchOpponentPlayerDTOList = viewModel.filtedMatchOpponentPlayerDTOList
-//
-//        //어댑터 세팅2개 각각의 어댑터
-//        setMatchMyPlayerAdapter(matchMyPlayerDTOList)
-//        setMatchOpponentPlayerAdapter(matchOpponentPlayerDTOList)
+        viewModel.setPlayer(matchDTO)
+
+        matchMyPlayerDTOList = viewModel.filtedMatchMyPlayerDTOList
+        matchOpponentPlayerDTOList = viewModel.filtedMatchOpponentPlayerDTOList
+
+        //어댑터 세팅2개 각각의 어댑터
+        setMatchMyPlayerAdapter(matchMyPlayerDTOList)
+        setMatchOpponentPlayerAdapter(matchOpponentPlayerDTOList)
 //
 ////        로딩 프로그래스 다이얼로그 종료
 //        loadingProgressDialog.dismiss()
@@ -165,39 +166,39 @@ class MatchDetailActivity : AppCompatActivity() {
 
     private fun initObserve() {
 //        바꾸는중
-        viewModel.spidDTOList.observe(this) {
-            spidDtoListCheck = true
-            if (spidDtoListCheck && sppositionDtoListCheck) {
-
-                viewModel.setPlayer(matchDTO)
-                matchMyPlayerDTOList = viewModel.filtedMatchMyPlayerDTOList
-                matchOpponentPlayerDTOList = viewModel.filtedMatchOpponentPlayerDTOList
-
-                //어댑터 세팅2개 각각의 어댑터
-                setMatchMyPlayerAdapter(matchMyPlayerDTOList)
-                setMatchOpponentPlayerAdapter(matchOpponentPlayerDTOList)
-
-                //로딩 프로그래스 다이얼로그 종료
-                loadingProgressDialog.dismiss()
-            }
-        }
-
-        viewModel.sppositionDTOList.observe(this) {
-            sppositionDtoListCheck = true
-            if (sppositionDtoListCheck && spidDtoListCheck) {
-
-                viewModel.setPlayer(matchDTO)
-
-                matchMyPlayerDTOList = viewModel.filtedMatchMyPlayerDTOList
-                matchOpponentPlayerDTOList = viewModel.filtedMatchOpponentPlayerDTOList
-                //어댑터 세팅2개 각각의 어댑터
-                setMatchMyPlayerAdapter(matchMyPlayerDTOList)
-                setMatchOpponentPlayerAdapter(matchOpponentPlayerDTOList)
-
-                //로딩 프로그래스 다이얼로그 종료
-                loadingProgressDialog.dismiss()
-            }
-        }
+//        viewModel.spidDTOList.observe(this) {
+//            spidDtoListCheck = true
+//            if (spidDtoListCheck && sppositionDtoListCheck) {
+//
+//                viewModel.setPlayer(matchDTO)
+//                matchMyPlayerDTOList = viewModel.filtedMatchMyPlayerDTOList
+//                matchOpponentPlayerDTOList = viewModel.filtedMatchOpponentPlayerDTOList
+//
+//                //어댑터 세팅2개 각각의 어댑터
+//                setMatchMyPlayerAdapter(matchMyPlayerDTOList)
+//                setMatchOpponentPlayerAdapter(matchOpponentPlayerDTOList)
+//
+//                //로딩 프로그래스 다이얼로그 종료
+//                loadingProgressDialog.dismiss()
+//            }
+//        }
+//
+//        viewModel.sppositionDTOList.observe(this) {
+//            sppositionDtoListCheck = true
+//            if (sppositionDtoListCheck && spidDtoListCheck) {
+//
+//                viewModel.setPlayer(matchDTO)
+//
+//                matchMyPlayerDTOList = viewModel.filtedMatchMyPlayerDTOList
+//                matchOpponentPlayerDTOList = viewModel.filtedMatchOpponentPlayerDTOList
+//                //어댑터 세팅2개 각각의 어댑터
+//                setMatchMyPlayerAdapter(matchMyPlayerDTOList)
+//                setMatchOpponentPlayerAdapter(matchOpponentPlayerDTOList)
+//
+//                //로딩 프로그래스 다이얼로그 종료
+//                loadingProgressDialog.dismiss()
+//            }
+//        }
     }
 
     private fun initListener() {
