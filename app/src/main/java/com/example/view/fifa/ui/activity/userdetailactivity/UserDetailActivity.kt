@@ -2,10 +2,13 @@ package com.example.view.fifa.ui.activity.userdetailactivity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView.OnScrollChangeListener
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.view.fifa.R
 import com.example.view.fifa.util.Pref
 import com.example.view.fifa.databinding.ActivityUserDetailBinding
 import com.example.view.fifa.network.models.dto.MatchDTO
@@ -55,6 +58,10 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
         binding.tvTitleUserNickname.text = userDTO.nickname
         binding.tvUserLevel.text = "Lv " + userDTO.level
         binding.tvUserMostRank.text = userRank
+
+        Log.e("cyc","유저 상세 Activity---matchDTOList---->${matchDTOList}")
+        Log.e("cyc","유저 상세 Activity---userDTO---->${userDTO}")
+
         //유저의 매칭기록 어댑터 세팅
         setUserMatchAdapter(matchDTOList, userDTO)
     }
@@ -111,6 +118,11 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
         intent.putExtra("NickName",nickName)
         startActivity(intent)
 
+    }
+
+    override fun onErrorItemClick() {
+        Toast.makeText(this, getString(R.string.app_error_game), Toast.LENGTH_SHORT)
+            .show()
     }
 
     //해당 view의 y좌표 구하기 (기능 및 맞게 돌아가지만 확실하지 않음 재공부 및  다시 구현해야됨)

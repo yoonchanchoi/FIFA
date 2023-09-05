@@ -6,6 +6,7 @@ import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
 import android.graphics.PorterDuff
 import android.os.Build
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.view.fifa.R
@@ -20,6 +21,10 @@ class UserMatchViewHolder(
     private val binding: ItemUserRecordBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
+
+
+
+
     @SuppressLint("SimpleDateFormat")
     fun bind(
         matchDTO: MatchDTO,
@@ -27,34 +32,94 @@ class UserMatchViewHolder(
         userDTO: UserDTO
     ) {
 
-        //유저의 이름 및 스코어 값 세팅
-        binding.tvMyUser.text = matchDTO.matchInfo[0].nickname
-        binding.tvMyScore.text = matchDTO.matchInfo[0].shoot.goalTotal.toString()
-        binding.tvOpponentUser.text = matchDTO.matchInfo[1].nickname
-        binding.tvOpponentScore.text = matchDTO.matchInfo[1].shoot.goalTotal.toString()
 
-        //매칭의 시간 데이터 값을 세팅
-        val date = matchDTO.matchDate.split("T")
-        binding.tvMyMonth.text = date[0]
-        binding.tvMyDay.text = with(date[1]) {
-            // 시간 형식 HH:mm:ss--->HH:mm 변경
-            var dayOut=""
-            val dayIntFormat = SimpleDateFormat("HH:mm:ss")
-            val dayOutFormat = SimpleDateFormat("HH:mm")
-            val tempDate = dayIntFormat.parse(this)
-            dayOut = dayOutFormat.format(tempDate)
-            return@with dayOut
+        if(matchDTO.matchInfo.size==2){
+            //유저의 이름 및 스코어 값 세팅
+            binding.tvMyUser.text = matchDTO.matchInfo[0].nickname
+            binding.tvMyScore.text = matchDTO.matchInfo[0].shoot.goalTotal.toString()
+            binding.tvOpponentUser.text = matchDTO.matchInfo[1].nickname
+            binding.tvOpponentScore.text = matchDTO.matchInfo[1].shoot.goalTotal.toString()
+
+            //매칭의 시간 데이터 값을 세팅
+            val date = matchDTO.matchDate.split("T")
+            binding.tvMyMonth.text = date[0]
+            binding.tvMyDay.text = with(date[1]) {
+                // 시간 형식 HH:mm:ss--->HH:mm 변경
+                var dayOut=""
+                val dayIntFormat = SimpleDateFormat("HH:mm:ss")
+                val dayOutFormat = SimpleDateFormat("HH:mm")
+                val tempDate = dayIntFormat.parse(this)
+                dayOut = dayOutFormat.format(tempDate)
+                return@with dayOut
+            }
+
+            //매칭의 승패에 따른 색깔 결정
+            matchResultViewColor(matchDTO.matchInfo[0],matchDTO.matchInfo[1], userDTO.nickname)
+
+            //아이템 선택에 따른 리스너(인터페이스 내용을 구현해야됨)
+            binding.clUserRecordItem.setOnClickListener {
+                userMatchRecyclerListener.onItemClick(
+                    matchDTO, userDTO.nickname
+                )
+            }
+        }else{
+            //유저의 이름 및 스코어 값 세팅
+            binding.tvMyUser.text = matchDTO.matchInfo[0].nickname
+            binding.tvMyScore.text = matchDTO.matchInfo[0].shoot.goalTotal.toString()
+            binding.tvOpponentUser.text = ""
+            binding.tvOpponentScore.text = ""
+
+            //매칭의 시간 데이터 값을 세팅
+            val date = matchDTO.matchDate.split("T")
+            binding.tvMyMonth.text = date[0]
+            binding.tvMyDay.text = with(date[1]) {
+                // 시간 형식 HH:mm:ss--->HH:mm 변경
+                var dayOut=""
+                val dayIntFormat = SimpleDateFormat("HH:mm:ss")
+                val dayOutFormat = SimpleDateFormat("HH:mm")
+                val tempDate = dayIntFormat.parse(this)
+                dayOut = dayOutFormat.format(tempDate)
+                return@with dayOut
+            }
+
+            //매칭의 승패에 따른 색깔 결정
+            matchResultViewColor(matchDTO.matchInfo[0],matchDTO.matchInfo[0], userDTO.nickname)
+
+            //아이템 선택에 따른 리스너(인터페이스 내용을 구현해야됨)
+            binding.clUserRecordItem.setOnClickListener {
+                userMatchRecyclerListener.onErrorItemClick()
+            }
         }
 
-        //매칭의 승패에 따른 색깔 결정
-        matchResultViewColor(matchDTO.matchInfo[0],matchDTO.matchInfo[1], userDTO.nickname)
 
-        //아이템 선택에 따른 리스너(인터페이스 내용을 구현해야됨)
-        binding.clUserRecordItem.setOnClickListener {
-            userMatchRecyclerListener.onItemClick(
-                matchDTO, userDTO.nickname
-            )
-        }
+//        //유저의 이름 및 스코어 값 세팅
+//        binding.tvMyUser.text = matchDTO.matchInfo[0].nickname
+//        binding.tvMyScore.text = matchDTO.matchInfo[0].shoot.goalTotal.toString()
+//        binding.tvOpponentUser.text = matchDTO.matchInfo[1].nickname
+//        binding.tvOpponentScore.text = matchDTO.matchInfo[1].shoot.goalTotal.toString()
+//
+//        //매칭의 시간 데이터 값을 세팅
+//        val date = matchDTO.matchDate.split("T")
+//        binding.tvMyMonth.text = date[0]
+//        binding.tvMyDay.text = with(date[1]) {
+//            // 시간 형식 HH:mm:ss--->HH:mm 변경
+//            var dayOut=""
+//            val dayIntFormat = SimpleDateFormat("HH:mm:ss")
+//            val dayOutFormat = SimpleDateFormat("HH:mm")
+//            val tempDate = dayIntFormat.parse(this)
+//            dayOut = dayOutFormat.format(tempDate)
+//            return@with dayOut
+//        }
+//
+//        //매칭의 승패에 따른 색깔 결정
+//        matchResultViewColor(matchDTO.matchInfo[0],matchDTO.matchInfo[1], userDTO.nickname)
+//
+//        //아이템 선택에 따른 리스너(인터페이스 내용을 구현해야됨)
+//        binding.clUserRecordItem.setOnClickListener {
+//            userMatchRecyclerListener.onItemClick(
+//                matchDTO, userDTO.nickname
+//            )
+//        }
     }
 
     /**
