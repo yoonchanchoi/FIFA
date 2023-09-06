@@ -8,90 +8,90 @@ data class StatusDTO(
 
     @SerializedName("shoot")
     @Expose
-    val shoot : Int,
+    val shoot: Int = 0,
 
     @SerializedName("effectiveShoot")
     @Expose
-    val effectiveShoot : Int,
+    val effectiveShoot: Int = 0,
 
     @SerializedName("assist")
     @Expose
-    val assist : Int,
+    val assist: Int = 0,
 
     @SerializedName("goal")
     @Expose
-    val goal : Int,
+    val goal: Int = 0,
 
     @SerializedName("dribble")
     @Expose
-    val dribble : Int,
+    val dribble: Int = 0,
 
     @SerializedName("intercept")
     @Expose
-    val intercept : Int,
+    val intercept: Int = 0,
 
     @SerializedName("defending")
     @Expose
-    val defending : Int,
+    val defending: Int = 0,
 
     @SerializedName("passTry")
     @Expose
-    val passTry : Int,
+    val passTry: Int = 0,
 
     @SerializedName("passSuccess")
     @Expose
-    val passSuccess : Int,
+    val passSuccess: Int = 0,
 
     @SerializedName("dribbleTry")
     @Expose
-    val dribbleTry : Int,
+    val dribbleTry: Int = 0,
 
     @SerializedName("dribbleSuccess")
     @Expose
-    val dribbleSuccess : Int,
+    val dribbleSuccess: Int = 0,
 
     @SerializedName("ballPossesionTry")
     @Expose
-    val ballPossesionTry : Int,
+    val ballPossesionTry: Int = 0,
 
     @SerializedName("ballPossesionSuccess")
     @Expose
-    val ballPossesionSuccess : Int,
+    val ballPossesionSuccess: Int = 0,
 
     @SerializedName("aerialTry")
     @Expose
-    val aerialTry : Int,
+    val aerialTry: Int = 0,
 
     @SerializedName("aerialSuccess")
     @Expose
-    val aerialSuccess : Int,
+    val aerialSuccess: Int = 0,
 
     @SerializedName("blockTry")
     @Expose
-    val blockTry : Int,
+    val blockTry: Int = 0,
 
     @SerializedName("block")
     @Expose
-    val block : Int,
+    val block: Int = 0,
 
     @SerializedName("tackleTry")
     @Expose
-    val tackleTry : Int,
+    val tackleTry: Int = 0,
 
     @SerializedName("tackle")
     @Expose
-    val tackle : Int,
+    val tackle: Int = 0,
 
     @SerializedName("yellowCards")
     @Expose
-    val yellowCards : Int,
+    val yellowCards: Int = 0,
 
     @SerializedName("redCards")
     @Expose
-    val redCards : Int,
+    val redCards: Int = 0,
 
     @SerializedName("spRating")
     @Expose
-    val spRating : Float
+    val spRating: Float
 
-): Serializable
+) : Serializable

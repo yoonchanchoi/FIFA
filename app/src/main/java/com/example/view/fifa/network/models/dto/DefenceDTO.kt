@@ -8,18 +8,18 @@ data class DefenceDTO(
 
     @SerializedName("blockTry")
     @Expose
-    val blockTry :Int,
+    val blockTry: Int = 0,
 
     @SerializedName("blockSuccess")
     @Expose
-    val blockSuccess :Int,
+    val blockSuccess: Int = 0,
 
     @SerializedName("tackleTry")
     @Expose
-    val tackleTry :Int,
+    val tackleTry: Int = 0,
 
     @SerializedName("tackleSuccess")
     @Expose
-    val tackleSuccess :Int
+    val tackleSuccess: Int = 0
 
-): Serializable
+) : Serializable

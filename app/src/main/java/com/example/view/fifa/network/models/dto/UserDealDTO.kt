@@ -7,22 +7,22 @@ import java.io.Serializable
 data class UserDealDTO(
     @SerializedName("tradeDate")
     @Expose
-    val tradeDate : String,
+    val tradeDate: String = "",
 
     @SerializedName("saleSn")
     @Expose
-    val saleSn : String,
+    val saleSn: String = "",
 
     @SerializedName("spid")
     @Expose
-    val spid : Int,
+    val spid: Int = 0,
 
     @SerializedName("grade")
     @Expose
-    val grade : Int,
+    val grade: Int = 0,
 
     @SerializedName("value")
     @Expose
-    val value : Int
+    val value: Int = 0
 
-): Serializable
+) : Serializable

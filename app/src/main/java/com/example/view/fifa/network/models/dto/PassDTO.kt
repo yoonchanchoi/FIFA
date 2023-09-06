@@ -8,58 +8,58 @@ data class PassDTO(
 
     @SerializedName("passTry")
     @Expose
-    val passTry: Int,
+    val passTry: Int = 0,
 
     @SerializedName("passSuccess")
     @Expose
-    val passSuccess: Int,
+    val passSuccess: Int = 0,
 
     @SerializedName("shortPassTry")
     @Expose
-    val shortPassTry: Int,
+    val shortPassTry: Int = 0,
 
     @SerializedName("shortPassSuccess")
     @Expose
-    val shortPassSuccess: Int,
+    val shortPassSuccess: Int = 0,
 
     @SerializedName("longPassTry")
     @Expose
-    val longPassTry: Int,
+    val longPassTry: Int = 0,
 
     @SerializedName("longPassSuccess")
     @Expose
-    val longPassSuccess: Int,
+    val longPassSuccess: Int = 0,
 
     @SerializedName("bouncingLobPassTry")
     @Expose
-    val bouncingLobPassTry: Int,
+    val bouncingLobPassTry: Int = 0,
 
     @SerializedName("bouncingLobPassSuccess")
     @Expose
-    val bouncingLobPassSuccess: Int,
+    val bouncingLobPassSuccess: Int = 0,
 
     @SerializedName("drivenGroundPassTry")
     @Expose
-    val drivenGroundPassTry: Int,
+    val drivenGroundPassTry: Int = 0,
 
     @SerializedName("drivenGroundPassSuccess")
     @Expose
-    val drivenGroundPassSuccess: Int,
+    val drivenGroundPassSuccess: Int = 0,
 
     @SerializedName("throughPassTry")
     @Expose
-    val throughPassTry: Int,
+    val throughPassTry: Int = 0,
 
     @SerializedName("throughPassSuccess")
     @Expose
-    val throughPassSuccess: Int,
+    val throughPassSuccess: Int = 0,
 
     @SerializedName("lobbedThroughPassTry")
     @Expose
-    val lobbedThroughPassTry: Int,
+    val lobbedThroughPassTry: Int = 0,
 
     @SerializedName("lobbedThroughPassSuccess")
     @Expose
-    val lobbedThroughPassSuccess: Int
+    val lobbedThroughPassSuccess: Int = 0
 
-): Serializable
+) : Serializable

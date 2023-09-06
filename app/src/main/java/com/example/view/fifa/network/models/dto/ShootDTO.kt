@@ -7,66 +7,66 @@ import java.io.Serializable
 data class ShootDTO(
     @SerializedName("shootTotal")
     @Expose
-    val shootTotal : Int,
+    val shootTotal: Int = 0,
 
     @SerializedName("effectiveShootTotal")
     @Expose
-    val effectiveShootTotal : Int,
+    val effectiveShootTotal: Int = 0,
 
     @SerializedName("shootOutScore")
     @Expose
-    val shootOutScore : Int,
+    val shootOutScore: Int = 0,
 
     @SerializedName("goalTotal")
     @Expose
-    val goalTotal : Int,
+    val goalTotal: Int = 0,
 
     @SerializedName("goalTotalDisplay")
     @Expose
-    val goalTotalDisplay : Int,
+    val goalTotalDisplay: Int = 0,
 
     @SerializedName("ownGoal")
     @Expose
-    val ownGoal : Int,
+    val ownGoal: Int = 0,
 
     @SerializedName("shootHeading")
     @Expose
-    val shootHeading : Int,
+    val shootHeading: Int = 0,
 
     @SerializedName("goalHeading")
     @Expose
-    val goalHeading : Int,
+    val goalHeading: Int = 0,
 
     @SerializedName("shootFreekick")
     @Expose
-    val shootFreekick : Int,
+    val shootFreekick: Int = 0,
 
     @SerializedName("goalFreekick")
     @Expose
-    val goalFreekick : Int,
+    val goalFreekick: Int = 0,
 
     @SerializedName("shootInPenalty")
     @Expose
-    val shootInPenalty : Int,
+    val shootInPenalty: Int = 0,
 
     @SerializedName("goalInPenalty")
     @Expose
-    val goalInPenalty : Int,
+    val goalInPenalty: Int = 0,
 
     @SerializedName("shootOutPenalty")
     @Expose
-    val shootOutPenalty : Int,
+    val shootOutPenalty: Int = 0,
 
     @SerializedName("goalOutPenalty")
     @Expose
-    val goalOutPenalty : Int,
+    val goalOutPenalty: Int = 0,
 
     @SerializedName("shootPenaltyKick")
     @Expose
-    val shootPenaltyKick : Int,
+    val shootPenaltyKick: Int = 0,
 
     @SerializedName("goalPenaltyKick")
     @Expose
-    val goalPenaltyKick : Int
+    val goalPenaltyKick: Int = 0
 
-): Serializable
+) : Serializable

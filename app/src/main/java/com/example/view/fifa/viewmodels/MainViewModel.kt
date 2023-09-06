@@ -18,7 +18,6 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val fifaMetadataManager: FIFAMetadataManager,
-    private val pref: Pref
 
 ) : ViewModel() {
 
@@ -40,7 +39,6 @@ class MainViewModel @Inject constructor(
                 if (response.isSuccessful) {
                     response.body()?.let {
                         _spidDTOList.postValue(it)
-//                        pref.saveAllSpidList(it)
                         Log.e("cyc", "전체 선수 성공")
                     }
                 } else {

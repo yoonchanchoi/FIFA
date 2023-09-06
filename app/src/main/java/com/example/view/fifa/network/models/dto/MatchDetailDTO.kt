@@ -8,57 +8,57 @@ data class MatchDetailDTO(
 
     @SerializedName("seasonId")
     @Expose
-    val seasonId : Int,
+    val seasonId: Int = 0,
 
     @SerializedName("matchResult")
     @Expose
-    val matchResult : String,
+    val matchResult: String = "",
 
     @SerializedName("matchEndType")
     @Expose
-    val matchEndType : Int,
+    val matchEndType: Int = 0,
 
     @SerializedName("systemPause")
     @Expose
-    val systemPause : Int,
+    val systemPause: Int = 0,
 
     @SerializedName("foul")
     @Expose
-    val foul : Int,
+    val foul: Int = 0,
 
     @SerializedName("injury")
     @Expose
-    val injury : Int,
+    val injury: Int = 0,
 
     @SerializedName("redCards")
     @Expose
-    val redCards : Int,
+    val redCards: Int = 0,
 
     @SerializedName("yellowCards")
     @Expose
-    val yellowCards : Int,
+    val yellowCards: Int = 0,
 
     @SerializedName("dribble")
     @Expose
-    val dribble : Int,
+    val dribble: Int = 0,
 
     @SerializedName("cornerKick")
     @Expose
-    val cornerKick : Int,
+    val cornerKick: Int = 0,
 
     @SerializedName("possession")
     @Expose
-    val possession : Int,
+    val possession: Int = 0,
 
     @SerializedName("OffsideCount")
     @Expose
-    val OffsideCount : Int,
+    val OffsideCount: Int = 0,
 
     @SerializedName("averageRating")
     @Expose
-    val averageRating : Double,
+    val averageRating: Double = 0.0,
 
     @SerializedName("controller")
     @Expose
-    val controller : String
-): Serializable
+    val controller: String = ""
+) : Serializable

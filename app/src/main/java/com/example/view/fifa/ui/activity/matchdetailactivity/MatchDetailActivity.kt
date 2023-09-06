@@ -60,7 +60,6 @@ class MatchDetailActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-
         //pref에서 데이터 가져오기 선수의 이름과 포지션 데이터 가져오기
         //추가로 해당 데이터를 직접만든 이름과 포지션 데이터 뿐만아니라 기존의 선수 데이터도 가지고 있게 변환해야될거 같다
         //일단 데이터만 저장하고 데이터 모델을 변환해야될것으로 보임...
@@ -212,7 +211,7 @@ class MatchDetailActivity : AppCompatActivity() {
      *
      */
     private fun setMatchMyPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayerDTO>) {
-        matchMyPlayerAdapter = MatchPlayerAdapter(matchPlayerDTOList)
+        matchMyPlayerAdapter = MatchPlayerAdapter(this, matchPlayerDTOList)
         val searchLinearLayoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         searchLinearLayoutManager.stackFromEnd = true // 키보드 열릴시 recycclerview 스크롤 처리
@@ -226,7 +225,7 @@ class MatchDetailActivity : AppCompatActivity() {
      *
      */
     private fun setMatchOpponentPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayerDTO>) {
-        matchOpponentPlayerAdapter = MatchPlayerAdapter(matchPlayerDTOList)
+        matchOpponentPlayerAdapter = MatchPlayerAdapter(this, matchPlayerDTOList)
         val searchLinearLayoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         searchLinearLayoutManager.stackFromEnd = true // 키보드 열릴시 recycclerview 스크롤 처리

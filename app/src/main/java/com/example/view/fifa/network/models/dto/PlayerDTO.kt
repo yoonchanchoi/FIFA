@@ -8,18 +8,18 @@ data class PlayerDTO(
 
     @SerializedName("spId")
     @Expose
-    val spId: Int,
+    val spId: Int = 0,
 
     @SerializedName("spPosition")
     @Expose
-    val spPosition: Int,
+    val spPosition: Int = 0,
 
     @SerializedName("spGrade")
     @Expose
-    val spGrade: Int,
+    val spGrade: Int = 0,
 
     @SerializedName("status")
     @Expose
     val status: StatusDTO
 
-): Serializable
+) : Serializable

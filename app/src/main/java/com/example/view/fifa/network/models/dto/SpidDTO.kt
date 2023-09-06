@@ -7,10 +7,10 @@ import java.io.Serializable
 data class SpidDTO(
     @SerializedName("id")
     @Expose
-    val id: Int,
+    val id: Int = 0,
 
     @SerializedName("name")
     @Expose
-    val name: String
+    val name: String = ""
 
-): Serializable
+) : Serializable

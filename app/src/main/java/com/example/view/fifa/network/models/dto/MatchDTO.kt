@@ -7,17 +7,17 @@ import java.io.Serializable
 data class MatchDTO(
     @SerializedName("matchId")
     @Expose
-    val matchId : String,
+    val matchId: String = "",
 
     @SerializedName("matchDate")
     @Expose
-    val matchDate : String,
+    val matchDate: String = "",
 
     @SerializedName("matchType")
     @Expose
-    val matchType : Int,
+    val matchType: Int = 0,
 
     @SerializedName("matchInfo")
     @Expose
-    val matchInfo : ArrayList<MatchInfoDTO>
-): Serializable
+    val matchInfo: ArrayList<MatchInfoDTO>
+) : Serializable

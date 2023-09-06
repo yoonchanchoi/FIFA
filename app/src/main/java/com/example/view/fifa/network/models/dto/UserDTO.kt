@@ -8,14 +8,14 @@ data class UserDTO(
 
     @SerializedName("accessId")
     @Expose
-    val accessId : String,
+    val accessId: String = "",
 
     @SerializedName("nickname")
     @Expose
-    val nickname : String,
+    val nickname: String = "",
 
     @SerializedName("level")
     @Expose
-    val level : Int
+    val level: Int = 0
 
-): Serializable
+) : Serializable

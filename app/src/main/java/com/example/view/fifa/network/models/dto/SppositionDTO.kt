@@ -8,10 +8,10 @@ data class SppositionDTO(
 
     @SerializedName("spposition")
     @Expose
-    val spposition: Int,
+    val spposition: Int = 0,
 
     @SerializedName("desc")
     @Expose
-    val desc: String
+    val desc: String = ""
 
 ) : Serializable

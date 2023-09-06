@@ -8,62 +8,62 @@ data class ShootDetailDTO(
 
     @SerializedName("goalTime")
     @Expose
-    val goalTime: Int,
+    val goalTime: Int = 0,
 
     @SerializedName("x")
     @Expose
-    val x: Double,
+    val x: Double = 0.0,
 
     @SerializedName("y")
     @Expose
-    val y: Double,
+    val y: Double = 0.0,
 
     @SerializedName("type")
     @Expose
-    val type: Int,
+    val type: Int = 0,
 
     @SerializedName("result")
     @Expose
-    val result: Int,
+    val result: Int = 0,
 
     @SerializedName("spId")
     @Expose
-    val spId: Int,
+    val spId: Int = 0,
 
     @SerializedName("spGrade")
     @Expose
-    val spGrade: Int,
+    val spGrade: Int = 0,
 
     @SerializedName("spLevel")
     @Expose
-    val spLevel: Int,
+    val spLevel: Int = 0,
 
     @SerializedName("spIdType")
     @Expose
-    val spIdType: Boolean,
+    val spIdType: Boolean = false,
 
     @SerializedName("assist")
     @Expose
-    val assist: Boolean,
+    val assist: Boolean = false,
 
     @SerializedName("assistSpId")
     @Expose
-    val assistSpId: Int,
+    val assistSpId: Int = 0,
 
     @SerializedName("assistX")
     @Expose
-    val assistX: Double,
+    val assistX: Double = 0.0,
 
     @SerializedName("assistY")
     @Expose
-    val assistY: Double,
+    val assistY: Double = 0.0,
 
     @SerializedName("hitPost")
     @Expose
-    val hitPost: Boolean,
+    val hitPost: Boolean = false,
 
     @SerializedName("inPenalty")
     @Expose
-    val inPenalty: Boolean
+    val inPenalty: Boolean = false
 
-): Serializable
+) : Serializable

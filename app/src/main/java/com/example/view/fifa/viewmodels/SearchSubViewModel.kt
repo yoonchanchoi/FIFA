@@ -80,17 +80,17 @@ class SearchSubViewModel @Inject constructor(
                         requestMaxDivision(it.accessId)
                         _recentSearchSaveCheck.postValue(recentSearchSaveCheck)
                         requestMatchId(it.accessId)
-                        Log.e("cyc", "성공")
+                        Log.e("cyc", "유저 정보---성공")
                     }
                 }else{
 //                    _userCheck.postValue(false)
-                    Log.e("cyc", "통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
+                    Log.e("cyc", "유저 정보---통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
                 }
             }
 
             override fun onFailure(call: Call<UserDTO>, t: Throwable) {
 //                _userCheck.postValue(false)
-                Log.e("cyc", "통신실패 (인터넷 연결의 문제, 예외발생)")
+                Log.e("cyc", "유저 정보---통신실패 (인터넷 연결의 문제, 예외발생)")
             }
         })
     }
@@ -106,14 +106,16 @@ class SearchSubViewModel @Inject constructor(
                     response.body()?.let{
 //                        _arrayMathId.postValue(it)
                         requestMatchInfo(it)
+                        Log.e("cyc", "유저 경기---성공")
+
                     }
                 }else{
-                    Log.e("cyc", "통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
+                    Log.e("cyc", "유저 경기---통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
                 }
             }
 
             override fun onFailure(call: Call<ArrayList<String>>, t: Throwable) {
-                Log.e("cyc", "통신실패 (인터넷 연결의 문제, 예외발생)")
+                Log.e("cyc", "유저 경기---통신실패 (인터넷 연결의 문제, 예외발생)")
             }
         })
     }
@@ -131,12 +133,14 @@ class SearchSubViewModel @Inject constructor(
                                 _matchDTOList.postValue(tmpMatchDToList)
                             }
                         }
+                        Log.e("cyc", "유저 경기 정보---성공")
+
                     }else{
-                        Log.e("cyc", "통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
+                        Log.e("cyc", "유저 경기 정보---통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
                     }
                 }
                 override fun onFailure(call: Call<MatchDTO>, t: Throwable) {
-                    Log.e("cyc", "통신실패 (인터넷 연결의 문제, 예외발생)")
+                    Log.e("cyc", "유저 경기 정보---통신실패 (인터넷 연결의 문제, 예외발생)")
                 }
             })
             // 밖에서 받는 것을 한다.
@@ -152,17 +156,17 @@ class SearchSubViewModel @Inject constructor(
                     response.body()?.let {
 //                        _maxDivisionDTOList.postValue(it)
                         _userRank.postValue(checkDivision(it))
-                        Log.e("cyc", "성공")
+                        Log.e("cyc", "유저의 최고 랭크---성공")
                     }
                 }else{
 //                    _userCheck.postValue(false)
-                    Log.e("cyc", "통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
+                    Log.e("cyc", "유저의 최고 랭크---통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
                 }
             }
 
             override fun onFailure(call: Call<ArrayList<MaxDivisionDTO>>, t: Throwable) {
 //                _userCheck.postValue(false)
-                Log.e("cyc", "통신실패 (인터넷 연결의 문제, 예외발생)")
+                Log.e("cyc", "유저의 최고 랭크---통신실패 (인터넷 연결의 문제, 예외발생)")
             }
         })
     }

@@ -7,33 +7,33 @@ import java.io.Serializable
 data class MatchInfoDTO(
     @SerializedName("accessId")
     @Expose
-    val accessId :String,
+    val accessId: String = "",
 
     @SerializedName("nickname")
     @Expose
-    val nickname :String,
+    val nickname: String = "",
 
     @SerializedName("matchDetail")
     @Expose
-    val matchDetail :MatchDetailDTO,
+    val matchDetail: MatchDetailDTO,
 
     @SerializedName("shoot")
     @Expose
-    val shoot :ShootDTO,
+    val shoot: ShootDTO,
 
     @SerializedName("shootDetail")
     @Expose
-    val shootDetail :ArrayList<ShootDetailDTO>,
+    val shootDetail: ArrayList<ShootDetailDTO>,
 
     @SerializedName("pass")
     @Expose
-    val pass :PassDTO,
+    val pass: PassDTO,
 
     @SerializedName("defence")
     @Expose
-    val defence :DefenceDTO,
+    val defence: DefenceDTO,
 
     @SerializedName("player")
     @Expose
-    val player :ArrayList<PlayerDTO>
-): Serializable
+    val player: ArrayList<PlayerDTO>
+) : Serializable
