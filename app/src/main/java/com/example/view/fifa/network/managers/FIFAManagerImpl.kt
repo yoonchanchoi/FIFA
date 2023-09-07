@@ -22,6 +22,9 @@ class FIFAManagerImpl @Inject constructor(@NetworkProviderModule.FifaRetrofit pr
     override fun requestMaxDivision(accessid: String): Call<ArrayList<MaxDivisionDTO>> =
         service.requestMaxDivision(accessid)
 
+//    override fun requestPlayerImage(spid: Int): Call<String> =
+//        service.requestPlayerImage(spid)
+
     ////-------------------------------------------------------------------------------------
 ////    //여기서 부터 rxjava잠금-1
 //

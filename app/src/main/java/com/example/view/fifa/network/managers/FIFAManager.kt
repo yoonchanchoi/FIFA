@@ -15,6 +15,9 @@ interface FIFAManager {
 
     fun requestMaxDivision(nickname: String): Call<ArrayList<MaxDivisionDTO>>
 
+//    fun requestPlayerImage(spid: Int): Call<String>
+
+
     ////-------------------------------------------------------------------------------------
 ////    //여기서 부터 rxjava잠금-1
 ////    fun requestTest(): Call<FIFAResponse>
