@@ -1,21 +1,27 @@
 package com.example.view.fifa.viewmodels
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.view.fifa.network.managers.FIFAMetadataManager
-import com.example.view.fifa.network.models.dto.*
+import com.example.view.fifa.network.managers.FIFAImageManager
+import com.example.view.fifa.network.models.dto.MatchDTO
+import com.example.view.fifa.network.models.dto.MatchPlayerDTO
+import com.example.view.fifa.network.models.dto.SpidDTO
+import com.example.view.fifa.network.models.dto.SppositionDTO
 import com.example.view.fifa.util.Pref
 import dagger.hilt.android.lifecycle.HiltViewModel
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
+
 @HiltViewModel
 class MatchDetailViewModel @Inject constructor(
-    private val pref: Pref
+    private val fifaImageManager: FIFAImageManager,
+    private val pref: Pref,
 
 ) : ViewModel() {
 
@@ -24,6 +30,8 @@ class MatchDetailViewModel @Inject constructor(
 
     val filtedMatchMyPlayerDTOList = ArrayList<MatchPlayerDTO>()
     val filtedMatchOpponentPlayerDTOList = ArrayList<MatchPlayerDTO>()
+
+    val testBitmapList = ArrayList<Bitmap>()
 
     fun getPreData(){
         _spidDTOList = pref.getAllSpidList() as ArrayList<SpidDTO>
@@ -67,6 +75,37 @@ class MatchDetailViewModel @Inject constructor(
             }
         }
         return MatchPlayerDTO(name, desc)
+    }
+
+
+    fun requestSpidImage() {
+        Log.e("cyc","비트맵 test")
+        val result = fifaImageManager.requestSpidImage(280202126)
+        result.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+
+                        val bmp = BitmapFactory.decodeStream(response.body()!!.byteStream())
+                        testBitmapList.add(bmp)
+
+                        Log.e("cyc", "선수 액션 이미지 성공")
+                        Log.e("cyc", "it.byteStream--->${it.byteStream()}")
+                        Log.e("cyc", "response.body().string()--->${response.body()!!.string()}")
+                    }
+                } else {
+                    Log.e("cyc", "선수 액션 이미지 통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("cyc", "선수 액션 이미지 통신실패 (인터넷 연결의 문제, 예외발생)")
+
+            }
+        })
     }
 }
 

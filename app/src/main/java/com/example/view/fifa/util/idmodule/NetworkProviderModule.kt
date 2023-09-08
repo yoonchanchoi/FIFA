@@ -1,5 +1,6 @@
 package com.example.view.fifa.util.idmodule
 
+import com.example.view.fifa.network.services.FIFAImageService
 import com.example.view.fifa.network.services.FIFAMetadataService
 import com.example.view.fifa.network.services.HeadersInterceptor
 import com.example.view.fifa.network.services.FIFAService
@@ -23,19 +24,33 @@ class NetworkProviderModule {
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
-    annotation class FifaOkHttpClient
+    annotation class FifaMetadataOkHttpClient
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
-    annotation class FifaMetadataOkHttpClient
+    annotation class FifaMetadataRetrofit
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class FifaOkHttpClient
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
     annotation class FifaRetrofit
 
+
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
-    annotation class FifaMetadataRetrofit
+    annotation class FifaImageOkHttpClient
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class FifaImageRetrofit
+
+
+
+
+
 
 
     @FifaMetadataOkHttpClient
@@ -87,6 +102,33 @@ class NetworkProviderModule {
             .client(okHttpClient)
             .build().create(FIFAService::class.java)
     }
+
+    @FifaImageOkHttpClient
+    @Provides
+    @Singleton
+    fun provideFifaImageOkHttpClient(
+        headersInterceptor: HeadersInterceptor
+    ): OkHttpClient {
+        val logInterceptor = HttpLoggingInterceptor()
+        logInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        return OkHttpClient.Builder()
+            .addInterceptor(logInterceptor)
+            .addInterceptor(headersInterceptor)
+            .build()
+    }
+    @FifaImageRetrofit
+    @Provides
+    @Singleton
+    fun provideFifaImageRetrofit(@FifaImageOkHttpClient okHttpClient: OkHttpClient): FIFAImageService {
+        return Retrofit.Builder()
+            .baseUrl(Constants.IMAGE_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+            .client(okHttpClient)
+            .build().create(FIFAImageService::class.java)
+    }
+
+
 }
 
 //import com.example.view.fifa.network.services.HeadersInterceptor
