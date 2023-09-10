@@ -76,6 +76,7 @@ class MatchDetailActivity : AppCompatActivity() {
 
         //test
         viewModel.requestSpidImage()
+
         viewModel.getPreData()
 
         //화면이 보여질때 가져올 데이터 intent
@@ -164,7 +165,7 @@ class MatchDetailActivity : AppCompatActivity() {
 //        loadingProgressDialog.dismiss()
 
         //test
-        binding.ivTest.setImageBitmap(viewModel.testBitmapList[1])
+//        binding.ivTest.setImageBitmap(viewModel.testBitmapList[0])
 
     }
 

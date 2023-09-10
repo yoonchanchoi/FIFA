@@ -33,6 +33,8 @@ class MatchDetailViewModel @Inject constructor(
 
     val testBitmapList = ArrayList<Bitmap>()
 
+    val testByteArrayList = ArrayList<ByteArray>()
+
     fun getPreData(){
         _spidDTOList = pref.getAllSpidList() as ArrayList<SpidDTO>
         _sppositionDTOList = pref.getAllSppositionList() as ArrayList<SppositionDTO>
@@ -89,12 +91,60 @@ class MatchDetailViewModel @Inject constructor(
                 if (response.isSuccessful) {
                     response.body()?.let {
 
-                        val bmp = BitmapFactory.decodeStream(response.body()!!.byteStream())
-                        testBitmapList.add(bmp)
-
+                    //해당 responsebody값을 여러번 호출 할 경우 (response.body().string()이렇게) 한번 밖에 호출되지 않고 다음
+                    //값 부터는 똑같이 호출해도 null값이 온다. 이 이유는 해당 response값은 메모리에 저장된 상태가 아니기 때문이다.
+                    // 이건 아직 확실하지 않는 부분이지만 위에 이유 때문인지 이것을 (it.byteStream()이렇게) 호출해서 바이너리 데이터를 스트림으로 받을 때도
+                    // 한번만 호출되고 다음부터는 null 값이 나온다..이것 때문에 여러 테스트할 때 계속 null이 나오는데 원인을 몰라서  아에 잘못한 줄 하고 3이나 샵질했다...아...ㅇㅅㅇ;;
                         Log.e("cyc", "선수 액션 이미지 성공")
-                        Log.e("cyc", "it.byteStream--->${it.byteStream()}")
-                        Log.e("cyc", "response.body().string()--->${response.body()!!.string()}")
+                        val input = it.byteStream()
+                        val bmp = BitmapFactory.decodeStream(input)
+
+//                        Log.e("cyc","it--->${it}")
+//                        Log.e("cyc","response.body()--->${response.body()}")
+//                        Log.e("cyc", "it.byteStream--->${it.byteStream()}")
+//                        Log.e("cyc","response.body().byteStream()--->${response.body()!!.byteStream()}")
+//                        Log.e("cyc", "response.body().string()--->${response.body()!!.string()}")
+//                        Log.e("cyc","response.body().string().byteInputStream()--->${response.body()!!.string().byteInputStream()}")
+//
+//                        val bmp = BitmapFactory.decodeStream(response.body()!!.byteStream())
+//                        Log.e("cyc","bmp--->${bmp}")
+//
+//                        val bmp2 = BitmapFactory.decodeStream(response.body()!!.string().byteInputStream())
+//                        Log.e("cyc","bmp2--->${bmp2}")
+//
+//                        val bmp3 = BitmapFactory.decodeStream(it.byteStream())
+//                        Log.e("cyc","bmp3--->${bmp3}")
+
+
+                        //test
+//                        val input = it.byteStream()
+//                        Log.e("cyc","input--->${input}")
+//
+//                        val bmp3 = BitmapFactory.decodeStream(input)
+//                        Log.e("cyc","bmp3--->${bmp3}")
+//                        Log.e("cyc","it2--->${it}")
+//                        Log.e("cyc", "response.body().string()2--->${response.body()!!.string()}")
+//
+//
+//                        Log.e("cyc","input2--->${input}")
+////                        Log.e("cyc","it--->${it}")
+//                        val bmp5 = BitmapFactory.decodeStream(it.byteStream())
+//                        Log.e("cyc","bmp5--->${bmp5}")
+//
+//                        val bmp6 = BitmapFactory.decodeStream(input)
+//                        Log.e("cyc","bmp5--->${bmp6}")
+////                        testBitmapList.add(bmp)
+//                        //test
+
+                        //되는코드
+//                        val input = it.byteStream()
+//                        Log.e("cyc","input--->${input}")
+////                        Log.e("cyc","it--->${it}")
+//                        val bmp5 = BitmapFactory.decodeStream(input)
+//                        Log.e("cyc","bmp5--->${bmp5}")
+                        //되는코드
+
+                        testBitmapList.add(bmp)
                     }
                 } else {
                     Log.e("cyc", "선수 액션 이미지 통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
