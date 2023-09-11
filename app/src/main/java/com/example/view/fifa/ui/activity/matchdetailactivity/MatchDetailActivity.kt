@@ -1,6 +1,7 @@
 package com.example.view.fifa.ui.activity.matchdetailactivity
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
 import android.graphics.PorterDuff
@@ -74,8 +75,8 @@ class MatchDetailActivity : AppCompatActivity() {
 //        viewModel.requestSpid()
 //        viewModel.requestSpposition()
 
-        //test
-        viewModel.requestSpidImage()
+//        //test
+//        viewModel.requestSpidImage()
 
         viewModel.getPreData()
 
@@ -158,18 +159,37 @@ class MatchDetailActivity : AppCompatActivity() {
         matchOpponentPlayerDTOList = viewModel.filtedMatchOpponentPlayerDTOList
 
         //어댑터 세팅2개 각각의 어댑터
-        setMatchMyPlayerAdapter(matchMyPlayerDTOList)
-        setMatchOpponentPlayerAdapter(matchOpponentPlayerDTOList)
+//        //이미지 test 바꾸기 전
+//        setMatchMyPlayerAdapter(matchMyPlayerDTOList)
+//        setMatchOpponentPlayerAdapter(matchOpponentPlayerDTOList)
+//        //이미지 test 바꾸기 전
+
 //
 ////        로딩 프로그래스 다이얼로그 종료
 //        loadingProgressDialog.dismiss()
 
-        //test
+
+//        viewModel.testBitmapList.forEach {
+//            Log.e("cyc","디테일 뷰 Bitmap-->${it}")
+//        }
+
+//        Log.e("cyc","viewModel.testBitmapList[0]-->${viewModel.testBitmapList[0]}")
+//        //test
 //        binding.ivTest.setImageBitmap(viewModel.testBitmapList[0])
 
     }
 
     private fun initObserve() {
+        //이미지 test
+        viewModel.myPlayerBitmapList.observe(this){
+            setMatchMyPlayerAdapter(matchMyPlayerDTOList,it)
+        }
+        viewModel.opponentPlayerBitmapList.observe(this){
+            setMatchOpponentPlayerAdapter(matchOpponentPlayerDTOList,it)
+        }
+        //이미지 test
+
+
 //        바꾸는중
 //        viewModel.spidDTOList.observe(this) {
 //            spidDtoListCheck = true
@@ -216,8 +236,37 @@ class MatchDetailActivity : AppCompatActivity() {
     /**
      *
      */
-    private fun setMatchMyPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayerDTO>) {
-        matchMyPlayerAdapter = MatchPlayerAdapter(this, matchPlayerDTOList)
+//    //이미지 test 바꾸기 전
+//    private fun setMatchMyPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayerDTO>) {
+//        matchMyPlayerAdapter = MatchPlayerAdapter(this, matchPlayerDTOList)
+//        val searchLinearLayoutManager =
+//            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+//        searchLinearLayoutManager.stackFromEnd = true // 키보드 열릴시 recycclerview 스크롤 처리
+//        binding.rvMy.apply {
+//            layoutManager = searchLinearLayoutManager
+//            adapter = matchMyPlayerAdapter
+//        }
+//    }
+//
+//    /**
+//     *
+//     */
+//    private fun setMatchOpponentPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayerDTO>) {
+//        matchOpponentPlayerAdapter = MatchPlayerAdapter(this, matchPlayerDTOList)
+//        val searchLinearLayoutManager =
+//            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+//        searchLinearLayoutManager.stackFromEnd = true // 키보드 열릴시 recycclerview 스크롤 처리
+//        binding.rvOpponent.apply {
+//            layoutManager = searchLinearLayoutManager
+//            adapter = matchOpponentPlayerAdapter
+//        }
+//    }
+//    //이미지 test 바꾸기 전
+
+
+    //이미지 test
+    private fun setMatchMyPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayerDTO>, bitmapList: ArrayList<Bitmap>) {
+        matchMyPlayerAdapter = MatchPlayerAdapter(this, matchPlayerDTOList, bitmapList)
         val searchLinearLayoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         searchLinearLayoutManager.stackFromEnd = true // 키보드 열릴시 recycclerview 스크롤 처리
@@ -230,8 +279,8 @@ class MatchDetailActivity : AppCompatActivity() {
     /**
      *
      */
-    private fun setMatchOpponentPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayerDTO>) {
-        matchOpponentPlayerAdapter = MatchPlayerAdapter(this, matchPlayerDTOList)
+    private fun setMatchOpponentPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayerDTO>,bitmapList: ArrayList<Bitmap>) {
+        matchOpponentPlayerAdapter = MatchPlayerAdapter(this, matchPlayerDTOList,bitmapList)
         val searchLinearLayoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         searchLinearLayoutManager.stackFromEnd = true // 키보드 열릴시 recycclerview 스크롤 처리
@@ -240,7 +289,7 @@ class MatchDetailActivity : AppCompatActivity() {
             adapter = matchOpponentPlayerAdapter
         }
     }
-
+    //이미지 test
 
     /**
      * 유저의 승패에 따른 색깔 결정

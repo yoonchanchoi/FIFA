@@ -1,14 +1,15 @@
 package com.example.view.fifa.viewmodels
 
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.view.fifa.network.managers.FIFAImageManager
-import com.example.view.fifa.network.models.dto.MatchDTO
-import com.example.view.fifa.network.models.dto.MatchPlayerDTO
-import com.example.view.fifa.network.models.dto.SpidDTO
-import com.example.view.fifa.network.models.dto.SppositionDTO
+import com.example.view.fifa.network.models.dto.*
+import com.example.view.fifa.util.Constants
 import com.example.view.fifa.util.Pref
 import dagger.hilt.android.lifecycle.HiltViewModel
 import okhttp3.ResponseBody
@@ -31,9 +32,20 @@ class MatchDetailViewModel @Inject constructor(
     val filtedMatchMyPlayerDTOList = ArrayList<MatchPlayerDTO>()
     val filtedMatchOpponentPlayerDTOList = ArrayList<MatchPlayerDTO>()
 
-    val testBitmapList = ArrayList<Bitmap>()
+//    val myPlayerBitmapList : ArrayList<Bitmap> = arrayListOf()
+//    val myPlayerBitmapList = ArrayList<Bitmap>()
+//    val opponentPlayerBitmapList = ArrayList<Bitmap>()
 
-    val testByteArrayList = ArrayList<ByteArray>()
+
+    private val _myPlayerBitmapList = MutableLiveData<ArrayList<Bitmap>>()
+    val myPlayerBitmapList: LiveData<ArrayList<Bitmap>>
+        get() = _myPlayerBitmapList
+
+    private val _opponentPlayerBitmapList = MutableLiveData<ArrayList<Bitmap>>()
+    val opponentPlayerBitmapList: LiveData<ArrayList<Bitmap>>
+        get() = _opponentPlayerBitmapList
+
+
 
     fun getPreData(){
         _spidDTOList = pref.getAllSpidList() as ArrayList<SpidDTO>
@@ -48,6 +60,7 @@ class MatchDetailViewModel @Inject constructor(
 //                _matchMyPlayerDTOList.postValue(_tempMatchMyPlayerDTOList)
 //            }
         }
+        requestSpidImage2(matchDTO.matchInfo[1].player,Constants.MY_TEAM_PLAYER_IMAGE)
 
         matchDTO.matchInfo[1].player.forEach {
             filtedMatchOpponentPlayerDTOList.add(pickUpPlayer(it.spId, it.spPosition))
@@ -55,6 +68,7 @@ class MatchDetailViewModel @Inject constructor(
 //                _matchOpponentPlayerDTOList.postValue(_tempMatchOpponentPlayerDTOList)
 //            }
         }
+        requestSpidImage2(matchDTO.matchInfo[1].player,Constants.OPPONENT_TEAM_PLAYER_IMAGE)
     }
 
     private fun pickUpPlayer(id: Int, position: Int): MatchPlayerDTO {
@@ -65,6 +79,7 @@ class MatchDetailViewModel @Inject constructor(
             spidDTOS.forEach {
                 if (it.id == id) {
                     name = it.name
+
                 }
             }
         }
@@ -98,53 +113,9 @@ class MatchDetailViewModel @Inject constructor(
                         Log.e("cyc", "선수 액션 이미지 성공")
                         val input = it.byteStream()
                         val bmp = BitmapFactory.decodeStream(input)
+//                        testBitmapList.add(bmp)
 
-//                        Log.e("cyc","it--->${it}")
-//                        Log.e("cyc","response.body()--->${response.body()}")
-//                        Log.e("cyc", "it.byteStream--->${it.byteStream()}")
-//                        Log.e("cyc","response.body().byteStream()--->${response.body()!!.byteStream()}")
-//                        Log.e("cyc", "response.body().string()--->${response.body()!!.string()}")
-//                        Log.e("cyc","response.body().string().byteInputStream()--->${response.body()!!.string().byteInputStream()}")
-//
-//                        val bmp = BitmapFactory.decodeStream(response.body()!!.byteStream())
-//                        Log.e("cyc","bmp--->${bmp}")
-//
-//                        val bmp2 = BitmapFactory.decodeStream(response.body()!!.string().byteInputStream())
-//                        Log.e("cyc","bmp2--->${bmp2}")
-//
-//                        val bmp3 = BitmapFactory.decodeStream(it.byteStream())
-//                        Log.e("cyc","bmp3--->${bmp3}")
-
-
-                        //test
-//                        val input = it.byteStream()
-//                        Log.e("cyc","input--->${input}")
-//
-//                        val bmp3 = BitmapFactory.decodeStream(input)
-//                        Log.e("cyc","bmp3--->${bmp3}")
-//                        Log.e("cyc","it2--->${it}")
-//                        Log.e("cyc", "response.body().string()2--->${response.body()!!.string()}")
-//
-//
-//                        Log.e("cyc","input2--->${input}")
-////                        Log.e("cyc","it--->${it}")
-//                        val bmp5 = BitmapFactory.decodeStream(it.byteStream())
-//                        Log.e("cyc","bmp5--->${bmp5}")
-//
-//                        val bmp6 = BitmapFactory.decodeStream(input)
-//                        Log.e("cyc","bmp5--->${bmp6}")
-////                        testBitmapList.add(bmp)
-//                        //test
-
-                        //되는코드
-//                        val input = it.byteStream()
-//                        Log.e("cyc","input--->${input}")
-////                        Log.e("cyc","it--->${it}")
-//                        val bmp5 = BitmapFactory.decodeStream(input)
-//                        Log.e("cyc","bmp5--->${bmp5}")
-                        //되는코드
-
-                        testBitmapList.add(bmp)
+//                        Log.e("cyc","디테일 뷰몯델 testBitmapList[0]-->${testBitmapList[0]}")
                     }
                 } else {
                     Log.e("cyc", "선수 액션 이미지 통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
@@ -156,6 +127,42 @@ class MatchDetailViewModel @Inject constructor(
 
             }
         })
+    }
+
+
+    fun requestSpidImage2(playerList : ArrayList<PlayerDTO>, whoseTeam: String) {
+        val bitmapList = ArrayList<Bitmap>()
+        playerList.forEach { plyaerDTO ->
+            val result = fifaImageManager.requestSpidImage(plyaerDTO.spId)
+            result.enqueue(object : Callback<ResponseBody>{
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    if(response.isSuccessful){
+                        response.body()?.let {
+
+                            val input = it.byteStream()
+                            val bmp = BitmapFactory.decodeStream(input)
+                            bitmapList.add(bmp)
+                            if(playerList.indexOf(plyaerDTO) == playerList.size-1){
+                                if(whoseTeam.equals(Constants.MY_TEAM_PLAYER_IMAGE)){
+                                    _myPlayerBitmapList.postValue(bitmapList)
+                                }else{
+                                    _opponentPlayerBitmapList.postValue(bitmapList)
+                                }
+                            }
+                        }
+                        Log.e("cyc", "유저 경기 정보---성공")
+
+                    }else{
+                        Log.e("cyc", "유저 경기 정보---통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
+                    }
+                }
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Log.e("cyc", "유저 경기 정보---통신실패 (인터넷 연결의 문제, 예외발생)")
+                }
+            })
+            // 밖에서 받는 것을 한다.
+            // synchronized로 처리할 될 내부의 repsonse를 뺄수가 없다..일단 다시 해본다 오늘 시도했지만 터졋다..
+        }
     }
 }
 

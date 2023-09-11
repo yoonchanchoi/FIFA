@@ -1,6 +1,7 @@
 package com.example.view.fifa.ui.activity.matchdetailactivity
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.util.Log
 import android.view.View
@@ -15,7 +16,7 @@ class MatchPlayerViewHolder(
     private val binding: ItemMatchPlayerBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(context: Context, matchPlayDTO: MatchPlayerDTO) {
+    fun bind(context: Context, matchPlayDTO: MatchPlayerDTO,bitmap: Bitmap) {
         binding.tvPlayerNickname.text = matchPlayDTO.spName
         sppositionColor(context,binding.tvPlayerPosition,matchPlayDTO.spPosition)
 //        binding.tvPlayerPosition.text = matchPlayDTO.spPosition
