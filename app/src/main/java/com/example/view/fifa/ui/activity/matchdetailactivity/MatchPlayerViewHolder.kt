@@ -16,7 +16,7 @@ class MatchPlayerViewHolder(
     private val binding: ItemMatchPlayerBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(context: Context, matchPlayDTO: MatchPlayerDTO,bitmap: Bitmap) {
+    fun bind(context: Context, matchPlayDTO: MatchPlayerDTO) {
         binding.tvPlayerNickname.text = matchPlayDTO.spName
         sppositionColor(context,binding.tvPlayerPosition,matchPlayDTO.spPosition)
 //        binding.tvPlayerPosition.text = matchPlayDTO.spPosition

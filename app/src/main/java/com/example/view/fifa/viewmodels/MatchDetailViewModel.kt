@@ -16,6 +16,7 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.InputStream
 import javax.inject.Inject
 
 
@@ -32,18 +33,9 @@ class MatchDetailViewModel @Inject constructor(
     val filtedMatchMyPlayerDTOList = ArrayList<MatchPlayerDTO>()
     val filtedMatchOpponentPlayerDTOList = ArrayList<MatchPlayerDTO>()
 
-//    val myPlayerBitmapList : ArrayList<Bitmap> = arrayListOf()
-//    val myPlayerBitmapList = ArrayList<Bitmap>()
-//    val opponentPlayerBitmapList = ArrayList<Bitmap>()
-
-
-    private val _myPlayerBitmapList = MutableLiveData<ArrayList<Bitmap>>()
-    val myPlayerBitmapList: LiveData<ArrayList<Bitmap>>
-        get() = _myPlayerBitmapList
-
-    private val _opponentPlayerBitmapList = MutableLiveData<ArrayList<Bitmap>>()
-    val opponentPlayerBitmapList: LiveData<ArrayList<Bitmap>>
-        get() = _opponentPlayerBitmapList
+    private val _input = MutableLiveData<InputStream>()
+    val input: LiveData<InputStream>
+        get() = _input
 
 
 
@@ -60,7 +52,6 @@ class MatchDetailViewModel @Inject constructor(
 //                _matchMyPlayerDTOList.postValue(_tempMatchMyPlayerDTOList)
 //            }
         }
-        requestSpidImage2(matchDTO.matchInfo[1].player,Constants.MY_TEAM_PLAYER_IMAGE)
 
         matchDTO.matchInfo[1].player.forEach {
             filtedMatchOpponentPlayerDTOList.add(pickUpPlayer(it.spId, it.spPosition))
@@ -68,7 +59,6 @@ class MatchDetailViewModel @Inject constructor(
 //                _matchOpponentPlayerDTOList.postValue(_tempMatchOpponentPlayerDTOList)
 //            }
         }
-        requestSpidImage2(matchDTO.matchInfo[1].player,Constants.OPPONENT_TEAM_PLAYER_IMAGE)
     }
 
     private fun pickUpPlayer(id: Int, position: Int): MatchPlayerDTO {
@@ -95,8 +85,9 @@ class MatchDetailViewModel @Inject constructor(
     }
 
 
-    fun requestSpidImage() {
+    fun requestSpidImage(){
         Log.e("cyc","비트맵 test")
+
         val result = fifaImageManager.requestSpidImage(280202126)
         result.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(
@@ -111,9 +102,12 @@ class MatchDetailViewModel @Inject constructor(
                     // 이건 아직 확실하지 않는 부분이지만 위에 이유 때문인지 이것을 (it.byteStream()이렇게) 호출해서 바이너리 데이터를 스트림으로 받을 때도
                     // 한번만 호출되고 다음부터는 null 값이 나온다..이것 때문에 여러 테스트할 때 계속 null이 나오는데 원인을 몰라서  아에 잘못한 줄 하고 3이나 샵질했다...아...ㅇㅅㅇ;;
                         Log.e("cyc", "선수 액션 이미지 성공")
-                        val input = it.byteStream()
-                        val bmp = BitmapFactory.decodeStream(input)
+                        _input.postValue(it.byteStream())
+//                        val input = it.byteStream()
+//                        val bmp = BitmapFactory.decodeStream(input)
+//                        bitmap = bmp
 //                        testBitmapList.add(bmp)
+
 
 //                        Log.e("cyc","디테일 뷰몯델 testBitmapList[0]-->${testBitmapList[0]}")
                     }
@@ -127,42 +121,7 @@ class MatchDetailViewModel @Inject constructor(
 
             }
         })
-    }
 
-
-    fun requestSpidImage2(playerList : ArrayList<PlayerDTO>, whoseTeam: String) {
-        val bitmapList = ArrayList<Bitmap>()
-        playerList.forEach { plyaerDTO ->
-            val result = fifaImageManager.requestSpidImage(plyaerDTO.spId)
-            result.enqueue(object : Callback<ResponseBody>{
-                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                    if(response.isSuccessful){
-                        response.body()?.let {
-
-                            val input = it.byteStream()
-                            val bmp = BitmapFactory.decodeStream(input)
-                            bitmapList.add(bmp)
-                            if(playerList.indexOf(plyaerDTO) == playerList.size-1){
-                                if(whoseTeam.equals(Constants.MY_TEAM_PLAYER_IMAGE)){
-                                    _myPlayerBitmapList.postValue(bitmapList)
-                                }else{
-                                    _opponentPlayerBitmapList.postValue(bitmapList)
-                                }
-                            }
-                        }
-                        Log.e("cyc", "유저 경기 정보---성공")
-
-                    }else{
-                        Log.e("cyc", "유저 경기 정보---통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
-                    }
-                }
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    Log.e("cyc", "유저 경기 정보---통신실패 (인터넷 연결의 문제, 예외발생)")
-                }
-            })
-            // 밖에서 받는 것을 한다.
-            // synchronized로 처리할 될 내부의 repsonse를 뺄수가 없다..일단 다시 해본다 오늘 시도했지만 터졋다..
-        }
     }
 }
 
