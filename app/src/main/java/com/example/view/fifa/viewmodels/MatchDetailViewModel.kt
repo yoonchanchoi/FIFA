@@ -33,12 +33,6 @@ class MatchDetailViewModel @Inject constructor(
     val filtedMatchMyPlayerDTOList = ArrayList<MatchPlayerDTO>()
     val filtedMatchOpponentPlayerDTOList = ArrayList<MatchPlayerDTO>()
 
-    private val _input = MutableLiveData<InputStream>()
-    val input: LiveData<InputStream>
-        get() = _input
-
-
-
     fun getPreData(){
         _spidDTOList = pref.getAllSpidList() as ArrayList<SpidDTO>
         _sppositionDTOList = pref.getAllSppositionList() as ArrayList<SppositionDTO>
@@ -102,12 +96,9 @@ class MatchDetailViewModel @Inject constructor(
                     // 이건 아직 확실하지 않는 부분이지만 위에 이유 때문인지 이것을 (it.byteStream()이렇게) 호출해서 바이너리 데이터를 스트림으로 받을 때도
                     // 한번만 호출되고 다음부터는 null 값이 나온다..이것 때문에 여러 테스트할 때 계속 null이 나오는데 원인을 몰라서  아에 잘못한 줄 하고 3이나 샵질했다...아...ㅇㅅㅇ;;
                         Log.e("cyc", "선수 액션 이미지 성공")
-                        _input.postValue(it.byteStream())
-//                        val input = it.byteStream()
-//                        val bmp = BitmapFactory.decodeStream(input)
-//                        bitmap = bmp
-//                        testBitmapList.add(bmp)
 
+                        val input = it.byteStream()
+                        val bmp = BitmapFactory.decodeStream(input)
 
 //                        Log.e("cyc","디테일 뷰몯델 testBitmapList[0]-->${testBitmapList[0]}")
                     }
