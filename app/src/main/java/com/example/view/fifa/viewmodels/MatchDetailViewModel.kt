@@ -33,56 +33,85 @@ class MatchDetailViewModel @Inject constructor(
     val filtedMatchMyPlayerDTOList = ArrayList<MatchPlayerDTO>()
     val filtedMatchOpponentPlayerDTOList = ArrayList<MatchPlayerDTO>()
 
+    //이미지 test
+    private val _input = MutableLiveData<InputStream>()
+    val input: LiveData<InputStream>
+        get() = _input
+
+    private val _myInput = MutableLiveData<InputStream>()
+    val myInput: LiveData<InputStream>
+        get() = _myInput
+
+    private val _opponentInput = MutableLiveData<InputStream>()
+    val opponentInput: LiveData<InputStream>
+        get() = _opponentInput
+
+
+    var tempName = ""
+    var tempPosition =""
+    var lastLenCheck = false
+    //이미지 test
+
+
+
+
+
     fun getPreData(){
         _spidDTOList = pref.getAllSpidList() as ArrayList<SpidDTO>
         _sppositionDTOList = pref.getAllSppositionList() as ArrayList<SppositionDTO>
     }
 
-    fun setPlayer(matchDTO: MatchDTO) {
-        matchDTO.matchInfo[0].player.forEach {
-//            Log.e("cyc", "아오아오아오아오--->${it.spId}")
-            filtedMatchMyPlayerDTOList.add(pickUpPlayer(it.spId, it.spPosition))
-//            if(matchDTO.matchInfo[0].player.indexOf(it)==matchDTO.matchInfo[0].player.size-1){
-//                _matchMyPlayerDTOList.postValue(_tempMatchMyPlayerDTOList)
-//            }
-        }
+//    fun setPlayer(matchDTO: MatchDTO) {
+//        matchDTO.matchInfo[0].player.forEach {
+////            Log.e("cyc", "아오아오아오아오--->${it.spId}")
+//            filtedMatchMyPlayerDTOList.add(pickUpPlayer(it.spId, it.spPosition))
+////            if(matchDTO.matchInfo[0].player.indexOf(it)==matchDTO.matchInfo[0].player.size-1){
+////                _matchMyPlayerDTOList.postValue(_tempMatchMyPlayerDTOList)
+////            }
+//        }
+//
+//        matchDTO.matchInfo[1].player.forEach {
+//            filtedMatchOpponentPlayerDTOList.add(pickUpPlayer(it.spId, it.spPosition))
+////            if(matchDTO.matchInfo[1].player.indexOf(it)==matchDTO.matchInfo[1].player.size-1){
+////                _matchOpponentPlayerDTOList.postValue(_tempMatchOpponentPlayerDTOList)
+////            }
+//        }
+//    }
 
-        matchDTO.matchInfo[1].player.forEach {
-            filtedMatchOpponentPlayerDTOList.add(pickUpPlayer(it.spId, it.spPosition))
-//            if(matchDTO.matchInfo[1].player.indexOf(it)==matchDTO.matchInfo[1].player.size-1){
-//                _matchOpponentPlayerDTOList.postValue(_tempMatchOpponentPlayerDTOList)
+//    private fun pickUpPlayer(id: Int, position: Int): MatchPlayerDTO {
+//        var name = ""
+//        var desc = ""
+//
+//        _spidDTOList?.let { spidDTOS ->
+//            spidDTOS.forEach {
+//                if (it.id == id) {
+//                    name = it.name
+//
+//                }
 //            }
-        }
+//        }
+//
+//        _sppositionDTOList?.let { sppositionDTOS ->
+//            sppositionDTOS.forEach {
+//                if (it.spposition == position) {
+//                    desc = it.desc
+//                }
+//            }
+//        }
+//        return MatchPlayerDTO(name, desc)
+//    }
+
+
+
+    fun requestPlayer(spid: Int, spPosition: Int, whosPlayer: String){
+//        Log.e("cyc","뷰모델 whosPlay--->${whosPlayer}")
+//        tempName = pickUpName(spid)
+//        tempPosition = pickUpPosition(spPosition)
+        requestSpidImage(pickUpName(spid),pickUpPosition(spPosition),spid,whosPlayer)
     }
 
-    private fun pickUpPlayer(id: Int, position: Int): MatchPlayerDTO {
-        var name = ""
-        var desc = ""
-
-        _spidDTOList?.let { spidDTOS ->
-            spidDTOS.forEach {
-                if (it.id == id) {
-                    name = it.name
-
-                }
-            }
-        }
-
-        _sppositionDTOList?.let { sppositionDTOS ->
-            sppositionDTOS.forEach {
-                if (it.spposition == position) {
-                    desc = it.desc
-                }
-            }
-        }
-        return MatchPlayerDTO(name, desc)
-    }
-
-
-    fun requestSpidImage(){
-        Log.e("cyc","비트맵 test")
-
-        val result = fifaImageManager.requestSpidImage(280202126)
+    fun requestSpidImage(name: String, position: String, spid: Int, whosPlayer: String){
+        val result = fifaImageManager.requestSpidImage(spid)
         result.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(
                 call: Call<ResponseBody>,
@@ -97,8 +126,24 @@ class MatchDetailViewModel @Inject constructor(
                     // 한번만 호출되고 다음부터는 null 값이 나온다..이것 때문에 여러 테스트할 때 계속 null이 나오는데 원인을 몰라서  아에 잘못한 줄 하고 3이나 샵질했다...아...ㅇㅅㅇ;;
                         Log.e("cyc", "선수 액션 이미지 성공")
 
-                        val input = it.byteStream()
-                        val bmp = BitmapFactory.decodeStream(input)
+
+                        //이미지 test
+                        if(whosPlayer == Constants.MY_TEAM_PLAYER_IMAGE){
+                            tempName=name
+                            tempPosition=position
+                            _myInput.postValue(it.byteStream())
+                        }else if(whosPlayer == Constants.OPPONENT_TEAM_PLAYER_IMAGE){
+                            tempName=name
+                            tempPosition=position
+                            _opponentInput.postValue(it.byteStream())
+                        }
+//                        _input.postValue(it.byteStream())
+                        //이미지 test
+
+//                        val input = it.byteStream()
+//                        val bmp = BitmapFactory.decodeStream(input)
+
+
 
 //                        Log.e("cyc","디테일 뷰몯델 testBitmapList[0]-->${testBitmapList[0]}")
                     }
@@ -112,7 +157,36 @@ class MatchDetailViewModel @Inject constructor(
 
             }
         })
+    }
 
+    private fun pickUpName(id: Int): String {
+        var name = ""
+
+        _spidDTOList?.let { spidDTOS ->
+            spidDTOS.forEach {
+                if (it.id == id) {
+                    name = it.name
+
+                }
+            }
+        }
+        Log.e("cyc","뷰모델 name--->${name}")
+        return name
+    }
+
+    private fun pickUpPosition(position: Int): String {
+        var desc = ""
+
+        _sppositionDTOList?.let { sppositionDTOS ->
+            sppositionDTOS.forEach {
+                if (it.spposition == position) {
+                    desc = it.desc
+                }
+            }
+        }
+        Log.e("cyc","뷰모델 desc--->${desc}")
+
+        return desc
     }
 }
 
