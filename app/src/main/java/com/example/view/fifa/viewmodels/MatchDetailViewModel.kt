@@ -22,7 +22,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MatchDetailViewModel @Inject constructor(
-    private val fifaImageManager: FIFAImageManager,
     private val pref: Pref,
 
 ) : ViewModel() {
@@ -33,148 +32,31 @@ class MatchDetailViewModel @Inject constructor(
     val filtedMatchMyPlayerDTOList = ArrayList<MatchPlayerDTO>()
     val filtedMatchOpponentPlayerDTOList = ArrayList<MatchPlayerDTO>()
 
-    //이미지 test
-    private val _input = MutableLiveData<InputStream>()
-    val input: LiveData<InputStream>
-        get() = _input
-
-    private val _myInput = MutableLiveData<InputStream>()
-    val myInput: LiveData<InputStream>
-        get() = _myInput
-
-    private val _opponentInput = MutableLiveData<InputStream>()
-    val opponentInput: LiveData<InputStream>
-        get() = _opponentInput
-
-
-    var tempName = ""
-    var tempPosition =""
-    var lastLenCheck = false
-
-    val tempBinary = "0"
-    //이미지 test
-
-
-
-
-
     fun getPreData(){
         _spidDTOList = pref.getAllSpidList() as ArrayList<SpidDTO>
         _sppositionDTOList = pref.getAllSppositionList() as ArrayList<SppositionDTO>
     }
 
-//    fun setPlayer(matchDTO: MatchDTO) {
-//        matchDTO.matchInfo[0].player.forEach {
-////            Log.e("cyc", "아오아오아오아오--->${it.spId}")
-//            filtedMatchMyPlayerDTOList.add(pickUpPlayer(it.spId, it.spPosition))
-////            if(matchDTO.matchInfo[0].player.indexOf(it)==matchDTO.matchInfo[0].player.size-1){
-////                _matchMyPlayerDTOList.postValue(_tempMatchMyPlayerDTOList)
-////            }
-//        }
-//
-//        matchDTO.matchInfo[1].player.forEach {
-//            filtedMatchOpponentPlayerDTOList.add(pickUpPlayer(it.spId, it.spPosition))
-////            if(matchDTO.matchInfo[1].player.indexOf(it)==matchDTO.matchInfo[1].player.size-1){
-////                _matchOpponentPlayerDTOList.postValue(_tempMatchOpponentPlayerDTOList)
-////            }
-//        }
-//    }
-
-//    private fun pickUpPlayer(id: Int, position: Int): MatchPlayerDTO {
-//        var name = ""
-//        var desc = ""
-//
-//        _spidDTOList?.let { spidDTOS ->
-//            spidDTOS.forEach {
-//                if (it.id == id) {
-//                    name = it.name
-//
-//                }
+    fun setPlayer(matchDTO: MatchDTO) {
+        matchDTO.matchInfo[0].player.forEach {
+//            Log.e("cyc", "아오아오아오아오--->${it.spId}")
+            filtedMatchMyPlayerDTOList.add(pickUpPlayer(it.spId, it.spPosition))
+//            if(matchDTO.matchInfo[0].player.indexOf(it)==matchDTO.matchInfo[0].player.size-1){
+//                _matchMyPlayerDTOList.postValue(_tempMatchMyPlayerDTOList)
 //            }
-//        }
-//
-//        _sppositionDTOList?.let { sppositionDTOS ->
-//            sppositionDTOS.forEach {
-//                if (it.spposition == position) {
-//                    desc = it.desc
-//                }
+        }
+
+        matchDTO.matchInfo[1].player.forEach {
+            filtedMatchOpponentPlayerDTOList.add(pickUpPlayer(it.spId, it.spPosition))
+//            if(matchDTO.matchInfo[1].player.indexOf(it)==matchDTO.matchInfo[1].player.size-1){
+//                _matchOpponentPlayerDTOList.postValue(_tempMatchOpponentPlayerDTOList)
 //            }
-//        }
-//        return MatchPlayerDTO(name, desc)
-//    }
-
-
-
-    fun requestPlayer(spid: Int, spPosition: Int, whosPlayer: String){
-//        Log.e("cyc","뷰모델 whosPlay--->${whosPlayer}")
-//        tempName = pickUpName(spid)
-//        tempPosition = pickUpPosition(spPosition)
-        requestSpidImage(pickUpName(spid),pickUpPosition(spPosition),spid,whosPlayer)
+        }
     }
 
-    fun requestSpidImage(name: String, position: String, spid: Int, whosPlayer: String){
-        val result = fifaImageManager.requestSpidImage(spid)
-        result.enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(
-                call: Call<ResponseBody>,
-                response: Response<ResponseBody>
-            ) {
-                if (response.isSuccessful) {
-                    response.body()?.let {
-
-                    //해당 responsebody값을 여러번 호출 할 경우 (response.body().string()이렇게) 한번 밖에 호출되지 않고 다음
-                    //값 부터는 똑같이 호출해도 null값이 온다. 이 이유는 해당 response값은 메모리에 저장된 상태가 아니기 때문이다.
-                    // 이건 아직 확실하지 않는 부분이지만 위에 이유 때문인지 이것을 (it.byteStream()이렇게) 호출해서 바이너리 데이터를 스트림으로 받을 때도
-                    // 한번만 호출되고 다음부터는 null 값이 나온다..이것 때문에 여러 테스트할 때 계속 null이 나오는데 원인을 몰라서  아에 잘못한 줄 하고 3이나 샵질했다...아...ㅇㅅㅇ;;
-                        Log.e("cyc", "선수 액션 이미지 성공")
-
-
-                        //이미지 test
-                        if(whosPlayer == Constants.MY_TEAM_PLAYER_IMAGE){
-                            tempName=name
-                            tempPosition=position
-                            _myInput.value=it.byteStream()
-
-                        }else if(whosPlayer == Constants.OPPONENT_TEAM_PLAYER_IMAGE){
-                            tempName=name
-                            tempPosition=position
-                            _opponentInput.value=it.byteStream()
-                        }
-//                        _input.postValue(it.byteStream())
-                        //이미지 test
-
-//                        val input = it.byteStream()
-//                        val bmp = BitmapFactory.decodeStream(input)
-
-
-
-//                        Log.e("cyc","디테일 뷰몯델 testBitmapList[0]-->${testBitmapList[0]}")
-                    }
-                } else {
-                    if(whosPlayer == Constants.MY_TEAM_PLAYER_IMAGE){
-                        tempName=name
-                        tempPosition=position
-                        _myInput.value=tempBinary.byteInputStream()
-
-
-                    }else if(whosPlayer == Constants.OPPONENT_TEAM_PLAYER_IMAGE){
-                        tempName=name
-                        tempPosition=position
-                        _opponentInput.value=tempBinary.byteInputStream()
-                    }
-                    Log.e("cyc", "선수 액션 이미지 통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.e("cyc", "선수 액션 이미지 통신실패 (인터넷 연결의 문제, 예외발생)")
-
-            }
-        })
-    }
-
-    private fun pickUpName(id: Int): String {
+    private fun pickUpPlayer(id: Int, position: Int): MatchPlayerDTO {
         var name = ""
+        var desc = ""
 
         _spidDTOList?.let { spidDTOS ->
             spidDTOS.forEach {
@@ -184,12 +66,6 @@ class MatchDetailViewModel @Inject constructor(
                 }
             }
         }
-        Log.e("cyc","뷰모델 name--->${name}")
-        return name
-    }
-
-    private fun pickUpPosition(position: Int): String {
-        var desc = ""
 
         _sppositionDTOList?.let { sppositionDTOS ->
             sppositionDTOS.forEach {
@@ -198,10 +74,12 @@ class MatchDetailViewModel @Inject constructor(
                 }
             }
         }
-        Log.e("cyc","뷰모델 desc--->${desc}")
-
-        return desc
+        return MatchPlayerDTO(name, desc)
     }
+
+
+
+
 }
 
 

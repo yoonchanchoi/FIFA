@@ -37,22 +37,13 @@ class MatchDetailActivity : AppCompatActivity() {
     private lateinit var nickName: String
     private lateinit var matchMyPlayerAdapter: MatchPlayerAdapter
     private lateinit var matchOpponentPlayerAdapter: MatchPlayerAdapter
-    private val matchMyPlayerDTOList: ArrayList<MatchPlayerDTO> = arrayListOf()
-    private val matchOpponentPlayerDTOList: ArrayList<MatchPlayerDTO> = arrayListOf()
-    private lateinit var spidDTOList: ArrayList<SpidDTO>
-    private lateinit var sppositionDTOList: ArrayList<SppositionDTO>
+    private lateinit var matchMyPlayerDTOList: ArrayList<MatchPlayerDTO>
+    private lateinit var matchOpponentPlayerDTOList: ArrayList<MatchPlayerDTO>
+//    private lateinit var spidDTOList: ArrayList<SpidDTO>
+//    private lateinit var sppositionDTOList: ArrayList<SppositionDTO>
 
 
     private val viewModel: MatchDetailViewModel by viewModels()
-
-    private var mylastMatchPlayerDTO: Boolean = false
-    private var opponentlastMatchPlayerDTO: Boolean = false
-    private var myInputDialogDismissCheck: Boolean = false
-    private var opponentInputDialogDismissCheck: Boolean = false
-
-
-//    private var spidDtoListCheck: Boolean = false
-//    private var sppositionDtoListCheck: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +59,6 @@ class MatchDetailActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-
 //        로딩 프로그래서 시작
 //        바꾸는중
         loadingProgressDialog = LoadingProgressDialog(this)
@@ -84,6 +74,7 @@ class MatchDetailActivity : AppCompatActivity() {
         intent.getStringExtra("NickName")?.let {
             nickName = it
         }
+
         //유저 이름 및 점수를 화면에 설정
         binding.tvMyUser.text = matchDTO.matchInfo[0].nickname
         binding.tvMyScore.text = matchDTO.matchInfo[0].shoot.goalTotal.toString()
@@ -100,23 +91,6 @@ class MatchDetailActivity : AppCompatActivity() {
             dayOut = dayOutFormat.format(tempDate)
             return@with dayOut
         }
-
-        matchDTO.matchInfo[0].player.forEach {
-            viewModel.requestPlayer(it.spId, it.spPosition, Constants.MY_TEAM_PLAYER_IMAGE)
-            if (matchDTO.matchInfo[0].player.indexOf(it) == matchDTO.matchInfo[0].player.size - 1) {
-                mylastMatchPlayerDTO = true
-                Log.e("cyc", "마지막 내 선수")
-            }
-        }
-        matchDTO.matchInfo[1].player.forEach {
-            viewModel.requestPlayer(it.spId, it.spPosition, Constants.OPPONENT_TEAM_PLAYER_IMAGE)
-            if (matchDTO.matchInfo[1].player.indexOf(it) == matchDTO.matchInfo[1].player.size - 1) {
-                opponentlastMatchPlayerDTO = true
-                Log.e("cyc", "마지막 상대 선수")
-
-            }
-        }
-
 
         binding.tvTitleUserNickname.text = nickName
 
@@ -167,85 +141,23 @@ class MatchDetailActivity : AppCompatActivity() {
         )
 
 
-//        viewModel.setPlayer(matchDTO)
+        viewModel.setPlayer(matchDTO)
 
-//        matchMyPlayerDTOList = viewModel.filtedMatchMyPlayerDTOList
-//        matchOpponentPlayerDTOList = viewModel.filtedMatchOpponentPlayerDTOList
+        matchMyPlayerDTOList = viewModel.filtedMatchMyPlayerDTOList
+        matchOpponentPlayerDTOList = viewModel.filtedMatchOpponentPlayerDTOList
 
-        //어댑터 세팅2개 각각의 어댑터
-//        //이미지 test 바꾸기 전
-//        setMatchMyPlayerAdapter(matchMyPlayerDTOList)
-//        setMatchOpponentPlayerAdapter(matchOpponentPlayerDTOList)
-//        //이미지 test 바꾸기 전
+//        어댑터 세팅2개 각각의 어댑터
+        //이미지 test 바꾸기 전
+        setMatchMyPlayerAdapter(matchMyPlayerDTOList)
+        setMatchOpponentPlayerAdapter(matchOpponentPlayerDTOList)
+        //이미지 test 바꾸기 전
 
 //        로딩 프로그래스 다이얼로그 종료
-//        loadingProgressDialog.dismiss()
+        loadingProgressDialog.dismiss()
 
     }
 
     private fun initObserve() {
-        viewModel.myInput.value
-        viewModel.myInput.observe(this) {
-            Log.e("cyc","액티비트 ===my=== inputStream-->${it}, viewModel.tempName-->${viewModel.tempName}, viewModel.tempName-->${viewModel.tempPosition}")
-            matchMyPlayerDTOList.add(MatchPlayerDTO(viewModel.tempName, viewModel.tempPosition, it))
-            if (mylastMatchPlayerDTO) {
-                myInputDialogDismissCheck = true
-                setMatchMyPlayerAdapter(matchMyPlayerDTOList)
-                if (myInputDialogDismissCheck && opponentInputDialogDismissCheck) {
-                    loadingProgressDialog.dismiss()
-                    Log.e("cyc","로딩바 my")
-                }
-            }
-        }
-        viewModel.opponentInput.observe(this) {
-            Log.e("cyc","액티비트 ===opponent=== inputStream-->${it}, viewModel.tempName-->${viewModel.tempName}, viewModel.tempName-->${viewModel.tempPosition}")
-
-            matchOpponentPlayerDTOList.add(MatchPlayerDTO(viewModel.tempName, viewModel.tempPosition, it))
-            if (opponentlastMatchPlayerDTO) {
-                opponentInputDialogDismissCheck = true
-                setMatchOpponentPlayerAdapter(matchOpponentPlayerDTOList)
-                if (myInputDialogDismissCheck && opponentInputDialogDismissCheck) {
-                    loadingProgressDialog.dismiss()
-                    Log.e("cyc","로딩바 opponent")
-
-                }
-            }
-        }
-
-//        바꾸는중
-//        viewModel.spidDTOList.observe(this) {
-//            spidDtoListCheck = true
-//            if (spidDtoListCheck && sppositionDtoListCheck) {
-//
-//                viewModel.setPlayer(matchDTO)
-//                matchMyPlayerDTOList = viewModel.filtedMatchMyPlayerDTOList
-//                matchOpponentPlayerDTOList = viewModel.filtedMatchOpponentPlayerDTOList
-//
-//                //어댑터 세팅2개 각각의 어댑터
-//                setMatchMyPlayerAdapter(matchMyPlayerDTOList)
-//                setMatchOpponentPlayerAdapter(matchOpponentPlayerDTOList)
-//
-//                //로딩 프로그래스 다이얼로그 종료
-//                loadingProgressDialog.dismiss()
-//            }
-//        }
-//
-//        viewModel.sppositionDTOList.observe(this) {
-//            sppositionDtoListCheck = true
-//            if (sppositionDtoListCheck && spidDtoListCheck) {
-//
-//                viewModel.setPlayer(matchDTO)
-//
-//                matchMyPlayerDTOList = viewModel.filtedMatchMyPlayerDTOList
-//                matchOpponentPlayerDTOList = viewModel.filtedMatchOpponentPlayerDTOList
-//                //어댑터 세팅2개 각각의 어댑터
-//                setMatchMyPlayerAdapter(matchMyPlayerDTOList)
-//                setMatchOpponentPlayerAdapter(matchOpponentPlayerDTOList)
-//
-//                //로딩 프로그래스 다이얼로그 종료
-//                loadingProgressDialog.dismiss()
-//            }
-//        }
     }
 
     private fun initListener() {
@@ -258,7 +170,6 @@ class MatchDetailActivity : AppCompatActivity() {
     /**
      *
      */
-    //이미지 test 바꾸기 전
     private fun setMatchMyPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayerDTO>) {
         matchMyPlayerAdapter = MatchPlayerAdapter(this, matchPlayerDTOList)
         val searchLinearLayoutManager =
@@ -283,7 +194,6 @@ class MatchDetailActivity : AppCompatActivity() {
             adapter = matchOpponentPlayerAdapter
         }
     }
-    //이미지 test 바꾸기 전
 
 
     /**
