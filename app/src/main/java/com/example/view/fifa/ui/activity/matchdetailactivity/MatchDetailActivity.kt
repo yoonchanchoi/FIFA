@@ -184,7 +184,7 @@ class MatchDetailActivity : AppCompatActivity() {
     }
 
     private fun initObserve() {
-
+        viewModel.myInput.value
         viewModel.myInput.observe(this) {
             Log.e("cyc","액티비트 ===my=== inputStream-->${it}, viewModel.tempName-->${viewModel.tempName}, viewModel.tempName-->${viewModel.tempPosition}")
             matchMyPlayerDTOList.add(MatchPlayerDTO(viewModel.tempName, viewModel.tempPosition, it))

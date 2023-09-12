@@ -50,6 +50,8 @@ class MatchDetailViewModel @Inject constructor(
     var tempName = ""
     var tempPosition =""
     var lastLenCheck = false
+
+    val tempBinary = "0"
     //이미지 test
 
 
@@ -131,11 +133,12 @@ class MatchDetailViewModel @Inject constructor(
                         if(whosPlayer == Constants.MY_TEAM_PLAYER_IMAGE){
                             tempName=name
                             tempPosition=position
-                            _myInput.postValue(it.byteStream())
+                            _myInput.value=it.byteStream()
+
                         }else if(whosPlayer == Constants.OPPONENT_TEAM_PLAYER_IMAGE){
                             tempName=name
                             tempPosition=position
-                            _opponentInput.postValue(it.byteStream())
+                            _opponentInput.value=it.byteStream()
                         }
 //                        _input.postValue(it.byteStream())
                         //이미지 test
@@ -148,6 +151,17 @@ class MatchDetailViewModel @Inject constructor(
 //                        Log.e("cyc","디테일 뷰몯델 testBitmapList[0]-->${testBitmapList[0]}")
                     }
                 } else {
+                    if(whosPlayer == Constants.MY_TEAM_PLAYER_IMAGE){
+                        tempName=name
+                        tempPosition=position
+                        _myInput.value=tempBinary.byteInputStream()
+
+
+                    }else if(whosPlayer == Constants.OPPONENT_TEAM_PLAYER_IMAGE){
+                        tempName=name
+                        tempPosition=position
+                        _opponentInput.value=tempBinary.byteInputStream()
+                    }
                     Log.e("cyc", "선수 액션 이미지 통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
                 }
             }
