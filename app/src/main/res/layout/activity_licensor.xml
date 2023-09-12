@@ -49,91 +49,102 @@
         android:text="@string/LicensorActivity_nexon_api_address"
         app:layout_constraintTop_toBottomOf="@id/tv_nexon_api_address_tag"/>
 
-    <TextView
-        android:id="@+id/tv_retrofit_tag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="&lt;사용 라이브러리&gt;"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_nexon_api_address"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="30dp"/>
-    <TextView
-        android:id="@+id/tv_retrofit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="15dp"
-        android:textStyle="bold"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/LicensorActivity_Retrofit_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_retrofit_tag"/>
-    <TextView
-        android:id="@+id/tv_retrofit_address_tag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="&lt;사용 라이브러리 주소&gt;"
-        android:textSize="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_retrofit"/>
-    <TextView
-        android:id="@+id/tv_retrofit_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="15dp"
-        android:textStyle="bold"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="@string/LicensorActivity_Retrofit_address"
-        app:layout_constraintTop_toBottomOf="@+id/tv_retrofit_address_tag"/>
-
-
-    <TextView
-        android:id="@+id/tv_gson_tag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="&lt;사용 라이브러리&gt;"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_retrofit_address"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="30dp"/>
-    <TextView
-        android:id="@+id/tv_gson_api"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="15dp"
-        android:textStyle="bold"
-        android:text="@string/LicensorActivity_Gson_text"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_gson_tag"/>
-    <TextView
-        android:id="@+id/tv_gson_address_tag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="&lt;사용 라이브러리 주소&gt;"
-        android:textSize="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_gson_api"/>
-    <TextView
-        android:id="@+id/tv_gson_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="15dp"
-        android:textStyle="bold"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="@string/LicensorActivity_Gson_address"
-        app:layout_constraintTop_toBottomOf="@+id/tv_gson_address_tag"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<TextView-->
+<!--android:id="@+id/tv_retrofit_tag"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:text="&lt;사용 라이브러리&gt;"-->
+<!--android:textSize="20dp"-->
+<!--app:layout_constraintStart_toStartOf="parent"-->
+<!--app:layout_constraintTop_toBottomOf="@id/tv_nexon_api_address"-->
+<!--android:layout_marginStart="10dp"-->
+<!--android:layout_marginTop="30dp"/>-->
+<!--<TextView-->
+<!--android:id="@+id/tv_retrofit"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:textSize="15dp"-->
+<!--android:textStyle="bold"-->
+<!--android:layout_marginStart="10dp"-->
+<!--android:layout_marginTop="5dp"-->
+<!--android:text="@string/LicensorActivity_Retrofit_text"-->
+<!--app:layout_constraintStart_toStartOf="parent"-->
+<!--app:layout_constraintTop_toBottomOf="@id/tv_retrofit_tag"/>-->
+<!--<TextView-->
+<!--android:id="@+id/tv_retrofit_address_tag"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:text="&lt;사용 라이브러리 주소&gt;"-->
+<!--android:textSize="20dp"-->
+<!--android:layout_marginTop="10dp"-->
+<!--android:layout_marginStart="10dp"-->
+<!--app:layout_constraintStart_toStartOf="parent"-->
+<!--app:layout_constraintTop_toBottomOf="@id/tv_retrofit"/>-->
+<!--<TextView-->
+<!--android:id="@+id/tv_retrofit_address"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:textSize="15dp"-->
+<!--android:textStyle="bold"-->
+<!--android:layout_marginStart="10dp"-->
+<!--android:layout_marginTop="5dp"-->
+<!--app:layout_constraintStart_toStartOf="parent"-->
+<!--android:text="@string/LicensorActivity_Retrofit_address"-->
+<!--app:layout_constraintTop_toBottomOf="@+id/tv_retrofit_address_tag"/>-->
+
+
+<!--<TextView-->
+<!--android:id="@+id/tv_gson_tag"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:text="&lt;사용 라이브러리&gt;"-->
+<!--android:textSize="20dp"-->
+<!--app:layout_constraintStart_toStartOf="parent"-->
+<!--app:layout_constraintTop_toBottomOf="@id/tv_retrofit_address"-->
+<!--android:layout_marginStart="10dp"-->
+<!--android:layout_marginTop="30dp"/>-->
+<!--<TextView-->
+<!--android:id="@+id/tv_gson_api"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:textSize="15dp"-->
+<!--android:textStyle="bold"-->
+<!--android:text="@string/LicensorActivity_Gson_text"-->
+<!--android:layout_marginStart="10dp"-->
+<!--android:layout_marginTop="5dp"-->
+<!--app:layout_constraintStart_toStartOf="parent"-->
+<!--app:layout_constraintTop_toBottomOf="@+id/tv_gson_tag"/>-->
+<!--<TextView-->
+<!--android:id="@+id/tv_gson_address_tag"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:text="&lt;사용 라이브러리 주소&gt;"-->
+<!--android:textSize="20dp"-->
+<!--android:layout_marginTop="10dp"-->
+<!--android:layout_marginStart="10dp"-->
+<!--app:layout_constraintStart_toStartOf="parent"-->
+<!--app:layout_constraintTop_toBottomOf="@id/tv_gson_api"/>-->
+<!--<TextView-->
+<!--android:id="@+id/tv_gson_address"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:textSize="15dp"-->
+<!--android:textStyle="bold"-->
+<!--android:layout_marginTop="5dp"-->
+<!--android:layout_marginStart="10dp"-->
+<!--app:layout_constraintStart_toStartOf="parent"-->
+<!--android:text="@string/LicensorActivity_Gson_address"-->
+<!--app:layout_constraintTop_toBottomOf="@+id/tv_gson_address_tag"/>-->
