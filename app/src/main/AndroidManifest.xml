@@ -29,7 +29,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name="com.football.view.fifa.ui.activity.licensoractivity.LicensorActivity"
+            android:name="com.football.view.fifa.ui.activity.licensoractivity.LicenseActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
