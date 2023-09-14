@@ -14,7 +14,7 @@ interface FIFAManager {
 
     fun requestMatchInfo(nickname: String): Single<MatchMetaDataResult>
 
-    fun requestMaxDivision(nickname: String): Call<ArrayList<MaxDivisionResult>>
+    fun requestMaxDivision(nickname: String): Single<ArrayList<MaxDivisionResult>>
 }
 
 

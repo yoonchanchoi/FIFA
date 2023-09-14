@@ -22,6 +22,6 @@ class FIFAManagerImpl @Inject constructor(
     override fun requestMatchInfo(matchId: String): Single<MatchMetaDataResult> =
         service.requestMatchInfo(matchId)
 
-    override fun requestMaxDivision(accessId: String): Call<ArrayList<MaxDivisionResult>> =
+    override fun requestMaxDivision(accessId: String) : Single<ArrayList<MaxDivisionResult>> =
         service.requestMaxDivision(accessId)
 }

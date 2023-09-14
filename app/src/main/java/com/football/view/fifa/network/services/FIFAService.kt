@@ -33,8 +33,7 @@ interface FIFAService {
     @GET("users/{accessId}/maxdivision")
     fun  requestMaxDivision(
         @Path("accessId") accessId: String
-    ): Call<ArrayList<MaxDivisionResult>>
-
+    ): Single<ArrayList<MaxDivisionResult>>
 }
 
 
