@@ -108,34 +108,10 @@ class SearchSubViewModel @Inject constructor(
             .observeOn(Schedulers.io())
             .subscribe({
                 _matchDTOList.postValue(it as ArrayList<MatchMetaDataResult>)
-            },{})
+            },{
+                Log.e("cyc", "유저 경기 정보 실패 : ${it}")
+            })
             .addTo(disposable)
-
-//        val tmpMatchDToList = ArrayList<MatchMetaDataResult>()
-//        matchIds.forEach {
-//            val result = fifaManager.requestMatchInfo(it)
-//            result.enqueue(object : Callback<MatchMetaDataResult>{
-//                override fun onResponse(call: Call<MatchMetaDataResult>, response: Response<MatchMetaDataResult>) {
-//                    if(response.isSuccessful){
-//                        response.body()?.let { MatchDTO->
-//                            tmpMatchDToList.add(MatchDTO)
-//                            if(matchIds.indexOf(it) == matchIds.size - 1){
-//                                _matchDTOList.postValue(tmpMatchDToList)
-//                            }
-//                        }
-//                        Log.e("cyc", "유저 경기 정보---성공")
-//
-//                    }else{
-//                        Log.e("cyc", "유저 경기 정보---통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
-//                    }
-//                }
-//                override fun onFailure(call: Call<MatchMetaDataResult>, t: Throwable) {
-//                    Log.e("cyc", "유저 경기 정보---통신실패 (인터넷 연결의 문제, 예외발생)")
-//                }
-//            })
-//            // 밖에서 받는 것을 한다.
-//            // synchronized로 처리할 될 내부의 repsonse를 뺄수가 없다..일단 다시 해본다 오늘 시도했지만 터졋다..
-//        }
     }
 
     fun requestMaxDivision(accessId: String) {

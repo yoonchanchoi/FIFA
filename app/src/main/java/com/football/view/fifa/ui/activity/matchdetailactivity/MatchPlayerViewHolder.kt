@@ -104,7 +104,7 @@ class MatchPlayerViewHolder(
                 textView.setTextColor(ContextCompat.getColor(context, R.color.clr_CC392E))
             }
             "LW" -> {
-                textView.setTextColor(ContextCompat.getColor(context, R.color.clr_5A5A5A))
+                textView.setTextColor(ContextCompat.getColor(context, R.color.clr_CC392E))
             }
             "SUB" -> {
                 textView.setTextColor(ContextCompat.getColor(context, R.color.clr_5A5A5A))
