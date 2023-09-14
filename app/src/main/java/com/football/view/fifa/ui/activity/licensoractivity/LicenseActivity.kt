@@ -5,17 +5,17 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.football.view.fifa.R
-import com.football.view.fifa.databinding.ActivityLicensorBinding
+import com.football.view.fifa.databinding.ActivityLicenseBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LicensorActivity : AppCompatActivity() {
+class LicenseActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityLicensorBinding
+    private lateinit var binding: ActivityLicenseBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLicensorBinding.inflate(layoutInflater)
+        binding = ActivityLicenseBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         init()

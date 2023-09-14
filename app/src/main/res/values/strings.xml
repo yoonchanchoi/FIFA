@@ -3,7 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tag_Lv">Lv</string>
-    <string name="MainActivity_search_tag">피린이를 검색하자</string>
+    <string name="main_search_tag">유저 검색</string>
     <string name="app_finish_toast">뒤로가기 버튼을 한번 더 누르면 종료됩니다.</string>
     <string name="app_error_game">해당 전적은 검색정보가 유효하지 않습니다.</string>
     <string name="SearchSubActivity_et_tag">피린이를 입력해주세요</string>
@@ -11,18 +11,18 @@
     <string name="SearchSubActivty_delete_all">전체 삭제</string>
     <string name="SearchSubActivity_no_recent_search">최근 검색된 단어가 없습니다.</string>
 
-    <!--LicensorActivity -->
-    <string name="LicensorActivity_nexon_api_text">NEXON DEVELOPERS 오픈 API</string>
-    <string name="LicensorActivity_nexon_api_address">https://developers.nexon.com/fifaonline4</string>
+    <!--LicenseActivity -->
+    <string name="license_nexon_api_text">NEXON DEVELOPERS 오픈 API</string>
+    <string name="License_nexon_api_address">https://developers.nexon.com/fifaonline4</string>
 
-    <string name="LicensorActivity_Retrofit_text">Retrofit</string>
-    <string name="LicensorActivity_Retrofit_address">http://devflow.github.io/retrofit-kr/</string>
+    <string name="License_retrofit_text">Retrofit</string>
+    <string name="license_retrofit_address">http://devflow.github.io/retrofit-kr/</string>
 
-    <string name="LicensorActivity_Gson_text">Gson</string>
-    <string name="LicensorActivity_Gson_address">https://github.com/google/gson</string>
+    <string name="license_gson_text">Gson</string>
+    <string name="license_gson_address">https://github.com/google/gson</string>
 
     <!--MatchDetailActivity Detail data String 형식 -->
-    <string name="MatchDetailActivity_detail_data_form"> %1s / %2s</string>
+    <string name="match_detail_data_form"> %1s / %2s</string>
 
 
 </resources>

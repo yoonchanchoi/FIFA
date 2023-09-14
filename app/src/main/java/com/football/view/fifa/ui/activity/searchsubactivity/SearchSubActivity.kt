@@ -60,7 +60,7 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
         viewModel.recentSearchSaveCheck.observe(this) {
             if (it) {
                 //받은 값이 ok일때 데이터 추가
-                viewModel.userdto.value?.let { userDto ->
+                viewModel.userDto.value?.let { userDto ->
                     saveSearchData(userDto)
                     searchRecentAdapter.notifyDataSetChanged()
                     checkNoRecentSearchView()
@@ -78,7 +78,7 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
             //* ViewModel안에 intent, StartActivity 가능! (하지만 개인적으로 조금더 생각해봐야될 부분임)
             val intent = Intent(this,UserDetailActivity::class.java)
             intent.putExtra("ArrayList<MatchDTO>",it)
-            intent.putExtra("SearchUserDTO",viewModel.userdto.value)
+            intent.putExtra("SearchUserDTO",viewModel.userDto.value)
             intent.putExtra("UserRank",viewModel.userRank.value)
             loadingProgressDialog.dismiss()
             startActivity(intent)

@@ -15,12 +15,11 @@ class MatchPlayerViewHolder(
 
     fun bind(context: Context, matchPlayDTO: MatchPlayerResult) {
         binding.tvPlayerNickname.text = matchPlayDTO.spName
-        sppositionColor(context,binding.tvPlayerPosition,matchPlayDTO.spPosition)
-    //        binding.tvPlayerPosition.text = matchPlayDTO.spPosition
+        spPositionColor(context,binding.tvPlayerPosition,matchPlayDTO.spPosition)
     }
 
-    private fun sppositionColor(context: Context, textView: TextView, spPosition: String) {
-        textView.text=spPosition
+    private fun spPositionColor(context: Context, textView: TextView, spPosition: String) {
+        textView.text = spPosition
         when (spPosition) {
             "GK" -> {
                 textView.setTextColor(ContextCompat.getColor(context, R.color.clr_FF9800))
