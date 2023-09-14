@@ -22,12 +22,12 @@ interface FIFAService {
         @Query("matchType") matchType : Int,
         @Query("offset") offset : Int,
         @Query("limit") limit : Int,
-    ) : Call<ArrayList<String>>
+    ) : Single<ArrayList<String>>
 
     @GET("matches/{matchId}")
     fun requestMatchInfo(
         @Path("matchId") matchId: String
-    ): Call<MatchMetaDataResult>
+    ): Single<MatchMetaDataResult>
 
 
     @GET("users/{accessId}/maxdivision")

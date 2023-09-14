@@ -69,19 +69,19 @@ class MainActivity : AppCompatActivity() {
         loadingProgressDialog = LoadingProgressDialog(this)
         loadingProgressDialog.show()
 
-        viewModel.requestSpid()
-        viewModel.requestSpposition()
+        viewModel.requestSpId()
+        viewModel.requestSpPosition()
         setbanner()
     }
     private fun initObserve(){
-        viewModel.spidDTOList.observe(this){
+        viewModel.spIdDTOList.observe(this){
             pref.saveAllSpidList(it)
             checkSaveAllSpidList=true
             if(checkSaveAllSpidList && checkSaveAllSppositionList){
                 loadingProgressDialog.dismiss()
             }
         }
-        viewModel.sppositionDTOList.observe(this){
+        viewModel.spPositionResultList.observe(this){
             pref.saveAllSppositionList(it)
             checkSaveAllSppositionList = true
             if(checkSaveAllSpidList && checkSaveAllSppositionList){

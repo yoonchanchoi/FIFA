@@ -10,9 +10,9 @@ interface FIFAManager {
 
     fun requestUserInfo(nickname: String): Single<UserInfoResult>
 
-    fun requestOfficialMatchId(accessId : String): Call<ArrayList<String>>
+    fun requestOfficialMatchId(accessId : String): Single<ArrayList<String>>
 
-    fun requestMatchInfo(nickname: String): Call<MatchMetaDataResult>
+    fun requestMatchInfo(nickname: String): Single<MatchMetaDataResult>
 
     fun requestMaxDivision(nickname: String): Call<ArrayList<MaxDivisionResult>>
 }
