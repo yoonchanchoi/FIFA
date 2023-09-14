@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class MatchDTO(
+data class MatchMetaDataResult(
     @SerializedName("matchId")
     @Expose
     val matchId: String = "",
@@ -19,5 +19,5 @@ data class MatchDTO(
 
     @SerializedName("matchInfo")
     @Expose
-    val matchInfo: ArrayList<MatchInfoDTO>
+    val matchInfo: ArrayList<MatchInfoResult>
 ) : Serializable

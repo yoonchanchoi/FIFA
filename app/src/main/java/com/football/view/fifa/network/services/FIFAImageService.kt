@@ -1,6 +1,5 @@
 package com.football.view.fifa.network.services
 
-import com.football.view.fifa.network.models.response.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.GET
@@ -12,7 +11,6 @@ interface FIFAImageService {
     fun requestSpidImage(
         @Path("spid") spid: Int
     ): Call<ResponseBody>
-
 }
 
 

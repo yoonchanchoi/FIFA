@@ -7,13 +7,13 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.football.view.fifa.R
 import com.football.view.fifa.databinding.ItemMatchPlayerBinding
-import com.football.view.fifa.network.models.dto.MatchPlayerDTO
+import com.football.view.fifa.network.models.dto.MatchPlayerResult
 
 class MatchPlayerViewHolder(
     private val binding: ItemMatchPlayerBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(context: Context, matchPlayDTO: MatchPlayerDTO) {
+    fun bind(context: Context, matchPlayDTO: MatchPlayerResult) {
         binding.tvPlayerNickname.text = matchPlayDTO.spName
         sppositionColor(context,binding.tvPlayerPosition,matchPlayDTO.spPosition)
     //        binding.tvPlayerPosition.text = matchPlayDTO.spPosition

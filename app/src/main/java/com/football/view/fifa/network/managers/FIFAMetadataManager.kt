@@ -5,9 +5,9 @@ import retrofit2.Call
 
 interface FIFAMetadataManager {
 
-    fun requestSpid(): Call<ArrayList<SpidDTO>>
+    fun requestSpid(): Call<ArrayList<SpIdResult>>
 
-    fun requestSpposition(): Call<ArrayList<SppositionDTO>>
+    fun requestSpposition(): Call<ArrayList<SpPositionResult>>
 }
 
 

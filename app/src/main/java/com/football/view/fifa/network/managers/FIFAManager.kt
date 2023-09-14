@@ -1,38 +1,20 @@
 package com.football.view.fifa.network.managers
 
-import com.football.view.fifa.network.models.dto.MatchDTO
-import com.football.view.fifa.network.models.dto.MaxDivisionDTO
-import com.football.view.fifa.network.models.dto.UserDTO
+import com.football.view.fifa.network.models.dto.MatchMetaDataResult
+import com.football.view.fifa.network.models.dto.MaxDivisionResult
+import com.football.view.fifa.network.models.dto.UserInfoResult
+import io.reactivex.Single
 import retrofit2.Call
 
 interface FIFAManager {
 
-    fun requestUserInfo(nickname: String): Call<UserDTO>
+    fun requestUserInfo(nickname: String): Single<UserInfoResult>
 
-    fun requestOfficialMatchId(accessid : String): Call<ArrayList<String>>
+    fun requestOfficialMatchId(accessId : String): Call<ArrayList<String>>
 
-    fun requestMatchInfo(nickname: String): Call<MatchDTO>
+    fun requestMatchInfo(nickname: String): Call<MatchMetaDataResult>
 
-    fun requestMaxDivision(nickname: String): Call<ArrayList<MaxDivisionDTO>>
-
-//    fun requestPlayerImage(spid: Int): Call<String>
-
-
-    ////-------------------------------------------------------------------------------------
-////    //여기서 부터 rxjava잠금-1
-////    fun requestTest(): Call<FIFAResponse>
-//
-//    fun requestUserInfo(nickname: String): Single<UserDTO>
-//
-//    fun requestMatchInfo(nickname: String): Observable<MatchDTO>
-//
-//    fun requestOfficialMatchId(accessid : String, matchtype : Int, offset : Int, limit : Int ): Single<List<String>>
-//
-//    fun requestMaxDivision(nickname: String): Single<List<MaxDivisionDTO>>
-//
-//
-////    여기까지 rxjava잠금-1
-////-------------------------------------------------------------------------------------
+    fun requestMaxDivision(nickname: String): Call<ArrayList<MaxDivisionResult>>
 }
 
 

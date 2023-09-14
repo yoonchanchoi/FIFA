@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class ShootDTO(
+data class ShootResult(
     @SerializedName("shootTotal")
     @Expose
     val shootTotal: Int = 0,

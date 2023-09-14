@@ -5,7 +5,7 @@ import retrofit2.Call
 
 interface FIFAImageManager {
 
-    fun requestSpidImage(spid: Int): Call<ResponseBody>
+    fun requestSpIdImage(spId: Int): Call<ResponseBody>
 }
 
 

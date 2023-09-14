@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class UserDealDTO(
+data class UserDealResult(
     @SerializedName("tradeDate")
     @Expose
     val tradeDate: String = "",

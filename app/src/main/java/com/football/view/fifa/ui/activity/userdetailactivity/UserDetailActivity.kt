@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.football.view.fifa.R
 import com.football.view.fifa.util.Pref
 import com.football.view.fifa.databinding.ActivityUserDetailBinding
-import com.football.view.fifa.network.models.dto.MatchDTO
-import com.football.view.fifa.network.models.dto.UserDTO
+import com.football.view.fifa.network.models.dto.MatchMetaDataResult
+import com.football.view.fifa.network.models.dto.UserInfoResult
 import com.football.view.fifa.ui.activity.matchdetailactivity.MatchDetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -24,10 +24,10 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
     @Inject
     lateinit var pref: Pref
 
-    private lateinit var userDTO: UserDTO
+    private lateinit var userDTO: UserInfoResult
     private lateinit var userRank: String
     private lateinit var binding: ActivityUserDetailBinding
-    private lateinit var matchDTOList: ArrayList<MatchDTO>
+    private lateinit var matchDTOList: ArrayList<MatchMetaDataResult>
     private lateinit var userMatchAdapter: UserMatchAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,10 +46,10 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
         //검색 페이지에서 넘어온값 확인 및 세팅
         val intent = intent
         intent.getSerializableExtra("ArrayList<MatchDTO>")?.let {
-            matchDTOList = it as ArrayList<MatchDTO>
+            matchDTOList = it as ArrayList<MatchMetaDataResult>
         }
         intent.getSerializableExtra("SearchUserDTO")?.let {
-            userDTO = it as UserDTO
+            userDTO = it as UserInfoResult
         }
         intent.getStringExtra("UserRank")?.let {
             userRank = it
@@ -100,7 +100,7 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
     /**
      * 최근 검색어 어댑터 세팅
      */
-    private fun setUserMatchAdapter(matchDTOList: ArrayList<MatchDTO>, userDTO: UserDTO) {
+    private fun setUserMatchAdapter(matchDTOList: ArrayList<MatchMetaDataResult>, userDTO: UserInfoResult) {
         userMatchAdapter = UserMatchAdapter(this@UserDetailActivity, this, matchDTOList, userDTO)
         val searchLinearLayoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -112,7 +112,7 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
     }
 
     //곧 구헌해야됨
-    override fun onItemClick(matchDTO: MatchDTO, nickName: String) {
+    override fun onItemClick(matchDTO: MatchMetaDataResult, nickName: String) {
         val intent = Intent(this,MatchDetailActivity::class.java)
         intent.putExtra("MatchDTO",matchDTO)
         intent.putExtra("NickName",nickName)
