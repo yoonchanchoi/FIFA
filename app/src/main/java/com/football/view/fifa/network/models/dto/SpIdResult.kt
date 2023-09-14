@@ -4,14 +4,13 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class SppositionDTO(
-
-    @SerializedName("spposition")
+data class SpIdResult(
+    @SerializedName("id")
     @Expose
-    val spposition: Int = 0,
+    val id: Int = 0,
 
-    @SerializedName("desc")
+    @SerializedName("name")
     @Expose
-    val desc: String = ""
+    val name: String = ""
 
 ) : Serializable

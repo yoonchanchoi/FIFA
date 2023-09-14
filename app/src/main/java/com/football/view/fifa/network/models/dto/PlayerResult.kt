@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class PlayerDTO(
+data class PlayerResult(
 
     @SerializedName("spId")
     @Expose
@@ -20,6 +20,6 @@ data class PlayerDTO(
 
     @SerializedName("status")
     @Expose
-    val status: StatusDTO
+    val status: StatusResult
 
 ) : Serializable

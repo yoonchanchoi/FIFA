@@ -13,18 +13,18 @@ class MatchDetailViewModel @Inject constructor(
 
 ) : ViewModel() {
 
-    var _spidDTOList = ArrayList<SpidDTO>()
-    var _sppositionDTOList = ArrayList<SppositionDTO>()
+    var _spidDTOList = ArrayList<SpIdResult>()
+    var _sppositionDTOList = ArrayList<SpPositionResult>()
 
-    val filtedMatchMyPlayerDTOList = ArrayList<MatchPlayerDTO>()
-    val filtedMatchOpponentPlayerDTOList = ArrayList<MatchPlayerDTO>()
+    val filtedMatchMyPlayerDTOList = ArrayList<MatchPlayerResult>()
+    val filtedMatchOpponentPlayerDTOList = ArrayList<MatchPlayerResult>()
 
     fun getPreData(){
-        _spidDTOList = pref.getAllSpidList() as ArrayList<SpidDTO>
-        _sppositionDTOList = pref.getAllSppositionList() as ArrayList<SppositionDTO>
+        _spidDTOList = pref.getAllSpidList() as ArrayList<SpIdResult>
+        _sppositionDTOList = pref.getAllSppositionList() as ArrayList<SpPositionResult>
     }
 
-    fun setPlayer(matchDTO: MatchDTO) {
+    fun setPlayer(matchDTO: MatchMetaDataResult) {
         matchDTO.matchInfo[0].player.forEach {
 //            Log.e("cyc", "아오아오아오아오--->${it.spId}")
             filtedMatchMyPlayerDTOList.add(pickUpPlayer(it.spId, it.spPosition))
@@ -41,7 +41,7 @@ class MatchDetailViewModel @Inject constructor(
         }
     }
 
-    private fun pickUpPlayer(id: Int, position: Int): MatchPlayerDTO {
+    private fun pickUpPlayer(id: Int, position: Int): MatchPlayerResult {
         var name = ""
         var desc = ""
 
@@ -61,7 +61,7 @@ class MatchDetailViewModel @Inject constructor(
                 }
             }
         }
-        return MatchPlayerDTO(name, desc)
+        return MatchPlayerResult(name, desc)
     }
 
 

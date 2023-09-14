@@ -1,8 +1,8 @@
 package com.football.view.fifa.ui.activity.userdetailactivity
 
-import com.football.view.fifa.network.models.dto.MatchDTO
+import com.football.view.fifa.network.models.dto.MatchMetaDataResult
 
 interface UserMatchRecyclerListener {
-    fun onItemClick(matchDTO: MatchDTO, nickName: String)
+    fun onItemClick(matchDTO: MatchMetaDataResult, nickName: String)
     fun onErrorItemClick()
 }

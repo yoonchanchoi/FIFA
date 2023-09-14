@@ -4,13 +4,14 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class SpidDTO(
-    @SerializedName("id")
-    @Expose
-    val id: Int = 0,
+data class SpPositionResult(
 
-    @SerializedName("name")
+    @SerializedName("spposition")
     @Expose
-    val name: String = ""
+    val spposition: Int = 0,
+
+    @SerializedName("desc")
+    @Expose
+    val desc: String = ""
 
 ) : Serializable

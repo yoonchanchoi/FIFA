@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.football.view.fifa.network.managers.FIFAMetadataManager
-import com.football.view.fifa.network.models.dto.SpidDTO
-import com.football.view.fifa.network.models.dto.SppositionDTO
+import com.football.view.fifa.network.models.dto.SpIdResult
+import com.football.view.fifa.network.models.dto.SpPositionResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,20 +20,20 @@ class MainViewModel @Inject constructor(
 
     ) : ViewModel() {
 
-    private val _spidDTOList = MutableLiveData<ArrayList<SpidDTO>>()
-    val spidDTOList: LiveData<ArrayList<SpidDTO>>
+    private val _spidDTOList = MutableLiveData<ArrayList<SpIdResult>>()
+    val spidDTOList: LiveData<ArrayList<SpIdResult>>
         get() = _spidDTOList
 
-    private val _sppositionDTOList = MutableLiveData<ArrayList<SppositionDTO>>()
-    val sppositionDTOList: LiveData<ArrayList<SppositionDTO>>
+    private val _sppositionDTOList = MutableLiveData<ArrayList<SpPositionResult>>()
+    val sppositionDTOList: LiveData<ArrayList<SpPositionResult>>
         get() = _sppositionDTOList
 
     fun requestSpid() {
         val result = fifaMetadataManager.requestSpid()
-        result.enqueue(object : Callback<ArrayList<SpidDTO>> {
+        result.enqueue(object : Callback<ArrayList<SpIdResult>> {
             override fun onResponse(
-                call: Call<ArrayList<SpidDTO>>,
-                response: Response<ArrayList<SpidDTO>>
+                call: Call<ArrayList<SpIdResult>>,
+                response: Response<ArrayList<SpIdResult>>
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let {
@@ -45,7 +45,7 @@ class MainViewModel @Inject constructor(
                 }
             }
 
-            override fun onFailure(call: Call<ArrayList<SpidDTO>>, t: Throwable) {
+            override fun onFailure(call: Call<ArrayList<SpIdResult>>, t: Throwable) {
                 Log.e("cyc", "전체 선수 통신실패 (인터넷 연결의 문제, 예외발생)")
             }
         })
@@ -53,10 +53,10 @@ class MainViewModel @Inject constructor(
 
     fun requestSpposition() {
         val result = fifaMetadataManager.requestSpposition()
-        result.enqueue(object : Callback<ArrayList<SppositionDTO>> {
+        result.enqueue(object : Callback<ArrayList<SpPositionResult>> {
             override fun onResponse(
-                call: Call<ArrayList<SppositionDTO>>,
-                response: Response<ArrayList<SppositionDTO>>
+                call: Call<ArrayList<SpPositionResult>>,
+                response: Response<ArrayList<SpPositionResult>>
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let {
@@ -69,7 +69,7 @@ class MainViewModel @Inject constructor(
                 }
             }
 
-            override fun onFailure(call: Call<ArrayList<SppositionDTO>>, t: Throwable) {
+            override fun onFailure(call: Call<ArrayList<SpPositionResult>>, t: Throwable) {
                 Log.e("cyc", "전체 포지션 통신실패 (인터넷 연결의 문제, 예외발생)")
 
             }

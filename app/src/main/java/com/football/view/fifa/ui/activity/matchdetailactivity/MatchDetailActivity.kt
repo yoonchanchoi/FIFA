@@ -29,12 +29,12 @@ class MatchDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMatchDetailBinding
     private lateinit var loadingProgressDialog: LoadingProgressDialog
-    private lateinit var matchDTO: MatchDTO
+    private lateinit var matchDTO: MatchMetaDataResult
     private lateinit var nickName: String
     private lateinit var matchMyPlayerAdapter: MatchPlayerAdapter
     private lateinit var matchOpponentPlayerAdapter: MatchPlayerAdapter
-    private lateinit var matchMyPlayerDTOList: ArrayList<MatchPlayerDTO>
-    private lateinit var matchOpponentPlayerDTOList: ArrayList<MatchPlayerDTO>
+    private lateinit var matchMyPlayerDTOList: ArrayList<MatchPlayerResult>
+    private lateinit var matchOpponentPlayerDTOList: ArrayList<MatchPlayerResult>
 //    private lateinit var spidDTOList: ArrayList<SpidDTO>
 //    private lateinit var sppositionDTOList: ArrayList<SppositionDTO>
 
@@ -65,7 +65,7 @@ class MatchDetailActivity : AppCompatActivity() {
         //화면이 보여질때 가져올 데이터 intent
         val intent = intent
         intent.getSerializableExtra("MatchDTO")?.let {
-            matchDTO = it as MatchDTO
+            matchDTO = it as MatchMetaDataResult
         }
         intent.getStringExtra("NickName")?.let {
             nickName = it
@@ -166,7 +166,7 @@ class MatchDetailActivity : AppCompatActivity() {
     /**
      *
      */
-    private fun setMatchMyPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayerDTO>) {
+    private fun setMatchMyPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayerResult>) {
         matchMyPlayerAdapter = MatchPlayerAdapter(this, matchPlayerDTOList)
         val searchLinearLayoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -180,7 +180,7 @@ class MatchDetailActivity : AppCompatActivity() {
     /**
      *
      */
-    private fun setMatchOpponentPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayerDTO>) {
+    private fun setMatchOpponentPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayerResult>) {
         matchOpponentPlayerAdapter = MatchPlayerAdapter(this, matchPlayerDTOList)
         val searchLinearLayoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -196,7 +196,7 @@ class MatchDetailActivity : AppCompatActivity() {
      * 유저의 승패에 따른 색깔 결정
      */
     private fun matchDetailResultViewColor(
-        matchInfoUser: MatchInfoDTO,
+        matchInfoUser: MatchInfoResult,
         view: View,
         context: Context
     ) {
@@ -253,7 +253,7 @@ class MatchDetailActivity : AppCompatActivity() {
     /**
      * 평균 평점 구하기
      */
-    private fun averageRating(matchInfoDTO: MatchInfoDTO): String {
+    private fun averageRating(matchInfoDTO: MatchInfoResult): String {
         var spRatingSum = 0.0
         var count = 0.0
         matchInfoDTO.player.forEach {
@@ -271,7 +271,7 @@ class MatchDetailActivity : AppCompatActivity() {
     /**
      * 패스 성공률
      */
-    private fun passSuccesRate(matchInfoDTO: MatchInfoDTO): String {
+    private fun passSuccesRate(matchInfoDTO: MatchInfoResult): String {
 
         val passTry = matchInfoDTO.pass.passTry.toDouble()
         val passSuccess = matchInfoDTO.pass.passSuccess.toDouble()

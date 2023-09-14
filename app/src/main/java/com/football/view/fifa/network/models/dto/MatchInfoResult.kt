@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class MatchInfoDTO(
+data class MatchInfoResult(
     @SerializedName("accessId")
     @Expose
     val accessId: String = "",
@@ -15,25 +15,25 @@ data class MatchInfoDTO(
 
     @SerializedName("matchDetail")
     @Expose
-    val matchDetail: MatchDetailDTO,
+    val matchDetail: MatchDetailResult,
 
     @SerializedName("shoot")
     @Expose
-    val shoot: ShootDTO,
+    val shoot: ShootResult,
 
     @SerializedName("shootDetail")
     @Expose
-    val shootDetail: ArrayList<ShootDetailDTO>,
+    val shootDetail: ArrayList<ShootDetailResult>,
 
     @SerializedName("pass")
     @Expose
-    val pass: PassDTO,
+    val pass: PassResult,
 
     @SerializedName("defence")
     @Expose
-    val defence: DefenceDTO,
+    val defence: DefenceResult,
 
     @SerializedName("player")
     @Expose
-    val player: ArrayList<PlayerDTO>
+    val player: ArrayList<PlayerResult>
 ) : Serializable

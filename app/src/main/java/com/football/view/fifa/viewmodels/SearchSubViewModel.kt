@@ -6,8 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.football.view.fifa.network.managers.FIFAManager
 import com.football.view.fifa.network.managers.FIFAMetadataManager
-import com.football.view.fifa.network.models.dto.*
+import com.football.view.fifa.network.models.dto.MatchMetaDataResult
+import com.football.view.fifa.network.models.dto.MaxDivisionResult
+import com.football.view.fifa.network.models.dto.UserInfoResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
+import io.reactivex.schedulers.Schedulers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,8 +27,10 @@ class SearchSubViewModel @Inject constructor(
 //    private val repository: Repository
 ) : ViewModel() {
 
-    private val _userdto = MutableLiveData<UserDTO>()
-    val userdto: LiveData<UserDTO>
+    private val disposable = CompositeDisposable()
+
+    private val _userdto = MutableLiveData<UserInfoResult>()
+    val userdto: LiveData<UserInfoResult>
         get() = _userdto
 
 //    private val _matchIdDTO = MutableLiveData<MatchIdDTO>()
@@ -34,8 +41,8 @@ class SearchSubViewModel @Inject constructor(
 //    val arrayMathId: LiveData<ArrayList<String>>
 //        get() = _arrayMathId
 
-    private val _matchDTOList = MutableLiveData<ArrayList<MatchDTO>>()
-    val matchDTOList: LiveData<ArrayList<MatchDTO>>
+    private val _matchDTOList = MutableLiveData<ArrayList<MatchMetaDataResult>>()
+    val matchDTOList: LiveData<ArrayList<MatchMetaDataResult>>
         get() = _matchDTOList
 
 //    private val _userCheck = MutableLiveData<Boolean>()
@@ -54,39 +61,30 @@ class SearchSubViewModel @Inject constructor(
 //    val maxDivisionDTOList: LiveData<ArrayList<MaxDivisionDTO>>
 //        get() = _maxDivisionDTOList
 
-    private val _maxDivision = MutableLiveData<MaxDivisionDTO>()
-    val maxDivision: LiveData<MaxDivisionDTO>
+    private val _maxDivision = MutableLiveData<MaxDivisionResult>()
+    val maxDivision: LiveData<MaxDivisionResult>
         get() = _maxDivision
 
     private val _userRank = MutableLiveData<String>()
     val userRank: LiveData<String>
         get() = _userRank
 
-    fun requestUserInfo(nickname: String,recentSearchSaveCheck: Boolean){
-       val result = fifaManager.requestUserInfo(nickname)
-        result.enqueue(object : Callback<UserDTO>{
-            override fun onResponse(call: Call<UserDTO>, response: Response<UserDTO>) {
-                if(response.isSuccessful) {
-                    response.body()?.let {
-                        _userdto.postValue(it)
-//                        _userCheck.postValue(true)
-                        _nickname.postValue(nickname)
-                        requestMaxDivision(it.accessId)
-                        _recentSearchSaveCheck.postValue(recentSearchSaveCheck)
-                        requestMatchId(it.accessId)
-                        Log.e("cyc", "유저 정보---성공")
-                    }
-                }else{
-//                    _userCheck.postValue(false)
-                    Log.e("cyc", "유저 정보---통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
+    fun requestUserInfo(nickname: String, recentSearchSaveCheck: Boolean){
+       fifaManager.requestUserInfo(nickname)
+           .subscribeOn(Schedulers.io())
+           .subscribe({ userInfo ->
+                userInfo?.let {
+                    _userdto.postValue(it)
+                    _nickname.postValue(it.nickname)
+                    requestMaxDivision(it.accessId)
+                    _recentSearchSaveCheck.postValue(recentSearchSaveCheck)
+                    requestMatchId(it.accessId)
+                    Log.e("cyc", "유저 정보---성공")
                 }
-            }
-
-            override fun onFailure(call: Call<UserDTO>, t: Throwable) {
-//                _userCheck.postValue(false)
-                Log.e("cyc", "유저 정보---통신실패 (인터넷 연결의 문제, 예외발생)")
-            }
-        })
+           },{
+               Log.e("cyc", "유저 정보 실패 ${it}")
+           })
+           .addTo(disposable)
     }
 
     fun requestMatchId(accessId: String){
@@ -115,11 +113,11 @@ class SearchSubViewModel @Inject constructor(
     }
 
     fun requestMatchInfo(matchIds : ArrayList<String>) {
-        var tmpMatchDToList = ArrayList<MatchDTO>()
+        val tmpMatchDToList = ArrayList<MatchMetaDataResult>()
         matchIds.forEach {
             val result = fifaManager.requestMatchInfo(it)
-            result.enqueue(object : Callback<MatchDTO>{
-                override fun onResponse(call: Call<MatchDTO>, response: Response<MatchDTO>) {
+            result.enqueue(object : Callback<MatchMetaDataResult>{
+                override fun onResponse(call: Call<MatchMetaDataResult>, response: Response<MatchMetaDataResult>) {
                     if(response.isSuccessful){
                         response.body()?.let { MatchDTO->
                             tmpMatchDToList.add(MatchDTO)
@@ -133,7 +131,7 @@ class SearchSubViewModel @Inject constructor(
                         Log.e("cyc", "유저 경기 정보---통신은 성공했지만 해당 통신의 서버에서 내려준 값이 잘못되어 실패")
                     }
                 }
-                override fun onFailure(call: Call<MatchDTO>, t: Throwable) {
+                override fun onFailure(call: Call<MatchMetaDataResult>, t: Throwable) {
                     Log.e("cyc", "유저 경기 정보---통신실패 (인터넷 연결의 문제, 예외발생)")
                 }
             })
@@ -144,8 +142,8 @@ class SearchSubViewModel @Inject constructor(
 
     fun requestMaxDivision(accessId: String) {
         val result = fifaManager.requestMaxDivision(accessId)
-        result.enqueue(object : Callback<ArrayList<MaxDivisionDTO>>{
-            override fun onResponse(call: Call<ArrayList<MaxDivisionDTO>>, response: Response<ArrayList<MaxDivisionDTO>>) {
+        result.enqueue(object : Callback<ArrayList<MaxDivisionResult>>{
+            override fun onResponse(call: Call<ArrayList<MaxDivisionResult>>, response: Response<ArrayList<MaxDivisionResult>>) {
                 if(response.isSuccessful) {
                     response.body()?.let {
 //                        _maxDivisionDTOList.postValue(it)
@@ -158,14 +156,14 @@ class SearchSubViewModel @Inject constructor(
                 }
             }
 
-            override fun onFailure(call: Call<ArrayList<MaxDivisionDTO>>, t: Throwable) {
+            override fun onFailure(call: Call<ArrayList<MaxDivisionResult>>, t: Throwable) {
 //                _userCheck.postValue(false)
                 Log.e("cyc", "유저의 최고 랭크---통신실패 (인터넷 연결의 문제, 예외발생)")
             }
         })
     }
 
-    fun checkDivision(maxDivisionDTOList: ArrayList<MaxDivisionDTO>):String{
+    fun checkDivision(maxDivisionDTOList: ArrayList<MaxDivisionResult>):String{
         var userRank = "언랭"
         maxDivisionDTOList.forEach {
             if(it.matchType==50){

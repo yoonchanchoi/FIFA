@@ -1,75 +1,25 @@
 package com.football.view.fifa.network.managers
 
+import com.football.view.fifa.network.models.dto.MatchMetaDataResult
+import com.football.view.fifa.network.models.dto.MaxDivisionResult
+import com.football.view.fifa.network.models.dto.UserInfoResult
 import com.football.view.fifa.network.services.FIFAService
-import com.football.view.fifa.network.models.dto.MatchDTO
-import com.football.view.fifa.network.models.dto.MaxDivisionDTO
-import com.football.view.fifa.network.models.dto.UserDTO
 import com.football.view.fifa.util.idmodule.NetworkProviderModule
+import io.reactivex.Single
 import retrofit2.Call
 import javax.inject.Inject
 
 class FIFAManagerImpl @Inject constructor(@NetworkProviderModule.FifaRetrofit private val service: FIFAService) : FIFAManager {
 
-    override fun requestUserInfo(nickname: String): Call<UserDTO> =
+    override fun requestUserInfo(nickname: String): Single<UserInfoResult> =
         service.requestUserInfo(nickname)
 
-    override fun requestOfficialMatchId(accessid: String): Call<ArrayList<String>> =
-        service.requestOfficialMatchId(accessid, matchType = 50, offset = 0, limit = 20)
+    override fun requestOfficialMatchId(accessId: String): Call<ArrayList<String>> =
+        service.requestOfficialMatchId(accessId, matchType = 50, offset = 0, limit = 20)
 
-    override fun requestMatchInfo(matchid: String): Call<MatchDTO> =
+    override fun requestMatchInfo(matchid: String): Call<MatchMetaDataResult> =
         service.requestMatchInfo(matchid)
 
-    override fun requestMaxDivision(accessid: String): Call<ArrayList<MaxDivisionDTO>> =
+    override fun requestMaxDivision(accessid: String): Call<ArrayList<MaxDivisionResult>> =
         service.requestMaxDivision(accessid)
-
-//    override fun requestPlayerImage(spid: Int): Call<String> =
-//        service.requestPlayerImage(spid)
-
-    ////-------------------------------------------------------------------------------------
-////    //여기서 부터 rxjava잠금-1
-//
-////    override fun requestTest(): Call<FIFAResponse> =
-////        service.requestTest()
-//
-//    override fun requestUserInfo(nickname : String): Single<UserDTO> =
-//        service.requestUserInfo(nickname)
-//
-//    override fun requestMatchInfo(matchid: String): Observable<MatchDTO> =
-//        service.requestMatchInfo(matchid)
-//
-//    override fun requestOfficialMatchId(accessid : String, matchtype : Int, offset : Int, limit : Int ): Single<List<String>> =
-//        service.requestOfficialMatchId(accessid, matchtype, offset, limit)
-//
-//    override fun requestMaxDivision( accessid: String): Single<List<MaxDivisionDTO>> =
-//        service.requestMaxDivision(accessid)
-//
-//
-////    여기까지 rxjava잠금-1
-////-------------------------------------------------------------------------------------
-
 }
-
-
-//
-//class FIFAManagerImpl @Inject constructor(private val service: FIFAService) : FIFAManager {
-//    override fun requestBlog(query: String, display: Int, start: Int): Call<ResultSearchAll> =
-//        service.requestBlog(query,display = display, start = start)
-//
-//    override fun requestCafe(query: String, start: Int): Call<ResultSearchAll> =
-//        service.requestCafe(query, start = start)
-//
-//    override fun requestDictionary(query: String, start: Int): Call<ResultSearchAll> =
-//        service.requestDictionary(query, start = start)
-//
-//    override fun requestImg(query: String, start: Int): Call<ResultSearchImg> =
-//        service.requestImg(query, start = start)
-//
-//    override fun requestCheckAdultWord(query: String): Call<ResultCheckAdultWord> =
-//        service.requestCheckAdultWord(query)
-//
-//    override fun requestCheckMissWord(query: String): Call<ResultMisspelledWord> =
-//        service.requestCheckMissWord(query)
-//
-//
-//}
-//
