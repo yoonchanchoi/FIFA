@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.licensoractivity.LicensorActivity">
+    tools:context=".ui.activity.licensoractivity.LicenseActivity">
 
     <TextView
         android:id="@+id/tv_nexon_api_tag"
@@ -24,7 +24,7 @@
         android:textStyle="bold"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
-        android:text="@string/LicensorActivity_nexon_api_text"
+        android:text="@string/license_nexon_api_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_nexon_api_tag" />
     <TextView
@@ -46,7 +46,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="@string/LicensorActivity_nexon_api_address"
+        android:text="@string/License_nexon_api_address"
         app:layout_constraintTop_toBottomOf="@id/tv_nexon_api_address_tag"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -96,42 +96,42 @@ class MatchDetailActivity : AppCompatActivity() {
 
         //아래 상세 데이터 설정
         binding.tvAverageRating.text = getString(
-            R.string.MatchDetailActivity_detail_data_form,
+            R.string.match_detail_data_form,
             averageRating(matchDTO.matchInfo[0]),
             averageRating(matchDTO.matchInfo[1])
         )
         binding.tvShooting.text = getString(
-            R.string.MatchDetailActivity_detail_data_form,
+            R.string.match_detail_data_form,
             matchDTO.matchInfo[0].shoot.shootTotal.toString(),
             matchDTO.matchInfo[1].shoot.shootTotal.toString()
         )
         binding.tvEffectiveShootingRating.text = getString(
-            R.string.MatchDetailActivity_detail_data_form,
+            R.string.match_detail_data_form,
             matchDTO.matchInfo[0].shoot.effectiveShootTotal.toString(),
             matchDTO.matchInfo[1].shoot.effectiveShootTotal.toString()
         )
         binding.tvShare.text = getString(
-            R.string.MatchDetailActivity_detail_data_form,
+            R.string.match_detail_data_form,
             matchDTO.matchInfo[0].matchDetail.possession.toString(),
             matchDTO.matchInfo[1].matchDetail.possession.toString()
         )
         binding.tvPassSuccessRate.text = getString(
-            R.string.MatchDetailActivity_detail_data_form,
+            R.string.match_detail_data_form,
             passSuccesRate(matchDTO.matchInfo[0]),
             passSuccesRate(matchDTO.matchInfo[1])
         )
         binding.tvCornerKick.text = getString(
-            R.string.MatchDetailActivity_detail_data_form,
+            R.string.match_detail_data_form,
             matchDTO.matchInfo[0].matchDetail.cornerKick.toString(),
             matchDTO.matchInfo[1].matchDetail.cornerKick.toString()
         )
         binding.tvTackle.text = getString(
-            R.string.MatchDetailActivity_detail_data_form,
+            R.string.match_detail_data_form,
             matchDTO.matchInfo[0].defence.tackleSuccess.toString(),
             matchDTO.matchInfo[1].defence.tackleSuccess.toString()
         )
         binding.tvBlock.text = getString(
-            R.string.MatchDetailActivity_detail_data_form,
+            R.string.match_detail_data_form,
             matchDTO.matchInfo[0].defence.blockSuccess.toString(),
             matchDTO.matchInfo[1].defence.blockSuccess.toString()
         )
