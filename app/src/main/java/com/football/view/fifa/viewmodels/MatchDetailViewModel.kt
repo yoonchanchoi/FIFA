@@ -83,6 +83,131 @@ class MatchDetailViewModel @Inject constructor(
 
 
 
+//Rxjava 로직
+//package com.football.view.fifa.viewmodels
+//
+//import android.graphics.Bitmap
+//import android.graphics.BitmapFactory
+//import android.util.Log
+//import androidx.lifecycle.MutableLiveData
+//import com.football.view.fifa.base.BaseViewModel
+//import com.football.view.fifa.network.managers.FIFAImageManager
+//import com.football.view.fifa.network.models.dto.MatchMetaDataResult
+//import com.football.view.fifa.network.models.dto.MatchPlayerResult
+//import com.football.view.fifa.network.models.dto.SpIdResult
+//import com.football.view.fifa.network.models.dto.SpPositionResult
+//import com.football.view.fifa.util.Pref
+//import dagger.hilt.android.lifecycle.HiltViewModel
+//import io.reactivex.Observable
+//import io.reactivex.Single
+//import io.reactivex.android.schedulers.AndroidSchedulers
+//import io.reactivex.rxkotlin.Observables
+//import io.reactivex.rxkotlin.Singles
+//import io.reactivex.rxkotlin.addTo
+//import io.reactivex.schedulers.Schedulers
+//import okhttp3.ResponseBody
+//import javax.inject.Inject
+//
+//
+//@HiltViewModel
+//class MatchDetailViewModel @Inject constructor(
+//    private val pref: Pref,
+//    private val fifaImageManager: FIFAImageManager
+//) : BaseViewModel() {
+//
+//    var _spidDTOList = ArrayList<SpIdResult>()
+//    var _sppositionDTOList = ArrayList<SpPositionResult>()
+//
+//    val filtedMatchMyPlayerDTOList = ArrayList<MatchPlayerResult>()
+//    val filteredMatchMyPlayerList = MutableLiveData<ArrayList<MatchPlayerResult>>()
+//    val filtedMatchOpponentPlayerDTOList = ArrayList<MatchPlayerResult>()
+//    val filteredMatchOpponentPlayerList = MutableLiveData<ArrayList<MatchPlayerResult>>()
+//
+//    fun getPreData(){
+//        _spidDTOList = pref.getAllSpidList() as ArrayList<SpIdResult>
+//        _sppositionDTOList = pref.getAllSppositionList() as ArrayList<SpPositionResult>
+//    }
+//
+//    fun setPlayer(matchDTO: MatchMetaDataResult) {
+//        Observables.zip(
+//            Observable.fromIterable(matchDTO.matchInfo[0].player),
+//            Observable.fromIterable(matchDTO.matchInfo[1].player)
+//        )
+//            .subscribeOn(Schedulers.io())
+//            .concatMapSingle { (left, right) ->
+//                Log.d("hello", "concatMapSingleLeft : ${left}")
+//                Log.d("hello", "concatMapSingleRight : ${right}")
+//                Singles.zip( // Single to Single
+//                    pickUpPlayer(left.spId, left.spPosition), // Single
+//                    pickUpPlayer(right.spId, right.spPosition) // Single
+//                )
+//            }
+////            .onErrorReturn {
+////                //if (it.localizedMessage == "HTTP 403") {
+////                Log.d("hello", "error test : ${it}")
+////                MatchPlayerResult(
+////                    "LW"
+////                ) to MatchPlayerResult(
+////                    "LW",
+////                )
+////
+////                //MatchPlayerResult() to MatchPlayerResult()
+////            }
+//            .subscribe({ (left, right) ->
+//                Log.d("hello", "left : ${left}")
+//                Log.d("hello", "right : ${right}")
+//                filtedMatchMyPlayerDTOList.add(left)
+//                filtedMatchOpponentPlayerDTOList.add(right)
+//            },{
+//                Log.e("cyc", "setPlayer 실패 : ${it.localizedMessage}")
+//            })
+//            .addTo(disposable)
+//    }
+//
+//    private fun pickUpPlayer(id: Int, position: Int): Single<MatchPlayerResult> {
+//        return Singles.zip(
+//            fifaImageManager.requestSpIdImage(id),
+//            Single.just(_spidDTOList),
+//            Single.just(_sppositionDTOList)
+//        )
+//            .subscribeOn(Schedulers.io())
+////                if (it.localizedMessage == "HTTP 403") {
+////                    return@onErrorReturn MatchPlayerResult("name", "desc", "imageBinaryList.toString()")
+////                }
+//            .map { (imageBinaryList, spIdList, spPositionList) ->
+//                var name = ""
+//                var desc = ""
+//                spIdList?.let { spIdList ->
+//                    spIdList.forEach {
+//                        //Log.d("hello2", "spIdList : ${it}")
+//                        if (it.id == id) {
+//                            name = it.name.trim()
+//                        }
+//                    }
+//                }
+//
+//                spPositionList?.let { spPositionList ->
+//                    spPositionList.forEach {
+//                        //Log.d("hello2", "spPositionList : ${it}")
+//                        if (it.spposition == position) {
+//                            desc = it.desc.trim()
+//                        }
+//                    }
+//                }
+//                val result = MatchPlayerResult(name, desc)
+//                Log.d("hello", "pickUpPlayer result : ${result}")
+//                result
+//            }
+//    }
+//
+//    sealed class CustomError() : Throwable() {
+//        data class ImageError(
+//            var messages: String = ""
+//        ) : Throwable()
+//    }
+//
+//}
+
 
 
 
