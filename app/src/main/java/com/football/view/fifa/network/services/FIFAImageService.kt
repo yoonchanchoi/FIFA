@@ -1,5 +1,6 @@
 package com.football.view.fifa.network.services
 
+import io.reactivex.Single
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.GET
@@ -10,7 +11,7 @@ interface FIFAImageService {
     @GET("playersAction/p{spid}.png")
     fun requestSpidImage(
         @Path("spid") spid: Int
-    ): Call<ResponseBody>
+    ): Single<ResponseBody>
 }
 
 
