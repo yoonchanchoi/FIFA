@@ -110,9 +110,9 @@ class MainActivity : AppCompatActivity() {
 
     fun setbanner() {
 
-        ContextCompat.getDrawable(this, R.drawable.fifa_image01)?.let { arrayImage.add(it) }
-        ContextCompat.getDrawable(this, R.drawable.fifa_image02)?.let { arrayImage.add(it) }
-        ContextCompat.getDrawable(this, R.drawable.fifa_image03)?.let { arrayImage.add(it) }
+        ContextCompat.getDrawable(this, R.drawable.fifa_banner01)?.let { arrayImage.add(it) }
+        ContextCompat.getDrawable(this, R.drawable.fifa_banner02)?.let { arrayImage.add(it) }
+        ContextCompat.getDrawable(this, R.drawable.fifa_banner03)?.let { arrayImage.add(it) }
 
         // initBanner()
         val bannerAdapter = BannerAdapter()

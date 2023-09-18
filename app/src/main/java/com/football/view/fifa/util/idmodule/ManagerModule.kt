@@ -19,8 +19,8 @@ abstract class ManagerModule {
     @Singleton
     abstract fun bindSearchManager(searchManagerImpl: FIFAManagerImpl): FIFAManager
 
-    @Binds
-    @Singleton
-    abstract fun bindSearchImageManager(searchImageManagerImpl: FIFAImageManagerImpl): FIFAImageManager
+//    @Binds
+//    @Singleton
+//    abstract fun bindSearchImageManager(searchImageManagerImpl: FIFAImageManagerImpl): FIFAImageManager
 
 }

@@ -5,9 +5,9 @@ import android.graphics.BitmapFactory
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.football.view.fifa.base.BaseViewModel
-import com.football.view.fifa.network.managers.FIFAImageManager
 import com.football.view.fifa.network.models.dto.MatchMetaDataResult
 import com.football.view.fifa.network.models.dto.MatchPlayerResult
+import com.football.view.fifa.network.models.dto.PlayerResult
 import com.football.view.fifa.network.models.dto.SpIdResult
 import com.football.view.fifa.network.models.dto.SpPositionResult
 import com.football.view.fifa.util.Pref
@@ -26,7 +26,6 @@ import javax.inject.Inject
 @HiltViewModel
 class MatchDetailViewModel @Inject constructor(
     private val pref: Pref,
-    private val fifaImageManager: FIFAImageManager
 ) : BaseViewModel() {
 
     var _spidDTOList = ArrayList<SpIdResult>()
@@ -51,10 +50,10 @@ class MatchDetailViewModel @Inject constructor(
             .subscribe({ (left, right) ->
 
                 left.forEach {
-                    filtedMatchMyPlayerDTOList.add(pickUpPlayer(it.spId, it.spPosition))
+                    filtedMatchMyPlayerDTOList.add(pickUpPlayer(it))
                 }
                 right.forEach {
-                    filtedMatchOpponentPlayerDTOList.add(pickUpPlayer(it.spId, it.spPosition))
+                    filtedMatchOpponentPlayerDTOList.add(pickUpPlayer(it))
                 }
             },{
 
@@ -62,13 +61,13 @@ class MatchDetailViewModel @Inject constructor(
             .addTo(disposable)
     }
 
-    private fun pickUpPlayer(id: Int, position: Int): MatchPlayerResult {
+    private fun pickUpPlayer(playerResult: PlayerResult): MatchPlayerResult {
         var name = ""
         var desc = ""
 
         _spidDTOList?.let { spidDTOS ->
             spidDTOS.forEach {
-                if (it.id == id) {
+                if (it.id == playerResult.spId) {
                     name = it.name
 
                 }
@@ -77,13 +76,36 @@ class MatchDetailViewModel @Inject constructor(
 
         _sppositionDTOList?.let { sppositionDTOS ->
             sppositionDTOS.forEach {
-                if (it.spposition == position) {
+                if (it.spposition == playerResult.spPosition) {
                     desc = it.desc
                 }
             }
         }
-        return MatchPlayerResult(name, desc)
+        return MatchPlayerResult(name, desc, playerResult.spId, playerResult.spPosition, playerResult.spGrade, playerResult.status)
     }
+
+//    private fun pickUpPlayer(id: Int, position: Int): MatchPlayerResult {
+//        var name = ""
+//        var desc = ""
+//
+//        _spidDTOList?.let { spidDTOS ->
+//            spidDTOS.forEach {
+//                if (it.id == id) {
+//                    name = it.name
+//
+//                }
+//            }
+//        }
+//
+//        _sppositionDTOList?.let { sppositionDTOS ->
+//            sppositionDTOS.forEach {
+//                if (it.spposition == position) {
+//                    desc = it.desc
+//                }
+//            }
+//        }
+//        return MatchPlayerResult(name, desc)
+//    }
 }
 
 
