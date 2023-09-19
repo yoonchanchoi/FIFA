@@ -83,29 +83,6 @@ class MatchDetailViewModel @Inject constructor(
         }
         return MatchPlayerResult(name, desc, playerResult.spId, playerResult.spPosition, playerResult.spGrade, playerResult.status)
     }
-
-//    private fun pickUpPlayer(id: Int, position: Int): MatchPlayerResult {
-//        var name = ""
-//        var desc = ""
-//
-//        _spidDTOList?.let { spidDTOS ->
-//            spidDTOS.forEach {
-//                if (it.id == id) {
-//                    name = it.name
-//
-//                }
-//            }
-//        }
-//
-//        _sppositionDTOList?.let { sppositionDTOS ->
-//            sppositionDTOS.forEach {
-//                if (it.spposition == position) {
-//                    desc = it.desc
-//                }
-//            }
-//        }
-//        return MatchPlayerResult(name, desc)
-//    }
 }
 
 
