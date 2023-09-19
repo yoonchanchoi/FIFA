@@ -5,9 +5,11 @@ import android.util.Log
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.football.view.fifa.R
 import com.football.view.fifa.databinding.ItemMatchPlayerBinding
 import com.football.view.fifa.network.models.dto.MatchPlayerResult
+import com.football.view.fifa.util.Constants
 
 class MatchPlayerViewHolder(
     private val binding: ItemMatchPlayerBinding
@@ -15,7 +17,14 @@ class MatchPlayerViewHolder(
 
     fun bind(context: Context, matchPlayDTO: MatchPlayerResult) {
         binding.tvPlayerNickname.text = matchPlayDTO.spName
-        spPositionColor(context,binding.tvPlayerPosition,matchPlayDTO.spPosition)
+        spPositionColor(context,binding.tvPlayerPosition,matchPlayDTO.spDesc)
+
+
+        Glide.with(itemView.context)
+            .load(String.format(Constants.IMAGE_BASE_URL, matchPlayDTO.spId))
+            .error(R.drawable.null_player1)
+            .placeholder(R.drawable.loading_player)
+            .into(binding.iv)
     }
 
     private fun spPositionColor(context: Context, textView: TextView, spPosition: String) {

@@ -1,17 +1,25 @@
 package com.football.view.fifa.viewmodels
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.football.view.fifa.base.BaseViewModel
 import com.football.view.fifa.network.models.dto.MatchMetaDataResult
 import com.football.view.fifa.network.models.dto.MatchPlayerResult
+import com.football.view.fifa.network.models.dto.PlayerResult
 import com.football.view.fifa.network.models.dto.SpIdResult
 import com.football.view.fifa.network.models.dto.SpPositionResult
 import com.football.view.fifa.util.Pref
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.Singles
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
+import okhttp3.ResponseBody
 import javax.inject.Inject
 
 
@@ -40,11 +48,12 @@ class MatchDetailViewModel @Inject constructor(
         )
             .subscribeOn(Schedulers.io())
             .subscribe({ (left, right) ->
+
                 left.forEach {
-                    filtedMatchMyPlayerDTOList.add(pickUpPlayer(it.spId, it.spPosition))
+                    filtedMatchMyPlayerDTOList.add(pickUpPlayer(it))
                 }
                 right.forEach {
-                    filtedMatchOpponentPlayerDTOList.add(pickUpPlayer(it.spId, it.spPosition))
+                    filtedMatchOpponentPlayerDTOList.add(pickUpPlayer(it))
                 }
             },{
 
@@ -52,13 +61,13 @@ class MatchDetailViewModel @Inject constructor(
             .addTo(disposable)
     }
 
-    private fun pickUpPlayer(id: Int, position: Int): MatchPlayerResult {
+    private fun pickUpPlayer(playerResult: PlayerResult): MatchPlayerResult {
         var name = ""
         var desc = ""
 
         _spidDTOList?.let { spidDTOS ->
             spidDTOS.forEach {
-                if (it.id == id) {
+                if (it.id == playerResult.spId) {
                     name = it.name
 
                 }
@@ -67,11 +76,17 @@ class MatchDetailViewModel @Inject constructor(
 
         _sppositionDTOList?.let { sppositionDTOS ->
             sppositionDTOS.forEach {
-                if (it.spposition == position) {
+                if (it.spposition == playerResult.spPosition) {
                     desc = it.desc
                 }
             }
         }
-        return MatchPlayerResult(name, desc)
+        return MatchPlayerResult(name, desc, playerResult.spId, playerResult.spPosition, playerResult.spGrade, playerResult.status)
     }
 }
+
+
+
+
+
+
