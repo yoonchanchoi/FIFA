@@ -1,6 +1,5 @@
 package com.football.view.fifa.util.idmodule
 
-//import com.football.view.fifa.network.services.FIFAImageService
 import com.football.view.fifa.network.services.FIFAMetadataService
 import com.football.view.fifa.network.services.FIFAService
 import com.football.view.fifa.network.services.HeadersInterceptor
@@ -37,15 +36,6 @@ class NetworkProviderModule {
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
     annotation class FifaRetrofit
-
-
-//    @Qualifier
-//    @Retention(AnnotationRetention.BINARY)
-//    annotation class FifaImageOkHttpClient
-//
-//    @Qualifier
-//    @Retention(AnnotationRetention.BINARY)
-//    annotation class FifaImageRetrofit
 
     @FifaMetadataOkHttpClient
     @Provides
@@ -98,30 +88,4 @@ class NetworkProviderModule {
             .client(okHttpClient)
             .build().create(FIFAService::class.java)
     }
-
-//    @FifaImageOkHttpClient
-//    @Provides
-//    @Singleton
-//    fun provideFifaImageOkHttpClient(
-//        headersInterceptor: HeadersInterceptor
-//    ): OkHttpClient {
-//        val logInterceptor = HttpLoggingInterceptor()
-//        logInterceptor.level = HttpLoggingInterceptor.Level.BODY
-//        return OkHttpClient.Builder()
-//            .addInterceptor(logInterceptor)
-//            .addInterceptor(headersInterceptor)
-//            .build()
-//    }
-//
-//    @FifaImageRetrofit
-//    @Provides
-//    @Singleton
-//    fun provideFifaImageRetrofit(@FifaImageOkHttpClient okHttpClient: OkHttpClient): FIFAImageService {
-//        return Retrofit.Builder()
-//            .baseUrl(Constants.IMAGE_BASE_URL)
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
-//            .client(okHttpClient)
-//            .build().create(FIFAImageService::class.java)
-//    }
 }
