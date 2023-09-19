@@ -33,11 +33,6 @@ class MatchDetailActivity : AppCompatActivity() {
     private lateinit var nickName: String
     private lateinit var matchMyPlayerAdapter: MatchPlayerAdapter
     private lateinit var matchOpponentPlayerAdapter: MatchPlayerAdapter
-    private lateinit var matchMyPlayerDTOList: ArrayList<MatchPlayerResult>
-    private lateinit var matchOpponentPlayerDTOList: ArrayList<MatchPlayerResult>
-//    private lateinit var spidDTOList: ArrayList<SpidDTO>
-//    private lateinit var sppositionDTOList: ArrayList<SppositionDTO>
-
 
     private val viewModel: MatchDetailViewModel by viewModels()
 
@@ -136,16 +131,12 @@ class MatchDetailActivity : AppCompatActivity() {
             matchDTO.matchInfo[1].defence.blockSuccess.toString()
         )
 
-
         viewModel.setPlayer(matchDTO)
-
-        matchMyPlayerDTOList = viewModel.filtedMatchMyPlayerDTOList
-        matchOpponentPlayerDTOList = viewModel.filtedMatchOpponentPlayerDTOList
 
 //        어댑터 세팅2개 각각의 어댑터
         //이미지 test 바꾸기 전
-        setMatchMyPlayerAdapter(matchMyPlayerDTOList)
-        setMatchOpponentPlayerAdapter(matchOpponentPlayerDTOList)
+        setMatchMyPlayerAdapter(viewModel.filtedMatchMyPlayerDTOList)
+        setMatchOpponentPlayerAdapter(viewModel.filtedMatchOpponentPlayerDTOList)
         //이미지 test 바꾸기 전
 
 //        로딩 프로그래스 다이얼로그 종료
