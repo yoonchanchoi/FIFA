@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun init() {
         val appbar = supportActionBar
-        appbar?.let { it.title = "FIFA" }
+        appbar?.let { it.title = getString(R.string.app_name) }
         initData()
         initObserve()
         initListener()
