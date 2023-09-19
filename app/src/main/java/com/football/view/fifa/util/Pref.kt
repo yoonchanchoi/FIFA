@@ -1,9 +1,9 @@
 package com.football.view.fifa.util
 
 import android.content.SharedPreferences
-import com.football.view.fifa.network.models.dto.SpidDTO
-import com.football.view.fifa.network.models.dto.SppositionDTO
-import com.football.view.fifa.network.models.dto.UserDTO
+import com.football.view.fifa.network.models.dto.SpIdResult
+import com.football.view.fifa.network.models.dto.SpPositionResult
+import com.football.view.fifa.network.models.dto.UserInfoResult
 import com.google.gson.Gson
 import javax.inject.Inject
 
@@ -13,55 +13,55 @@ class Pref @Inject constructor(private val pref: SharedPreferences) {
     //apply() 비동기 처리, 구글 권장
     //확장함수 사용 방법
 
-    fun saveSearchList(searchList: MutableList<UserDTO>) {
+    fun saveSearchList(searchList: MutableList<UserInfoResult>) {
         val searchListString: String = Gson().toJson(searchList)
         val editor: SharedPreferences.Editor = pref.edit()
         editor.putString(Constants.PREF_KEY_SEARCH, searchListString)
         editor.apply()
     }
 
-    fun getSearchList(): MutableList<UserDTO> {
-        var saveSearchList = ArrayList<UserDTO>()
+    fun getSearchList(): MutableList<UserInfoResult> {
+        var saveSearchList = ArrayList<UserInfoResult>()
         pref.getString(Constants.PREF_KEY_SEARCH, "")?.let {
             if (it.isNotEmpty()) {
-                saveSearchList = Gson().fromJson(it, Array<UserDTO>::class.java)
-                    .toMutableList() as ArrayList<UserDTO>
+                saveSearchList = Gson().fromJson(it, Array<UserInfoResult>::class.java)
+                    .toMutableList() as ArrayList<UserInfoResult>
             }
         }
         return saveSearchList
     }
 
-    fun saveAllSpidList(allSpidList: MutableList<SpidDTO>){
+    fun saveAllSpidList(allSpidList: MutableList<SpIdResult>){
         val allSpidListString: String = Gson().toJson(allSpidList)
         val editor: SharedPreferences.Editor = pref.edit()
         editor.putString(Constants.PREF_KEY_ALL_SPID, allSpidListString)
         editor.apply()
     }
 
-    fun getAllSpidList(): MutableList<SpidDTO> {
-        var saveAllSpidList = ArrayList<SpidDTO>()
+    fun getAllSpidList(): MutableList<SpIdResult> {
+        var saveAllSpidList = ArrayList<SpIdResult>()
         pref.getString(Constants.PREF_KEY_ALL_SPID, "")?.let {
             if (it.isNotEmpty()) {
-                saveAllSpidList = Gson().fromJson(it, Array<SpidDTO>::class.java)
-                    .toMutableList() as ArrayList<SpidDTO>
+                saveAllSpidList = Gson().fromJson(it, Array<SpIdResult>::class.java)
+                    .toMutableList() as ArrayList<SpIdResult>
             }
         }
         return saveAllSpidList
     }
 
-    fun saveAllSppositionList(allSppositionDTOList: MutableList<SppositionDTO>){
+    fun saveAllSppositionList(allSppositionDTOList: MutableList<SpPositionResult>){
         val allSppositionListString: String = Gson().toJson(allSppositionDTOList)
         val editor: SharedPreferences.Editor = pref.edit()
         editor.putString(Constants.PREF_KEY_ALL_SPPOSITION, allSppositionListString)
         editor.apply()
     }
 
-    fun getAllSppositionList(): MutableList<SppositionDTO> {
-        var saveAllSppositionList = ArrayList<SppositionDTO>()
+    fun getAllSppositionList(): MutableList<SpPositionResult> {
+        var saveAllSppositionList = ArrayList<SpPositionResult>()
         pref.getString(Constants.PREF_KEY_ALL_SPPOSITION, "")?.let {
             if (it.isNotEmpty()) {
-                saveAllSppositionList = Gson().fromJson(it, Array<SppositionDTO>::class.java)
-                    .toMutableList() as ArrayList<SppositionDTO>
+                saveAllSppositionList = Gson().fromJson(it, Array<SpPositionResult>::class.java)
+                    .toMutableList() as ArrayList<SpPositionResult>
             }
         }
         return saveAllSppositionList

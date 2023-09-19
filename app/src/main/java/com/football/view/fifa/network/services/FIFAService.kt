@@ -1,9 +1,9 @@
 package com.football.view.fifa.network.services
 
-import com.football.view.fifa.network.models.response.*
-import com.football.view.fifa.network.models.dto.MatchDTO
-import com.football.view.fifa.network.models.dto.MaxDivisionDTO
-import com.football.view.fifa.network.models.dto.UserDTO
+import com.football.view.fifa.network.models.dto.MatchMetaDataResult
+import com.football.view.fifa.network.models.dto.MaxDivisionResult
+import com.football.view.fifa.network.models.dto.UserInfoResult
+import io.reactivex.Single
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -14,7 +14,7 @@ interface FIFAService {
     @GET("users")
     fun requestUserInfo(
         @Query("nickname") nicknamee: String
-    ): Call<UserDTO>
+    ): Single<UserInfoResult>
 
     @GET("users/{accessId}/matches")
     fun  requestOfficialMatchId(
@@ -22,19 +22,18 @@ interface FIFAService {
         @Query("matchType") matchType : Int,
         @Query("offset") offset : Int,
         @Query("limit") limit : Int,
-    ) : Call<ArrayList<String>>
+    ) : Single<ArrayList<String>>
 
     @GET("matches/{matchId}")
     fun requestMatchInfo(
         @Path("matchId") matchId: String
-    ): Call<MatchDTO>
+    ): Single<MatchMetaDataResult>
 
 
     @GET("users/{accessId}/maxdivision")
     fun  requestMaxDivision(
         @Path("accessId") accessId: String
-    ): Call<ArrayList<MaxDivisionDTO>>
-
+    ): Single<ArrayList<MaxDivisionResult>>
 }
 
 

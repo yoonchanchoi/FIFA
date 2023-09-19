@@ -5,22 +5,30 @@ import android.util.Log
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.football.view.fifa.R
 import com.football.view.fifa.databinding.ItemMatchPlayerBinding
-import com.football.view.fifa.network.models.dto.MatchPlayerDTO
+import com.football.view.fifa.network.models.dto.MatchPlayerResult
+import com.football.view.fifa.util.Constants
 
 class MatchPlayerViewHolder(
     private val binding: ItemMatchPlayerBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(context: Context, matchPlayDTO: MatchPlayerDTO) {
+    fun bind(context: Context, matchPlayDTO: MatchPlayerResult) {
         binding.tvPlayerNickname.text = matchPlayDTO.spName
-        sppositionColor(context,binding.tvPlayerPosition,matchPlayDTO.spPosition)
-    //        binding.tvPlayerPosition.text = matchPlayDTO.spPosition
+        spPositionColor(context,binding.tvPlayerPosition,matchPlayDTO.spDesc)
+
+
+        Glide.with(itemView.context)
+            .load(String.format(Constants.IMAGE_BASE_URL, matchPlayDTO.spId))
+            .error(R.drawable.null_player1)
+            .placeholder(R.drawable.loading_player)
+            .into(binding.iv)
     }
 
-    private fun sppositionColor(context: Context, textView: TextView, spPosition: String) {
-        textView.text=spPosition
+    private fun spPositionColor(context: Context, textView: TextView, spPosition: String) {
+        textView.text = spPosition
         when (spPosition) {
             "GK" -> {
                 textView.setTextColor(ContextCompat.getColor(context, R.color.clr_FF9800))
@@ -104,7 +112,7 @@ class MatchPlayerViewHolder(
                 textView.setTextColor(ContextCompat.getColor(context, R.color.clr_CC392E))
             }
             "LW" -> {
-                textView.setTextColor(ContextCompat.getColor(context, R.color.clr_5A5A5A))
+                textView.setTextColor(ContextCompat.getColor(context, R.color.clr_CC392E))
             }
             "SUB" -> {
                 textView.setTextColor(ContextCompat.getColor(context, R.color.clr_5A5A5A))

@@ -1,13 +1,14 @@
 package com.football.view.fifa.network.managers
 
-import com.football.view.fifa.network.models.dto.*
-import retrofit2.Call
+import com.football.view.fifa.network.models.dto.SpIdResult
+import com.football.view.fifa.network.models.dto.SpPositionResult
+import io.reactivex.Single
 
 interface FIFAMetadataManager {
 
-    fun requestSpid(): Call<ArrayList<SpidDTO>>
+    fun requestSpId(): Single<ArrayList<SpIdResult>>
 
-    fun requestSpposition(): Call<ArrayList<SppositionDTO>>
+    fun requestSpPosition(): Single<ArrayList<SpPositionResult>>
 }
 
 

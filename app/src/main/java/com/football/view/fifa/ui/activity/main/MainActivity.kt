@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.football.view.fifa.R
 import com.football.view.fifa.databinding.ActivityMainBinding
-import com.football.view.fifa.ui.activity.licensoractivity.LicensorActivity
+import com.football.view.fifa.ui.activity.licensoractivity.LicenseActivity
 import com.football.view.fifa.ui.activity.searchsubactivity.SearchSubActivity
 import com.football.view.fifa.ui.dialog.LoadingProgressDialog
 import com.football.view.fifa.util.Pref
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun init() {
         val appbar = supportActionBar
-        appbar?.let { it.title = "FIFA" }
+        appbar?.let { it.title = getString(R.string.app_name) }
         initData()
         initObserve()
         initListener()
@@ -69,19 +69,19 @@ class MainActivity : AppCompatActivity() {
         loadingProgressDialog = LoadingProgressDialog(this)
         loadingProgressDialog.show()
 
-        viewModel.requestSpid()
-        viewModel.requestSpposition()
+        viewModel.requestSpId()
+        viewModel.requestSpPosition()
         setbanner()
     }
     private fun initObserve(){
-        viewModel.spidDTOList.observe(this){
+        viewModel.spIdDTOList.observe(this){
             pref.saveAllSpidList(it)
             checkSaveAllSpidList=true
             if(checkSaveAllSpidList && checkSaveAllSppositionList){
                 loadingProgressDialog.dismiss()
             }
         }
-        viewModel.sppositionDTOList.observe(this){
+        viewModel.spPositionResultList.observe(this){
             pref.saveAllSppositionList(it)
             checkSaveAllSppositionList = true
             if(checkSaveAllSpidList && checkSaveAllSppositionList){
@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity() {
     // 메뉴 업션 구현(아직 미구헌 추후 추가)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId==R.id.setting_action){
-            val intent = Intent(this, LicensorActivity::class.java)
+            val intent = Intent(this, LicenseActivity::class.java)
             startActivity(intent)
         }
 
@@ -110,9 +110,9 @@ class MainActivity : AppCompatActivity() {
 
     fun setbanner() {
 
-        ContextCompat.getDrawable(this, R.drawable.fifa_image01)?.let { arrayImage.add(it) }
-        ContextCompat.getDrawable(this, R.drawable.fifa_image02)?.let { arrayImage.add(it) }
-        ContextCompat.getDrawable(this, R.drawable.fifa_image03)?.let { arrayImage.add(it) }
+        ContextCompat.getDrawable(this, R.drawable.fifa_banner01)?.let { arrayImage.add(it) }
+        ContextCompat.getDrawable(this, R.drawable.fifa_banner02)?.let { arrayImage.add(it) }
+        ContextCompat.getDrawable(this, R.drawable.fifa_banner03)?.let { arrayImage.add(it) }
 
         // initBanner()
         val bannerAdapter = BannerAdapter()

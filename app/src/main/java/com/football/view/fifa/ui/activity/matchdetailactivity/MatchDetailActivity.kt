@@ -29,15 +29,10 @@ class MatchDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMatchDetailBinding
     private lateinit var loadingProgressDialog: LoadingProgressDialog
-    private lateinit var matchDTO: MatchDTO
+    private lateinit var matchDTO: MatchMetaDataResult
     private lateinit var nickName: String
     private lateinit var matchMyPlayerAdapter: MatchPlayerAdapter
     private lateinit var matchOpponentPlayerAdapter: MatchPlayerAdapter
-    private lateinit var matchMyPlayerDTOList: ArrayList<MatchPlayerDTO>
-    private lateinit var matchOpponentPlayerDTOList: ArrayList<MatchPlayerDTO>
-//    private lateinit var spidDTOList: ArrayList<SpidDTO>
-//    private lateinit var sppositionDTOList: ArrayList<SppositionDTO>
-
 
     private val viewModel: MatchDetailViewModel by viewModels()
 
@@ -65,7 +60,7 @@ class MatchDetailActivity : AppCompatActivity() {
         //화면이 보여질때 가져올 데이터 intent
         val intent = intent
         intent.getSerializableExtra("MatchDTO")?.let {
-            matchDTO = it as MatchDTO
+            matchDTO = it as MatchMetaDataResult
         }
         intent.getStringExtra("NickName")?.let {
             nickName = it
@@ -96,56 +91,52 @@ class MatchDetailActivity : AppCompatActivity() {
 
         //아래 상세 데이터 설정
         binding.tvAverageRating.text = getString(
-            R.string.MatchDetailActivity_detail_data_form,
+            R.string.match_detail_data_form,
             averageRating(matchDTO.matchInfo[0]),
             averageRating(matchDTO.matchInfo[1])
         )
         binding.tvShooting.text = getString(
-            R.string.MatchDetailActivity_detail_data_form,
+            R.string.match_detail_data_form,
             matchDTO.matchInfo[0].shoot.shootTotal.toString(),
             matchDTO.matchInfo[1].shoot.shootTotal.toString()
         )
         binding.tvEffectiveShootingRating.text = getString(
-            R.string.MatchDetailActivity_detail_data_form,
+            R.string.match_detail_data_form,
             matchDTO.matchInfo[0].shoot.effectiveShootTotal.toString(),
             matchDTO.matchInfo[1].shoot.effectiveShootTotal.toString()
         )
         binding.tvShare.text = getString(
-            R.string.MatchDetailActivity_detail_data_form,
+            R.string.match_detail_data_form,
             matchDTO.matchInfo[0].matchDetail.possession.toString(),
             matchDTO.matchInfo[1].matchDetail.possession.toString()
         )
         binding.tvPassSuccessRate.text = getString(
-            R.string.MatchDetailActivity_detail_data_form,
+            R.string.match_detail_data_form,
             passSuccesRate(matchDTO.matchInfo[0]),
             passSuccesRate(matchDTO.matchInfo[1])
         )
         binding.tvCornerKick.text = getString(
-            R.string.MatchDetailActivity_detail_data_form,
+            R.string.match_detail_data_form,
             matchDTO.matchInfo[0].matchDetail.cornerKick.toString(),
             matchDTO.matchInfo[1].matchDetail.cornerKick.toString()
         )
         binding.tvTackle.text = getString(
-            R.string.MatchDetailActivity_detail_data_form,
+            R.string.match_detail_data_form,
             matchDTO.matchInfo[0].defence.tackleSuccess.toString(),
             matchDTO.matchInfo[1].defence.tackleSuccess.toString()
         )
         binding.tvBlock.text = getString(
-            R.string.MatchDetailActivity_detail_data_form,
+            R.string.match_detail_data_form,
             matchDTO.matchInfo[0].defence.blockSuccess.toString(),
             matchDTO.matchInfo[1].defence.blockSuccess.toString()
         )
 
-
         viewModel.setPlayer(matchDTO)
-
-        matchMyPlayerDTOList = viewModel.filtedMatchMyPlayerDTOList
-        matchOpponentPlayerDTOList = viewModel.filtedMatchOpponentPlayerDTOList
 
 //        어댑터 세팅2개 각각의 어댑터
         //이미지 test 바꾸기 전
-        setMatchMyPlayerAdapter(matchMyPlayerDTOList)
-        setMatchOpponentPlayerAdapter(matchOpponentPlayerDTOList)
+        setMatchMyPlayerAdapter(viewModel.filtedMatchMyPlayerDTOList)
+        setMatchOpponentPlayerAdapter(viewModel.filtedMatchOpponentPlayerDTOList)
         //이미지 test 바꾸기 전
 
 //        로딩 프로그래스 다이얼로그 종료
@@ -166,7 +157,7 @@ class MatchDetailActivity : AppCompatActivity() {
     /**
      *
      */
-    private fun setMatchMyPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayerDTO>) {
+    private fun setMatchMyPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayerResult>) {
         matchMyPlayerAdapter = MatchPlayerAdapter(this, matchPlayerDTOList)
         val searchLinearLayoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -180,7 +171,7 @@ class MatchDetailActivity : AppCompatActivity() {
     /**
      *
      */
-    private fun setMatchOpponentPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayerDTO>) {
+    private fun setMatchOpponentPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayerResult>) {
         matchOpponentPlayerAdapter = MatchPlayerAdapter(this, matchPlayerDTOList)
         val searchLinearLayoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -196,7 +187,7 @@ class MatchDetailActivity : AppCompatActivity() {
      * 유저의 승패에 따른 색깔 결정
      */
     private fun matchDetailResultViewColor(
-        matchInfoUser: MatchInfoDTO,
+        matchInfoUser: MatchInfoResult,
         view: View,
         context: Context
     ) {
@@ -253,7 +244,7 @@ class MatchDetailActivity : AppCompatActivity() {
     /**
      * 평균 평점 구하기
      */
-    private fun averageRating(matchInfoDTO: MatchInfoDTO): String {
+    private fun averageRating(matchInfoDTO: MatchInfoResult): String {
         var spRatingSum = 0.0
         var count = 0.0
         matchInfoDTO.player.forEach {
@@ -271,7 +262,7 @@ class MatchDetailActivity : AppCompatActivity() {
     /**
      * 패스 성공률
      */
-    private fun passSuccesRate(matchInfoDTO: MatchInfoDTO): String {
+    private fun passSuccesRate(matchInfoDTO: MatchInfoResult): String {
 
         val passTry = matchInfoDTO.pass.passTry.toDouble()
         val passSuccess = matchInfoDTO.pass.passSuccess.toDouble()
