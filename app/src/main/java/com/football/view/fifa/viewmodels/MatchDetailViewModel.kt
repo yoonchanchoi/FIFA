@@ -44,7 +44,7 @@ class MatchDetailViewModel @Inject constructor(
     fun setPlayer(matchDTO: MatchMetaDataResult) {
         Singles.zip(
             Single.just(matchDTO.matchInfo[0].player),
-            Single.just(matchDTO.matchInfo [1].player)
+            Single.just(matchDTO.matchInfo[1].player)
         )
             .subscribeOn(Schedulers.io())
             .subscribe({ (left, right) ->
