@@ -1,20 +1,15 @@
 package com.football.view.fifa.network.services
 
-import com.football.view.fifa.network.models.response.*
-import com.football.view.fifa.network.models.dto.SpidDTO
-import com.football.view.fifa.network.models.dto.SppositionDTO
-import retrofit2.Call
+import com.football.view.fifa.network.models.dto.SpIdResult
+import com.football.view.fifa.network.models.dto.SpPositionResult
+import io.reactivex.Single
 import retrofit2.http.GET
 
 interface FIFAMetadataService {
 
     @GET("spid.json")
-    fun  requestSpid(): Call<ArrayList<SpidDTO>>
+    fun  requestSpId(): Single<ArrayList<SpIdResult>>
 
     @GET("spposition.json")
-    fun  requestSpposition(): Call<ArrayList<SppositionDTO>>
+    fun  requestSpPosition(): Single<ArrayList<SpPositionResult>>
 }
-
-
-
-

@@ -17,7 +17,7 @@ class HeadersInterceptor @Inject constructor(
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
             .newBuilder()
-            .addHeader("Authorization",CLIENT_ID)
+            .addHeader("Authorization", CLIENT_ID)
             .build()
         return chain.proceed(request)
     }

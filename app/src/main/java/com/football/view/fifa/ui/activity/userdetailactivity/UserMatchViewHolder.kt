@@ -10,9 +10,9 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.football.view.fifa.R
 import com.football.view.fifa.databinding.ItemUserRecordBinding
-import com.football.view.fifa.network.models.dto.MatchDTO
-import com.football.view.fifa.network.models.dto.MatchInfoDTO
-import com.football.view.fifa.network.models.dto.UserDTO
+import com.football.view.fifa.network.models.dto.MatchMetaDataResult
+import com.football.view.fifa.network.models.dto.MatchInfoResult
+import com.football.view.fifa.network.models.dto.UserInfoResult
 import java.text.SimpleDateFormat
 
 class UserMatchViewHolder(
@@ -26,9 +26,9 @@ class UserMatchViewHolder(
 
     @SuppressLint("SimpleDateFormat")
     fun bind(
-        matchDTO: MatchDTO,
+        matchDTO: MatchMetaDataResult,
         userMatchRecyclerListener: UserMatchRecyclerListener,
-        userDTO: UserDTO
+        userDTO: UserInfoResult
     ) {
 
 
@@ -125,11 +125,11 @@ class UserMatchViewHolder(
      * 유저의 승패에 따른 색깔 결정
      */
     private fun matchResultViewColor(
-        matchInfoUser1: MatchInfoDTO,
-        matchInfoUser2: MatchInfoDTO,
+        matchInfoUser1: MatchInfoResult,
+        matchInfoUser2: MatchInfoResult,
         searchUser: String
     ) {
-        val tempMatchInfoDTO: MatchInfoDTO = if (searchUser == matchInfoUser1.nickname) {
+        val tempMatchInfoDTO: MatchInfoResult = if (searchUser == matchInfoUser1.nickname) {
             matchInfoUser1
         } else {
             matchInfoUser2

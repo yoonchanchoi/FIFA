@@ -2,20 +2,20 @@ package com.football.view.fifa.ui.activity.searchsubactivity
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.football.view.fifa.databinding.ActivitySearchSubBinding
+import com.football.view.fifa.network.models.dto.UserInfoResult
+import com.football.view.fifa.ui.activity.userdetailactivity.UserDetailActivity
+import com.football.view.fifa.ui.dialog.LoadingProgressDialog
 import com.football.view.fifa.util.Constants
 import com.football.view.fifa.util.Pref
 import com.football.view.fifa.util.onTextChanged
-import com.football.view.fifa.databinding.ActivitySearchSubBinding
-import com.football.view.fifa.network.models.dto.UserDTO
-import com.football.view.fifa.ui.activity.userdetailactivity.UserDetailActivity
-import com.football.view.fifa.ui.dialog.LoadingProgressDialog
 import com.football.view.fifa.viewmodels.SearchSubViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -26,7 +26,7 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
     @Inject
     lateinit var pref: Pref
 
-    private lateinit var searchDataList: ArrayList<UserDTO>
+    private lateinit var searchDataList: ArrayList<UserInfoResult>
     private lateinit var binding: ActivitySearchSubBinding
     private lateinit var searchRecentAdapter: RecentSearchAdapter
     private lateinit var loadingProgressDialog: LoadingProgressDialog
@@ -49,7 +49,7 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
     private fun initData() {
         loadingProgressDialog = LoadingProgressDialog(this)
         binding.etSearch.requestFocus()
-        searchDataList = pref.getSearchList() as ArrayList<UserDTO>
+        searchDataList = pref.getSearchList() as ArrayList<UserInfoResult>
         setSearchRecentAdapter(searchDataList)
         checkNoRecentSearchView()
     }
@@ -60,7 +60,7 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
         viewModel.recentSearchSaveCheck.observe(this) {
             if (it) {
                 //받은 값이 ok일때 데이터 추가
-                viewModel.userdto.value?.let { userDto ->
+                viewModel.userDto.value?.let { userDto ->
                     saveSearchData(userDto)
                     searchRecentAdapter.notifyDataSetChanged()
                     checkNoRecentSearchView()
@@ -78,7 +78,7 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
             //* ViewModel안에 intent, StartActivity 가능! (하지만 개인적으로 조금더 생각해봐야될 부분임)
             val intent = Intent(this,UserDetailActivity::class.java)
             intent.putExtra("ArrayList<MatchDTO>",it)
-            intent.putExtra("SearchUserDTO",viewModel.userdto.value)
+            intent.putExtra("SearchUserDTO",viewModel.userDto.value)
             intent.putExtra("UserRank",viewModel.userRank.value)
             loadingProgressDialog.dismiss()
             startActivity(intent)
@@ -147,7 +147,7 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
     /**
      * 최근기록 검색어 어댑터 세팅
      */
-    private fun setSearchRecentAdapter(searchDataList: ArrayList<UserDTO>) {
+    private fun setSearchRecentAdapter(searchDataList: ArrayList<UserInfoResult>) {
         searchRecentAdapter = RecentSearchAdapter(this, searchDataList)
         val searchLinearLayoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true)
@@ -161,7 +161,7 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
     /**
      * 최근기록 검색어를 preference에 저장
      */
-    private fun saveSearchData(userDTO: UserDTO) {
+    private fun saveSearchData(userDTO: UserInfoResult) {
         //버전 차이에 대한 생각 고민 중
         //같은 검색일경우 삭제
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
