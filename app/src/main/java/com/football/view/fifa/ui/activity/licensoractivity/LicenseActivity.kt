@@ -37,7 +37,7 @@ class LicenseActivity : AppCompatActivity() {
     private fun init() {
         val appbar = supportActionBar
         appbar?.let {
-            it.title = "FIFA"
+            it.title = getString(R.string.app_name)
             it.setDisplayHomeAsUpEnabled(true)
         }
     }
