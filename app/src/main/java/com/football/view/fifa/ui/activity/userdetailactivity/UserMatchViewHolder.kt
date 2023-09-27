@@ -20,10 +20,6 @@ class UserMatchViewHolder(
     private val binding: ItemUserRecordBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-
-
-
-
     @SuppressLint("SimpleDateFormat")
     fun bind(
         matchDTO: MatchMetaDataResult,

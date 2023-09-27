@@ -41,5 +41,4 @@ class LicenseActivity : AppCompatActivity() {
             it.setDisplayHomeAsUpEnabled(true)
         }
     }
-
 }
