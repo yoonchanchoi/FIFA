@@ -50,8 +50,8 @@ class MatchDetailActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-//        로딩 프로그래서 시작
-//        바꾸는중
+//      로딩 프로그래서 시작
+//      바꾸는중
         loadingProgressDialog = LoadingProgressDialog(this)
         loadingProgressDialog.show()
 
@@ -155,7 +155,7 @@ class MatchDetailActivity : AppCompatActivity() {
 
 
     /**
-     *
+     * 왼쪽 매치 선수 데이터 세팅 어댑터
      */
     private fun setMatchMyPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayerResult>) {
         matchMyPlayerAdapter = MatchPlayerAdapter(this, matchPlayerDTOList)
@@ -169,7 +169,7 @@ class MatchDetailActivity : AppCompatActivity() {
     }
 
     /**
-     *
+     * 오른쪽 매치 선수 데이터 세팅 어댑터
      */
     private fun setMatchOpponentPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayerResult>) {
         matchOpponentPlayerAdapter = MatchPlayerAdapter(this, matchPlayerDTOList)

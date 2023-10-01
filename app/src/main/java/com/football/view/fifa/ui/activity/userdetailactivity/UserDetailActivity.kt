@@ -76,17 +76,6 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
                 binding.linearTop.isSelected = false
                 binding.tvTitleUserNickname.isSelected = false
             }
-            //* 연습용
-//            if (!v.canScrollVertically(-1)) {
-//                Log.e("cyc", "최상단")
-//                binding.linearTop.isSelected = false
-//                binding.tvTitleUserNickname.isSelected = false
-//            } else {
-//                Log.e("cyc", "아닐때")
-//                Log.e("cyc", "scrollY--->${scrollY}")
-//                binding.linearTop.isSelected = true
-//                binding.tvTitleUserNickname.isSelected = true
-//            }
         })
 
         /**
@@ -111,7 +100,6 @@ class UserDetailActivity : AppCompatActivity(), UserMatchRecyclerListener {
         }
     }
 
-    //곧 구헌해야됨
     override fun onItemClick(matchDTO: MatchMetaDataResult, nickName: String) {
         val intent = Intent(this,MatchDetailActivity::class.java)
         intent.putExtra("MatchDTO",matchDTO)
