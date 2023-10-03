@@ -18,8 +18,8 @@ android {
         applicationId "com.football.view.fifa"
         minSdk 21
         targetSdk 33
-        versionCode 20102
-        versionName "2.1.2"
+        versionCode 20103
+        versionName "2.1.3"
 
         buildConfigField "String", "CLIENT_ID", project.properties["CLIENT_ID"]
 
