@@ -1,11 +1,12 @@
 package com.football.view.fifa.util
 
 object Constants {
+
     //URL
     const val BASE_URL = "https://api.nexon.co.kr/fifaonline4/v1.0/"
     const val METADATA_BASE_URL = "https://static.api.nexon.co.kr/fifaonline4/latest/"
     const val IMAGE_BASE_URL = "https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/playersAction/p%s.png"
-//    playersAction/p{spid}.png
+
     //Sharedpreference
     const val PREF_KEY_SEARCH = "key_search"
     const val PREF_KEY_ALL_SPID = "key_all_spid"
@@ -19,7 +20,9 @@ object Constants {
     const val MY_TEAM_PLAYER_IMAGE = "my_team_player_image"
     const val OPPONENT_TEAM_PLAYER_IMAGE = "opponent_team_player_image"
 
+    //선수 포지선의 int형 Keyr값
 
+    const val SUB_SPOSITION = 28
 
     //근데 객체로 하면되지 않나? 이거 왜이렇게 함? 각각의 객체일때 api로 받으면 됩는데...나 바본가? 일단 확인 왜 모아서 보내야되지?
     //MatchPlayerDTO에 넣고 하면됨..............변수넣어서.일단 그렇게 한번 더해보자
