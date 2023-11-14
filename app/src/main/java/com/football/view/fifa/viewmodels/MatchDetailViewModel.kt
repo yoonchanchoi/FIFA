@@ -56,7 +56,7 @@ class MatchDetailViewModel @Inject constructor(
                 }
                 right.forEach {
                     if (it.spPosition != Constants.SUB_SPOSITION) {
-                        filtedMatchOpponentPlayerDTOList.add(pickUpPlayer(it))
+                        filteredMatchOpponentPlayerDTOList.add(pickUpPlayer(it))
                     }
                 }
             }, {
