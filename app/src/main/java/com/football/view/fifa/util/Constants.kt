@@ -24,7 +24,5 @@ object Constants {
 
     const val SUB_SPOSITION = 28
 
-    //근데 객체로 하면되지 않나? 이거 왜이렇게 함? 각각의 객체일때 api로 받으면 됩는데...나 바본가? 일단 확인 왜 모아서 보내야되지?
-    //MatchPlayerDTO에 넣고 하면됨..............변수넣어서.일단 그렇게 한번 더해보자
 
 }
