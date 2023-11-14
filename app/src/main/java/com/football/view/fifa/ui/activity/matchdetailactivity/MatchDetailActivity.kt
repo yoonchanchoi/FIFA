@@ -135,8 +135,8 @@ class MatchDetailActivity : AppCompatActivity() {
 
 //        어댑터 세팅2개 각각의 어댑터
         //이미지 test 바꾸기 전
-        setMatchMyPlayerAdapter(viewModel.filtedMatchMyPlayerDTOList)
-        setMatchOpponentPlayerAdapter(viewModel.filtedMatchOpponentPlayerDTOList)
+        setMatchMyPlayerAdapter(viewModel.filteredMatchMyPlayerDTOList)
+        setMatchOpponentPlayerAdapter(viewModel.filteredMatchOpponentPlayerDTOList)
         //이미지 test 바꾸기 전
 
 //        로딩 프로그래스 다이얼로그 종료

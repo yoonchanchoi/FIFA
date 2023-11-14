@@ -10,6 +10,7 @@ import com.football.view.fifa.network.models.dto.MatchPlayerResult
 import com.football.view.fifa.network.models.dto.PlayerResult
 import com.football.view.fifa.network.models.dto.SpIdResult
 import com.football.view.fifa.network.models.dto.SpPositionResult
+import com.football.view.fifa.util.Constants
 import com.football.view.fifa.util.Pref
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
@@ -31,12 +32,12 @@ class MatchDetailViewModel @Inject constructor(
     var _spidDTOList = ArrayList<SpIdResult>()
     var _sppositionDTOList = ArrayList<SpPositionResult>()
 
-    val filtedMatchMyPlayerDTOList = ArrayList<MatchPlayerResult>()
+    val filteredMatchMyPlayerDTOList = ArrayList<MatchPlayerResult>()
     val filteredMatchMyPlayerList = MutableLiveData<ArrayList<MatchPlayerResult>>()
-    val filtedMatchOpponentPlayerDTOList = ArrayList<MatchPlayerResult>()
+    val filteredMatchOpponentPlayerDTOList = ArrayList<MatchPlayerResult>()
     val filteredMatchOpponentPlayerList = MutableLiveData<ArrayList<MatchPlayerResult>>()
 
-    fun getPreData(){
+    fun getPreData() {
         _spidDTOList = pref.getAllSpidList() as ArrayList<SpIdResult>
         _sppositionDTOList = pref.getAllSppositionList() as ArrayList<SpPositionResult>
     }
@@ -48,14 +49,17 @@ class MatchDetailViewModel @Inject constructor(
         )
             .subscribeOn(Schedulers.io())
             .subscribe({ (left, right) ->
-
                 left.forEach {
-                    filtedMatchMyPlayerDTOList.add(pickUpPlayer(it))
+                    if (it.spPosition != Constants.SUB_SPOSITION) {
+                        filteredMatchMyPlayerDTOList.add(pickUpPlayer(it))
+                    }
                 }
                 right.forEach {
-                    filtedMatchOpponentPlayerDTOList.add(pickUpPlayer(it))
+                    if (it.spPosition != Constants.SUB_SPOSITION) {
+                        filteredMatchOpponentPlayerDTOList.add(pickUpPlayer(it))
+                    }
                 }
-            },{
+            }, {
 
             })
             .addTo(disposable)
@@ -81,7 +85,14 @@ class MatchDetailViewModel @Inject constructor(
                 }
             }
         }
-        return MatchPlayerResult(name, desc, playerResult.spId, playerResult.spPosition, playerResult.spGrade, playerResult.status)
+        return MatchPlayerResult(
+            name,
+            desc,
+            playerResult.spId,
+            playerResult.spPosition,
+            playerResult.spGrade,
+            playerResult.status
+        )
     }
 }
 
