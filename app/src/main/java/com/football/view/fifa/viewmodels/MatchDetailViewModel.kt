@@ -32,9 +32,9 @@ class MatchDetailViewModel @Inject constructor(
     var _spidDTOList = ArrayList<SpIdResult>()
     var _sppositionDTOList = ArrayList<SpPositionResult>()
 
-    val filtedMatchMyPlayerDTOList = ArrayList<MatchPlayerResult>()
+    val filteredMatchMyPlayerDTOList = ArrayList<MatchPlayerResult>()
     val filteredMatchMyPlayerList = MutableLiveData<ArrayList<MatchPlayerResult>>()
-    val filtedMatchOpponentPlayerDTOList = ArrayList<MatchPlayerResult>()
+    val filteredMatchOpponentPlayerDTOList = ArrayList<MatchPlayerResult>()
     val filteredMatchOpponentPlayerList = MutableLiveData<ArrayList<MatchPlayerResult>>()
 
     fun getPreData() {

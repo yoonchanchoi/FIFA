@@ -3,9 +3,9 @@ package com.football.view.fifa.util
 object Constants {
 
     //URL
-    const val BASE_URL = "https://api.nexon.co.kr/fifaonline4/v1.0/"
-    const val METADATA_BASE_URL = "https://static.api.nexon.co.kr/fifaonline4/latest/"
-    const val IMAGE_BASE_URL = "https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/playersAction/p%s.png"
+    const val BASE_URL = "https://public.api.nexon.com/openapi/fconline/v1.0/"
+    const val METADATA_BASE_URL = "https://static.api.nexon.co.kr/fconline/latest/"
+    const val IMAGE_BASE_URL = "https://fco.dn.nexoncdn.co.kr/live/externalAssets/common/playersAction/p%s.png"
 
     //Sharedpreference
     const val PREF_KEY_SEARCH = "key_search"
