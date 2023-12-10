@@ -1,5 +1,6 @@
 package com.football.view.fifa.network.managers
 
+import com.football.view.fifa.network.models.dto.SeasonIdResult
 import com.football.view.fifa.network.models.dto.SpIdResult
 import com.football.view.fifa.network.models.dto.SpPositionResult
 import com.football.view.fifa.network.services.FIFAMetadataService
@@ -17,5 +18,9 @@ class FIFAMetadataManagerImpl @Inject constructor(
 
     override fun requestSpPosition(): Single<ArrayList<SpPositionResult>> =
         service.requestSpPosition()
+
+    override fun requestSeasonId(): Single<ArrayList<SeasonIdResult>> =
+        service.requestSeasonId()
+
 }
 
