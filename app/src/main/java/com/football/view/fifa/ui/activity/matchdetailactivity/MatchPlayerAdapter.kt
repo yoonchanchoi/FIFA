@@ -10,6 +10,7 @@ import com.football.view.fifa.network.models.dto.MatchPlayerResult
 
 class MatchPlayerAdapter(
     private val context: Context,
+    private val matchPlayerRecyclerListener: MatchPlayerRecyclerListener,
     private val matchPlayerDTOList: ArrayList<MatchPlayerResult>,
 ) : RecyclerView.Adapter<MatchPlayerViewHolder>(){
 
@@ -20,7 +21,7 @@ class MatchPlayerAdapter(
     }
 
     override fun onBindViewHolder(holder: MatchPlayerViewHolder, position: Int) {
-        holder.bind(context, matchPlayerDTOList[position])
+        holder.bind(context, matchPlayerRecyclerListener, matchPlayerDTOList[position])
     }
 
     override fun getItemCount(): Int {
