@@ -79,7 +79,7 @@ class PlayerDetailDialogFragment : DialogFragment() {
             .load(findSeasonId())
             .error(R.drawable.red_cross_image)
             .placeholder(R.drawable.white_image)
-            .into(binding.ivPlayer)
+            .into(binding.ivSpSeason)
 
         binding.tvPlayerName.text = matchPlayDTO.spName
         binding.tvSpGrade.text = matchPlayDTO.spGrade.toString()
@@ -107,12 +107,7 @@ class PlayerDetailDialogFragment : DialogFragment() {
     }
 
     private fun setPassSuccesRate(): String{
-        Log.e("cyc","다이얼로그 matchPlayDTO.status.passSuccess-->${matchPlayDTO.status.passSuccess}")
-        Log.e("cyc","다이얼로그 matchPlayDTO.status.passTry-->${matchPlayDTO.status.passTry}")
-
-        val tempDouble = matchPlayDTO.status.passSuccess/matchPlayDTO.status.passTry*100
-        Log.e("cyc","다이얼로그 tempDouble-->${tempDouble}")
-
+        val tempDouble = (matchPlayDTO.status.passSuccess/matchPlayDTO.status.passTry*100).toDouble()
         return String.format("%.0f", tempDouble) + "%"
     }
 
