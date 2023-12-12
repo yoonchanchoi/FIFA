@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@drawable/shape_outbalck_inwhite_thin_round_bg"
     tools:context=".ui.dialog.PlayerDetailDialogFragment">
 
@@ -289,21 +289,12 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:text="3"
-            android:text값Color="@color/black"
+            android:textColor="@color/black"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="@id/tv_effective_shot_tag"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_effective_shot_tag"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!-- 선수 포지션, 선수 강화 등급, 평점, 득점수, 어시스트, 패스성공률, 슛 수, 유효 슛수  -->
-
-
-    <!--    &lt;!&ndash; TODO: Update blank fragment layout &ndash;&gt;-->
-    <!--    <TextView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:text="@string/hello_blank_fragment" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
