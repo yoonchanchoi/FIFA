@@ -107,7 +107,9 @@ class PlayerDetailDialogFragment : DialogFragment() {
     }
 
     private fun setPassSuccesRate(): String{
-        val tempDouble = (matchPlayDTO.status.passSuccess/matchPlayDTO.status.passTry*100).toDouble()
+        val passSuccess = matchPlayDTO.status.passSuccess.toDouble()
+        val passTry = matchPlayDTO.status.passTry.toDouble()
+        val tempDouble = (passSuccess/passTry*100)
         return String.format("%.0f", tempDouble) + "%"
     }
 
