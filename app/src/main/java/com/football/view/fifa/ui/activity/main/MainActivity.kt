@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
 
     private var checkSaveAllSpidList: Boolean = false
     private var checkSaveAllSppositionList: Boolean = false
+    private var checkSaveAllSeasonIdList: Boolean = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,20 +72,29 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.requestSpId()
         viewModel.requestSpPosition()
+        viewModel.requestSeasonIdResult()
         setbanner()
     }
     private fun initObserve(){
         viewModel.spIdDTOList.observe(this){
             pref.saveAllSpidList(it)
             checkSaveAllSpidList=true
-            if(checkSaveAllSpidList && checkSaveAllSppositionList){
+            if(checkSaveAllSpidList && checkSaveAllSppositionList && checkSaveAllSeasonIdList){
                 loadingProgressDialog.dismiss()
             }
         }
         viewModel.spPositionResultList.observe(this){
             pref.saveAllSppositionList(it)
             checkSaveAllSppositionList = true
-            if(checkSaveAllSpidList && checkSaveAllSppositionList){
+            if(checkSaveAllSpidList && checkSaveAllSppositionList && checkSaveAllSeasonIdList){
+                loadingProgressDialog.dismiss()
+            }
+        }
+
+        viewModel.seasonIdResult.observe(this){
+            pref.saveAllSeasonIdList(it)
+            checkSaveAllSeasonIdList = true
+            if(checkSaveAllSpidList && checkSaveAllSppositionList && checkSaveAllSeasonIdList){
                 loadingProgressDialog.dismiss()
             }
         }

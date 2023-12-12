@@ -15,6 +15,8 @@ import com.football.view.fifa.R
 import com.football.view.fifa.databinding.ActivityMatchDetailBinding
 import com.football.view.fifa.network.models.dto.*
 import com.football.view.fifa.ui.dialog.LoadingProgressDialog
+import com.football.view.fifa.ui.dialog.PlayerDetailDialogFragment
+import com.football.view.fifa.util.Constants
 import com.football.view.fifa.util.Pref
 import com.football.view.fifa.viewmodels.MatchDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,7 +24,7 @@ import java.text.SimpleDateFormat
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MatchDetailActivity : AppCompatActivity() {
+class MatchDetailActivity : AppCompatActivity(), MatchPlayerRecyclerListener {
 
     @Inject
     lateinit var pref: Pref
@@ -158,7 +160,7 @@ class MatchDetailActivity : AppCompatActivity() {
      * 왼쪽 매치 선수 데이터 세팅 어댑터
      */
     private fun setMatchMyPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayerResult>) {
-        matchMyPlayerAdapter = MatchPlayerAdapter(this, matchPlayerDTOList)
+        matchMyPlayerAdapter = MatchPlayerAdapter(this,this, matchPlayerDTOList)
         val searchLinearLayoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         searchLinearLayoutManager.stackFromEnd = true // 키보드 열릴시 recycclerview 스크롤 처리
@@ -172,7 +174,7 @@ class MatchDetailActivity : AppCompatActivity() {
      * 오른쪽 매치 선수 데이터 세팅 어댑터
      */
     private fun setMatchOpponentPlayerAdapter(matchPlayerDTOList: ArrayList<MatchPlayerResult>) {
-        matchOpponentPlayerAdapter = MatchPlayerAdapter(this, matchPlayerDTOList)
+        matchOpponentPlayerAdapter = MatchPlayerAdapter(this,this,  matchPlayerDTOList)
         val searchLinearLayoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         searchLinearLayoutManager.stackFromEnd = true // 키보드 열릴시 recycclerview 스크롤 처리
@@ -270,5 +272,13 @@ class MatchDetailActivity : AppCompatActivity() {
             if ((passSuccess / passTry * 100).isNaN()) 0.0 else passSuccess / passTry * 100
 
         return String.format("%.0f", passSuccesRate)
+    }
+
+    override fun onItemClick(matchPlayDTO: MatchPlayerResult) {
+        val playerDetailDialogFragment = PlayerDetailDialogFragment()
+        val bundle = Bundle()
+        bundle.putSerializable(Constants.BUNDLE_NAME_MATCHPLAYDTO, matchPlayDTO)
+        playerDetailDialogFragment.arguments = bundle
+        playerDetailDialogFragment.show(supportFragmentManager, "PlayerDetailDialogFragment")
     }
 }
