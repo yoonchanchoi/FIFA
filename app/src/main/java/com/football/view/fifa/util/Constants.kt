@@ -11,6 +11,7 @@ object Constants {
     const val PREF_KEY_SEARCH = "key_search"
     const val PREF_KEY_ALL_SPID = "key_all_spid"
     const val PREF_KEY_ALL_SPPOSITION = "key_all_spposition"
+    const val PREF_KEY_ALL_SEASONID = "key_all_seasonid"
 
     //최근기록에 저장할지 안할지
     const val RECENT_SEARCH_SAVE_TRUE = true
@@ -24,5 +25,6 @@ object Constants {
 
     const val SUB_SPOSITION = 28
 
-
+    //bundleName
+    const val BUNDLE_NAME_MATCHPLAYDTO = "bundle_name_matchPlayDTO"
 }
