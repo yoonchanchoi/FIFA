@@ -1,5 +1,7 @@
 package com.football.view.fifa.network.models.dto
 
+import java.io.Serializable
+
 data class MatchPlayerResult(
     val spName: String = "",
     val spDesc: String = "",

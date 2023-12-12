@@ -1,6 +1,7 @@
 package com.football.view.fifa.util
 
 import android.content.SharedPreferences
+import com.football.view.fifa.network.models.dto.SeasonIdResult
 import com.football.view.fifa.network.models.dto.SpIdResult
 import com.football.view.fifa.network.models.dto.SpPositionResult
 import com.football.view.fifa.network.models.dto.UserInfoResult
@@ -49,6 +50,7 @@ class Pref @Inject constructor(private val pref: SharedPreferences) {
         return saveAllSpidList
     }
 
+    //여기 DTO 명칭 수정
     fun saveAllSppositionList(allSppositionDTOList: MutableList<SpPositionResult>){
         val allSppositionListString: String = Gson().toJson(allSppositionDTOList)
         val editor: SharedPreferences.Editor = pref.edit()
@@ -65,6 +67,24 @@ class Pref @Inject constructor(private val pref: SharedPreferences) {
             }
         }
         return saveAllSppositionList
+    }
+
+    fun saveAllSeasonIdList(allSeasonIdList: MutableList<SeasonIdResult>){
+        val allSeasonIdListString: String = Gson().toJson(allSeasonIdList)
+        val editor: SharedPreferences.Editor = pref.edit()
+        editor.putString(Constants.PREF_KEY_ALL_SEASONID, allSeasonIdListString)
+        editor.apply()
+    }
+
+    fun getAllSeasonIdList(): MutableList<SeasonIdResult> {
+        var saveAllSeasonIdList = ArrayList<SeasonIdResult>()
+        pref.getString(Constants.PREF_KEY_ALL_SEASONID, "")?.let {
+            if (it.isNotEmpty()) {
+                saveAllSeasonIdList = Gson().fromJson(it, Array<SeasonIdResult>::class.java)
+                    .toMutableList() as ArrayList<SeasonIdResult>
+            }
+        }
+        return saveAllSeasonIdList
     }
 
     fun putData(key: String, value: Any) {

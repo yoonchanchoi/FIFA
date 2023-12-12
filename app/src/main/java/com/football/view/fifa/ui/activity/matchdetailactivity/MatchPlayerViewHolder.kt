@@ -15,7 +15,7 @@ class MatchPlayerViewHolder(
     private val binding: ItemMatchPlayerBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(context: Context, matchPlayDTO: MatchPlayerResult) {
+    fun bind(context: Context, matchPlayerRecyclerListener: MatchPlayerRecyclerListener, matchPlayDTO: MatchPlayerResult) {
         binding.tvPlayerNickname.text = matchPlayDTO.spName
         spPositionColor(context,binding.tvPlayerPosition,matchPlayDTO.spDesc)
 
@@ -25,6 +25,8 @@ class MatchPlayerViewHolder(
             .error(R.drawable.null_player1)
             .placeholder(R.drawable.loading_player)
             .into(binding.iv)
+
+        binding.clMatchPlayerItem.setOnClickListener { matchPlayerRecyclerListener.onItemClick(matchPlayDTO) }
     }
 
     private fun spPositionColor(context: Context, textView: TextView, spPosition: String) {
