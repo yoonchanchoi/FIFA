@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.football.view.fifa.base.BaseViewModel
 import com.football.view.fifa.network.managers.FIFAMetadataManager
+import com.football.view.fifa.network.models.dto.SeasonIdResult
 import com.football.view.fifa.network.models.dto.SpIdResult
 import com.football.view.fifa.network.models.dto.SpPositionResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,6 +26,11 @@ class MainViewModel @Inject constructor(
     private val _spPositionDTOList = MutableLiveData<ArrayList<SpPositionResult>>()
     val spPositionResultList: LiveData<ArrayList<SpPositionResult>>
         get() = _spPositionDTOList
+
+    private val _seasonIdResult = MutableLiveData<ArrayList<SeasonIdResult>>()
+    val seasonIdResult: LiveData<ArrayList<SeasonIdResult>>
+        get() = _seasonIdResult
+
 
     fun requestSpId() {
         fifaMetadataManager.requestSpId()
@@ -50,6 +56,18 @@ class MainViewModel @Inject constructor(
                 }
             }, {
                 Log.e("cyc", "전체 포지션 통신실패 : ${it}")
+            })
+            .addTo(disposable)
+    }
+
+    fun requestSeasonIdResult(){
+        fifaMetadataManager.requestSeasonId()
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                Log.e("cyc", "전체 seasonId 데이터 통신 성공")
+                _seasonIdResult.postValue(it)
+            }, {
+                Log.e("cyc", "전체 seasonId 데이터 통신 실패 : ${it}")
             })
             .addTo(disposable)
     }
