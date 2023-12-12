@@ -30,7 +30,7 @@ class PlayerDetailDialogFragment : DialogFragment() {
     lateinit var pref: Pref
 
     private lateinit var binding: FragmentPlayerDetailDialogBinding
-    private lateinit var matchPlayDTO : MatchPlayerResult
+    private lateinit var matchPlayDTO: MatchPlayerResult
     private lateinit var seasonIdDTOList: ArrayList<SeasonIdResult>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,26 +47,21 @@ class PlayerDetailDialogFragment : DialogFragment() {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         arguments?.let {
-            matchPlayDTO= it.customGetSerializable(Constants.BUNDLE_NAME_MATCHPLAYDTO, MatchPlayerResult::class.java)!!
+            matchPlayDTO = it.customGetSerializable(
+                Constants.BUNDLE_NAME_MATCHPLAYDTO,
+                MatchPlayerResult::class.java
+            )!!
         }
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init()
-
-//        binding.btnCheck.setOnClickListener {
-//            dismiss()
-//        }
-    }
-    private fun init() {
         initData()
     }
 
-    private fun initData(){
 
-
-
+    private fun initData() {
 
         Glide.with(this)
             .load(String.format(Constants.IMAGE_BASE_URL, matchPlayDTO.spId))
@@ -84,7 +79,6 @@ class PlayerDetailDialogFragment : DialogFragment() {
         binding.tvPlayerName.text = matchPlayDTO.spName
         binding.tvSpGrade.text = matchPlayDTO.spGrade.toString()
         binding.tvSpPosition.text = matchPlayDTO.spDesc
-
         binding.tvAverageRating.text = matchPlayDTO.status.spRating.toString()
         binding.tvScore.text = matchPlayDTO.status.goal.toString()
         binding.tvAssist.text = matchPlayDTO.status.assist.toString()
@@ -94,23 +88,22 @@ class PlayerDetailDialogFragment : DialogFragment() {
 
     }
 
-    private fun findSeasonId(): String{
-        var seasonImg=""
+    private fun findSeasonId(): String {
+        var seasonImg = ""
         val seasonId = matchPlayDTO.spId.toString().substring(0 until 3)
         seasonIdDTOList = pref.getAllSeasonIdList() as ArrayList<SeasonIdResult>
         seasonIdDTOList.forEach {
-            if(it.seasonId.toString() == seasonId){
+            if (it.seasonId.toString() == seasonId) {
                 seasonImg = it.seasonImg
             }
         }
         return seasonImg
     }
 
-    private fun setPassSuccesRate(): String{
+    private fun setPassSuccesRate(): String {
         val passSuccess = matchPlayDTO.status.passSuccess.toDouble()
         val passTry = matchPlayDTO.status.passTry.toDouble()
-        val tempDouble = (passSuccess/passTry*100)
+        val tempDouble = (passSuccess / passTry * 100)
         return String.format("%.0f", tempDouble) + "%"
     }
-
 }
