@@ -10,10 +10,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class ManagerModule {
-
-    @Binds
-    @Singleton
-    abstract fun bindSearchMetadataManager(searchMetadataManagerImpl: FIFAMetadataManagerImpl): FIFAMetadataManager
+//
+//    @Binds
+//    @Singleton
+//    abstract fun bindSearchMetadataManager(searchMetadataManagerImpl: FIFAMetadataManagerImpl): FIFAMetadataManager
 
     @Binds
     @Singleton

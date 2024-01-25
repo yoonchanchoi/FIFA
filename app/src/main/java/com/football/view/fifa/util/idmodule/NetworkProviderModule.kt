@@ -1,6 +1,5 @@
 package com.football.view.fifa.util.idmodule
 
-import com.football.view.fifa.network.services.FIFAMetadataService
 import com.football.view.fifa.network.services.FIFAService
 import com.football.view.fifa.network.services.HeadersInterceptor
 import com.football.view.fifa.util.Constants
@@ -21,49 +20,48 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class NetworkProviderModule {
 
-    @Qualifier
-    @Retention(AnnotationRetention.BINARY)
-    annotation class FifaMetadataOkHttpClient
+//    @Qualifier
+//    @Retention(AnnotationRetention.BINARY)
+//    annotation class FifaMetadataOkHttpClient
+//
+//    @Qualifier
+//    @Retention(AnnotationRetention.BINARY)
+//    annotation class FifaMetadataRetrofit
+//
+//    @Qualifier
+//    @Retention(AnnotationRetention.BINARY)
+//    annotation class FifaOkHttpClient
+//
+//    @Qualifier
+//    @Retention(AnnotationRetention.BINARY)
+//    annotation class FifaRetrofit
 
-    @Qualifier
-    @Retention(AnnotationRetention.BINARY)
-    annotation class FifaMetadataRetrofit
+//    @FifaMetadataOkHttpClient
+//    @Provides
+//    @Singleton
+//    fun provideFifaMetadataOkHttpClient(
+//        headersInterceptor: HeadersInterceptor
+//    ): OkHttpClient {
+//        val logInterceptor = HttpLoggingInterceptor()
+//        logInterceptor.level = HttpLoggingInterceptor.Level.BODY
+//        return OkHttpClient.Builder()
+//            .addInterceptor(logInterceptor)
+//            .addInterceptor(headersInterceptor)
+//            .build()
+//    }
+//
+//    @FifaMetadataRetrofit
+//    @Provides
+//    @Singleton
+//    fun provideFifaMetadataRetrofit(@FifaMetadataOkHttpClient okHttpClient: OkHttpClient): FIFAMetadataService {
+//        return Retrofit.Builder()
+//            .baseUrl(Constants.BASE_URL)
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+//            .client(okHttpClient)
+//            .build().create(FIFAMetadataService::class.java)
+//    }
 
-    @Qualifier
-    @Retention(AnnotationRetention.BINARY)
-    annotation class FifaOkHttpClient
-
-    @Qualifier
-    @Retention(AnnotationRetention.BINARY)
-    annotation class FifaRetrofit
-
-    @FifaMetadataOkHttpClient
-    @Provides
-    @Singleton
-    fun provideFifaMetadataOkHttpClient(
-        headersInterceptor: HeadersInterceptor
-    ): OkHttpClient {
-        val logInterceptor = HttpLoggingInterceptor()
-        logInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        return OkHttpClient.Builder()
-            .addInterceptor(logInterceptor)
-            .addInterceptor(headersInterceptor)
-            .build()
-    }
-
-    @FifaMetadataRetrofit
-    @Provides
-    @Singleton
-    fun provideFifaMetadataRetrofit(@FifaMetadataOkHttpClient okHttpClient: OkHttpClient): FIFAMetadataService {
-        return Retrofit.Builder()
-            .baseUrl(Constants.METADATA_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
-            .client(okHttpClient)
-            .build().create(FIFAMetadataService::class.java)
-    }
-
-    @FifaOkHttpClient
     @Provides
     @Singleton
     fun provideOkHttpClient(
@@ -77,10 +75,9 @@ class NetworkProviderModule {
             .build()
     }
 
-    @FifaRetrofit
     @Provides
     @Singleton
-    fun provideRetrofit(@FifaOkHttpClient okHttpClient: OkHttpClient): FIFAService {
+    fun provideRetrofit(okHttpClient: OkHttpClient): FIFAService {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
