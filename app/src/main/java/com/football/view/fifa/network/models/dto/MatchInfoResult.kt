@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class MatchInfoResult(
-    @SerializedName("accessId")
+    @SerializedName("ouid")
     @Expose
-    val accessId: String = "",
+    val ouid: String = "",
 
     @SerializedName("nickname")
     @Expose

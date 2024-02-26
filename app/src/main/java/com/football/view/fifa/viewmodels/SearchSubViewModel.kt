@@ -7,6 +7,7 @@ import com.football.view.fifa.base.BaseViewModel
 import com.football.view.fifa.network.managers.FIFAManager
 import com.football.view.fifa.network.models.dto.MatchMetaDataResult
 import com.football.view.fifa.network.models.dto.MaxDivisionResult
+import com.football.view.fifa.network.models.dto.UserIdResult
 import com.football.view.fifa.network.models.dto.UserInfoResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
@@ -59,16 +60,29 @@ class SearchSubViewModel @Inject constructor(
     val userRank: LiveData<String>
         get() = _userRank
 
-    fun requestUserInfo(nickname: String, recentSearchSaveCheck: Boolean){
-       fifaManager.requestUserInfo(nickname)
+    fun requestUserId(nickname: String, recentSearchSaveCheck: Boolean){
+        fifaManager.requestUserId(nickname)
+            .subscribeOn(Schedulers.io())
+            .subscribe({ userIdResult ->
+                userIdResult?.let {
+                    requestUserInfo(it.ouid, recentSearchSaveCheck)
+                    Log.e("cyc", "유저 아이티 값---성공")
+                }
+            },{
+                Log.e("cyc", "유저  아이디 값 ${it}")
+            })
+            .addTo(disposable)
+    }
+    private fun requestUserInfo(ouId: String, recentSearchSaveCheck: Boolean){
+       fifaManager.requestUserInfo(ouId)
            .subscribeOn(Schedulers.io())
            .subscribe({ userInfo ->
                 userInfo?.let {
                     _userDto.postValue(it)
                     _nickname.postValue(it.nickname)
-                    requestMaxDivision(it.accessId)
+                    requestMaxDivision(it.ouid)
                     _recentSearchSaveCheck.postValue(recentSearchSaveCheck)
-                    requestMatchId(it.accessId)
+                    requestMatchId(it.ouid)
                     Log.e("cyc", "유저 정보---성공")
                 }
            },{

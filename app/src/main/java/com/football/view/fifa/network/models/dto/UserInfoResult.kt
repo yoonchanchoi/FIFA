@@ -6,9 +6,9 @@ import java.io.Serializable
 
 data class UserInfoResult(
 
-    @SerializedName("accessId")
+    @SerializedName("ouid")
     @Expose
-    val accessId: String = "",
+    val ouid: String = "",
 
     @SerializedName("nickname")
     @Expose

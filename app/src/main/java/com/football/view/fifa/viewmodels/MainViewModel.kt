@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.football.view.fifa.base.BaseViewModel
-import com.football.view.fifa.network.managers.FIFAMetadataManager
+import com.football.view.fifa.network.managers.FIFAManager
 import com.football.view.fifa.network.models.dto.SeasonIdResult
 import com.football.view.fifa.network.models.dto.SpIdResult
 import com.football.view.fifa.network.models.dto.SpPositionResult
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val fifaMetadataManager: FIFAMetadataManager,
+    private val fifaManager: FIFAManager,
 ) : BaseViewModel() {
 
     private val _spIdDTOList = MutableLiveData<ArrayList<SpIdResult>>()
@@ -33,7 +33,7 @@ class MainViewModel @Inject constructor(
 
 
     fun requestSpId() {
-        fifaMetadataManager.requestSpId()
+        fifaManager.requestSpId()
             .subscribeOn(Schedulers.io())
             .subscribe({
                 Log.e("cyc", "전체 선수 통신 성공")
@@ -45,7 +45,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun requestSpPosition() {
-        fifaMetadataManager.requestSpPosition()
+        fifaManager.requestSpPosition()
             .subscribeOn(Schedulers.io())
             .subscribe({ positionList ->
                 Log.e("cyc", "전체 포지션 성공")
@@ -61,7 +61,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun requestSeasonIdResult(){
-        fifaMetadataManager.requestSeasonId()
+        fifaManager.requestSeasonId()
             .subscribeOn(Schedulers.io())
             .subscribe({
                 Log.e("cyc", "전체 seasonId 데이터 통신 성공")

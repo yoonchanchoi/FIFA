@@ -107,7 +107,7 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
                             Log.e("cyc", "검색 값이 null 이거나 비어있을때 ")
                             false
                         } else {
-                            viewModel.requestUserInfo(textView.text.toString(),Constants.RECENT_SEARCH_SAVE_TRUE)
+                            viewModel.requestUserId(textView.text.toString(),Constants.RECENT_SEARCH_SAVE_TRUE)
                             Log.e("cyc", "검색 값이 null이 아니고 비어있지 않을때 ")
                             true
                         }
@@ -201,7 +201,7 @@ class SearchSubActivity : AppCompatActivity(), RecentSearchRecyclerListener {
     override fun onItemClick(position: Int, nickname: String) {
         //해당 아이템 클릭시
         loadingProgressDialog.show()
-        viewModel.requestUserInfo(nickname,Constants.RECENT_SEARCH_SAVE_FALSE)
+        viewModel.requestUserId(nickname,Constants.RECENT_SEARCH_SAVE_FALSE)
 
     }
 
